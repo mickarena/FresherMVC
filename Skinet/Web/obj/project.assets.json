@@ -1810,11 +1810,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SourceCode\\Fresher2\\Skinet\\Web\\Web.csproj",
+      "projectUniqueName": "D:\\SourceCode\\FresherMVC\\Skinet\\Web\\Web.csproj",
       "projectName": "Web",
-      "projectPath": "D:\\SourceCode\\Fresher2\\Skinet\\Web\\Web.csproj",
+      "projectPath": "D:\\SourceCode\\FresherMVC\\Skinet\\Web\\Web.csproj",
       "packagesPath": "C:\\Users\\hoang\\.nuget\\packages\\",
-      "outputPath": "D:\\SourceCode\\Fresher2\\Skinet\\Web\\obj\\",
+      "outputPath": "D:\\SourceCode\\FresherMVC\\Skinet\\Web\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\hoang\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1833,11 +1833,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\SourceCode\\Fresher2\\Skinet\\Core\\Core.csproj": {
-              "projectPath": "D:\\SourceCode\\Fresher2\\Skinet\\Core\\Core.csproj"
+            "D:\\SourceCode\\FresherMVC\\Skinet\\Core\\Core.csproj": {
+              "projectPath": "D:\\SourceCode\\FresherMVC\\Skinet\\Core\\Core.csproj"
             },
-            "D:\\SourceCode\\Fresher2\\Skinet\\Infrastructure\\Infrastructure.csproj": {
-              "projectPath": "D:\\SourceCode\\Fresher2\\Skinet\\Infrastructure\\Infrastructure.csproj"
+            "D:\\SourceCode\\FresherMVC\\Skinet\\Infrastructure\\Infrastructure.csproj": {
+              "projectPath": "D:\\SourceCode\\FresherMVC\\Skinet\\Infrastructure\\Infrastructure.csproj"
             }
           }
         }

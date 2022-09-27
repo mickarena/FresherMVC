@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3COjJes3ajNRGFzbuWMsWDYHrh9HZZ/L9d4ASjubUD/N8a3nZI+tFuALmV45G70rySSkMxIqPCt3NArOypkIHw==",
+  "dgSpecHash": "Qz9LrkK5XyIpo+guak4pyyfg0lFaKVh0o+FxsS3bKgttFuNvRIdAAHaIN02eCVIwO0RSm1oJbybnS0rgj+sHrg==",
   "success": true,
-  "projectFilePath": "D:\\SourceCode\\Fresher2\\Skinet\\Web\\Web.csproj",
+  "projectFilePath": "D:\\SourceCode\\FresherMVC\\Skinet\\Web\\Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hoang\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\hoang\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",

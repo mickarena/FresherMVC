@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SourceCode\\Fresher2\\Skinet\\Core\\Core.csproj",
+      "projectUniqueName": "D:\\SourceCode\\FresherMVC\\Skinet\\Core\\Core.csproj",
       "projectName": "Core",
-      "projectPath": "D:\\SourceCode\\Fresher2\\Skinet\\Core\\Core.csproj",
+      "projectPath": "D:\\SourceCode\\FresherMVC\\Skinet\\Core\\Core.csproj",
       "packagesPath": "C:\\Users\\hoang\\.nuget\\packages\\",
-      "outputPath": "D:\\SourceCode\\Fresher2\\Skinet\\Core\\obj\\",
+      "outputPath": "D:\\SourceCode\\FresherMVC\\Skinet\\Core\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\hoang\\AppData\\Roaming\\NuGet\\NuGet.Config",
