@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "y1Tu6Fswscp5pedqlQhTZZpoMQlNOGsB7dmtWs75OFq0rsiCUlKiZ+KazjF2R7OV0SktZTUi5QUqlU3/04cYBw==",
+  "dgSpecHash": "dKRgHcjwmtlXCRk0xvQYePsMnVe9hP6m8b7lB1afGsQrt6HmcAbbCxrhemt/PwQp5UhHNvBsg2JbpDNRx36EZg==",
   "success": true,
-  "projectFilePath": "D:\\SourceCode\\FresherMVC\\Skinet\\Core\\Core.csproj",
+  "projectFilePath": "D:\\Project\\Fresher_MVC\\Skinet\\Core\\Core.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
