@@ -1,8 +1,8 @@
-﻿using Web.Models;
+﻿using DotNET6_Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace Web.Controllers
+namespace DotNET6_Web.Controllers
 {
     public class HomeController : Controller
     {

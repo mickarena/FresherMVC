@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
-    public class HospitalRepository<T> : IGenericRepository<T> where T : Nurse
+    public class HospitalRepositor : IHospitalRepository
     {
-        private readonly HospitalContext _context;
+        private readonly StoreContext _context;
 
-        public HospitalRepository(HospitalContext context)
+        public HospitalRepository(StoreContext context)
         {
             _context = context;
         }
