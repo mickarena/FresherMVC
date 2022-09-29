@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Core.Interfaces
 {
-    public interface IHospitalRepository
+    public interface IHospitalRepisitory
     {
-        Task<Nurse> CreateNurse(Nurse nurse);
+        Task<Nurse> Create(Nurse nurse);
     }
 }
