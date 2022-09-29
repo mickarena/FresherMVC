@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "DotNET6_Web": {
+    "Web": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
