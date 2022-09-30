@@ -18,12 +18,5 @@ namespace Web.Controllers
             return View();
         }
 
-        [HttpPost]
-        
-        public Task<IActionResult> Create(int id)
-        {
-
-            return View();
-        }
     }
 }
