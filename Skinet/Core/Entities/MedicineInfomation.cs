@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
@@ -7,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace Core.Entity
 {
-    public class MedicineInfomation
+    public class MedicineInfomation : BaseEntity
     {
-        public Guid Id { get; set; }
         public Guid IdType { get; set; }
         public DateTime ImportDate { get; set; }
         public DateTime ExpireDate { get; set; }
