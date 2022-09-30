@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
-    internal class BedRepository : IBadRepository
+    public class BedRepository : IBadRepository
     {
         private readonly StoreContext _context;
         public BedRepository(StoreContext context)
