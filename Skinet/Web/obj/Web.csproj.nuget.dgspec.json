@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SourceCode\\FresherMVC\\Skinet\\Web\\Web.csproj": {}
+    "D:\\New folder\\Skinet\\Web\\Web.csproj": {}
   },
   "projects": {
-    "D:\\SourceCode\\FresherMVC\\Skinet\\Core\\Core.csproj": {
+    "D:\\New folder\\Skinet\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SourceCode\\FresherMVC\\Skinet\\Core\\Core.csproj",
+        "projectUniqueName": "D:\\New folder\\Skinet\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "D:\\SourceCode\\FresherMVC\\Skinet\\Core\\Core.csproj",
-        "packagesPath": "C:\\Users\\hoang\\.nuget\\packages\\",
-        "outputPath": "D:\\SourceCode\\FresherMVC\\Skinet\\Core\\obj\\",
+        "projectPath": "D:\\New folder\\Skinet\\Core\\Core.csproj",
+        "packagesPath": "C:\\Users\\Tran Tuan Anh\\.nuget\\packages\\",
+        "outputPath": "D:\\New folder\\Skinet\\Core\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\hoang\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Tran Tuan Anh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,9 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://sitecore.myget.org/F/sc-commerce-packages/api/v3/index.json": {},
-          "https://sitecore.myget.org/F/sc-packages/api/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
@@ -47,8 +49,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -57,21 +58,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\SourceCode\\FresherMVC\\Skinet\\Infrastructure\\Infrastructure.csproj": {
+    "D:\\New folder\\Skinet\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SourceCode\\FresherMVC\\Skinet\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "D:\\New folder\\Skinet\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "D:\\SourceCode\\FresherMVC\\Skinet\\Infrastructure\\Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\hoang\\.nuget\\packages\\",
-        "outputPath": "D:\\SourceCode\\FresherMVC\\Skinet\\Infrastructure\\obj\\",
+        "projectPath": "D:\\New folder\\Skinet\\Infrastructure\\Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Tran Tuan Anh\\.nuget\\packages\\",
+        "outputPath": "D:\\New folder\\Skinet\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\hoang\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Tran Tuan Anh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -79,16 +84,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://sitecore.myget.org/F/sc-commerce-packages/api/v3/index.json": {},
-          "https://sitecore.myget.org/F/sc-packages/api/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\SourceCode\\FresherMVC\\Skinet\\Core\\Core.csproj": {
-                "projectPath": "D:\\SourceCode\\FresherMVC\\Skinet\\Core\\Core.csproj"
+              "D:\\New folder\\Skinet\\Core\\Core.csproj": {
+                "projectPath": "D:\\New folder\\Skinet\\Core\\Core.csproj"
               }
             }
           }
@@ -103,9 +106,25 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.9, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[6.0.7, )"
+              "version": "[6.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.9, )"
             }
           },
           "imports": [
@@ -114,8 +133,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -124,21 +142,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\SourceCode\\FresherMVC\\Skinet\\Web\\Web.csproj": {
+    "D:\\New folder\\Skinet\\Web\\Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SourceCode\\FresherMVC\\Skinet\\Web\\Web.csproj",
+        "projectUniqueName": "D:\\New folder\\Skinet\\Web\\Web.csproj",
         "projectName": "Web",
-        "projectPath": "D:\\SourceCode\\FresherMVC\\Skinet\\Web\\Web.csproj",
-        "packagesPath": "C:\\Users\\hoang\\.nuget\\packages\\",
-        "outputPath": "D:\\SourceCode\\FresherMVC\\Skinet\\Web\\obj\\",
+        "projectPath": "D:\\New folder\\Skinet\\Web\\Web.csproj",
+        "packagesPath": "C:\\Users\\Tran Tuan Anh\\.nuget\\packages\\",
+        "outputPath": "D:\\New folder\\Skinet\\Web\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\hoang\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Tran Tuan Anh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -146,19 +168,17 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://sitecore.myget.org/F/sc-commerce-packages/api/v3/index.json": {},
-          "https://sitecore.myget.org/F/sc-packages/api/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\SourceCode\\FresherMVC\\Skinet\\Core\\Core.csproj": {
-                "projectPath": "D:\\SourceCode\\FresherMVC\\Skinet\\Core\\Core.csproj"
+              "D:\\New folder\\Skinet\\Core\\Core.csproj": {
+                "projectPath": "D:\\New folder\\Skinet\\Core\\Core.csproj"
               },
-              "D:\\SourceCode\\FresherMVC\\Skinet\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "D:\\SourceCode\\FresherMVC\\Skinet\\Infrastructure\\Infrastructure.csproj"
+              "D:\\New folder\\Skinet\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "D:\\New folder\\Skinet\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -172,14 +192,35 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.9, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -191,7 +232,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

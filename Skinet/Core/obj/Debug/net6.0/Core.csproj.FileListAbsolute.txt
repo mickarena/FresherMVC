@@ -46,3 +46,15 @@ D:\SourceCode\FresherMVC\Skinet\Core\obj\Debug\net6.0\Core.dll
 D:\SourceCode\FresherMVC\Skinet\Core\obj\Debug\net6.0\refint\Core.dll
 D:\SourceCode\FresherMVC\Skinet\Core\obj\Debug\net6.0\Core.pdb
 D:\SourceCode\FresherMVC\Skinet\Core\obj\Debug\net6.0\ref\Core.dll
+D:\New folder\Skinet\Core\bin\Debug\net6.0\Core.deps.json
+D:\New folder\Skinet\Core\bin\Debug\net6.0\Core.dll
+D:\New folder\Skinet\Core\bin\Debug\net6.0\ref\Core.dll
+D:\New folder\Skinet\Core\bin\Debug\net6.0\Core.pdb
+D:\New folder\Skinet\Core\obj\Debug\net6.0\Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\New folder\Skinet\Core\obj\Debug\net6.0\Core.AssemblyInfoInputs.cache
+D:\New folder\Skinet\Core\obj\Debug\net6.0\Core.AssemblyInfo.cs
+D:\New folder\Skinet\Core\obj\Debug\net6.0\Core.csproj.CoreCompileInputs.cache
+D:\New folder\Skinet\Core\obj\Debug\net6.0\Core.dll
+D:\New folder\Skinet\Core\obj\Debug\net6.0\ref\Core.dll
+D:\New folder\Skinet\Core\obj\Debug\net6.0\Core.pdb
+D:\New folder\Skinet\Core\obj\Debug\net6.0\Core.csproj.AssemblyReference.cache
