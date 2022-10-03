@@ -9,7 +9,10 @@ namespace Core.Entities
 {
     public class BaseEntity
     {
+<<<<<<< HEAD
       
+=======
+>>>>>>> 79f6df4379e3b09ec5e6ea7b34fa80f2ea23067b
         public Guid Id { get; set; }
     }
 }
