@@ -34,6 +34,12 @@ namespace Infrastructure.Data
             modelBuilder.Entity<MedicineBillInfo>().HasKey(c => c.Id);
             modelBuilder.Entity<MedicineInfomation>().HasOne(a => a.MedicineType).WithMany(c => c.MedicineInfomations).HasForeignKey(d => d.IdType);
             modelBuilder.Entity<MedicineBillInfo>().HasOne(a => a.MedicineBills).WithMany(c => c.MedicineBillInfo).HasForeignKey(d => d.BillId);
+
+            modelBuilder.Entity<Doctor>().HasKey(c => c.IdDoctor);
+            modelBuilder.Entity<Shift>().HasKey(c => c.IdShift);
+            modelBuilder.Entity<WorkShift>().HasKey(c => c.Id);
+            modelBuilder.Entity<WorkShift>().HasOne(a => a.Shift).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdShift);
+            modelBuilder.Entity<WorkShift>().HasOne(d => d.Doctor).WithMany(f => f.WorkShift).HasForeignKey(g => g.IdDoctor);
         }
     }
 }
