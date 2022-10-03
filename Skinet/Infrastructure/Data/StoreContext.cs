@@ -19,6 +19,7 @@ namespace Infrastructure.Data
         public DbSet<MedicineBillInfo>? MedicineBillInfo { get; set; }
         public DbSet<MedicineInfomation>? MedicineInfomation { get; set; }
         public DbSet<MedicineType>? MedicineType { get; set; }
+        public DbSet<HospitalBed> HospitalBeds { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
