@@ -9,14 +9,14 @@ namespace Core.Interfaces
 {
     public interface IMedicineTypeRepository
     {
-        Task<MedicineType> Creat(MedicineType medicineType);
+        void Creat(MedicineType medicineType);
 
-        Task<MedicineType> Update(MedicineType medicineType);
+        void Update(MedicineType medicineType);
 
-        Task Delete(Guid id);
+        void Delete(Guid id);
 
         Task<MedicineType> GetById(Guid id);
 
-        Task<MedicineType> GetType();
+        List<MedicineType> GetType();
     }
 }
