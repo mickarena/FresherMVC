@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,30 @@ namespace Infrastructure.Data
             await _context.Doctors.AddAsync(doctor);
             await _context.SaveChangesAsync();
             return doctor;
+        }
+
+        public async Task Delete(int id)
+        {
+            var doctorToDelete = await _context.Doctors.FindAsync(id);
+            _context.Doctors.Remove(doctorToDelete);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Doctor>> GetDoctor()
+        {
+            return await _context.Doctors.ToListAsync();
+        }
+        /*
+        public async Task<Doctor> GetById(int id)
+        {
+           return await _context.Doctors.FirstOrDefaultAsync(x => x.Id == id);
+            
+        }
+        */
+        public async Task Update(Doctor doctor)
+        {
+            _context.Entry(doctor).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
     }
 }

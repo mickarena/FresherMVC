@@ -9,6 +9,10 @@ namespace Core.Interfaces
 {
     public interface IDoctorRepository
     {
+        Task<IEnumerable<Doctor>> GetDoctor();
+        //Task<Doctor> GetById(int id);
         Task<Doctor> Create(Doctor doctor);
+        Task Update(Doctor doctor);
+        Task Delete(int id);
     }
 }

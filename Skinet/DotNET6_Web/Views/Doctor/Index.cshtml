@@ -1,59 +1,76 @@
-﻿@using Core
+﻿
+@model List<Core.Entities.Doctor>;
 
-@model Core.Entities.Doctor;
-
-<h4>DoctorModel</h4>
-<hr />
-
-<form asp-action="Index">
-    <div class="form-horizontal">
-        <h4>Doctor</h4>
-        <hr />
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="Name" class="control-label"></label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Doctor list</h6>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-8">
+                <p>
+                    <button type="submit" class="btn btn-primary"data-bs-toggle="modal" data-bs-target="#them">Add</button>
+                </p>
             </div>
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
+            <div class="col-md-1">
+                <p>
+                    <a class="btn btn-primary" asp-controller="Doctor" asp-action="Index" asp-route-sort="asc">Ascending</a>
+                </p>
             </div>
-        <div class="form-group">
-            <label asp-for="Gender" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <select asp-for="Gender" class="form-control" asp-items="Html.GetEnumSelectList<Gender>()"></select>
-                <span asp-validation-for="Gender" class="text-danger"></span>
+            <div class="col-md-1">
+                <p>
+                    <a class="btn btn-primary" asp-controller="Doctor" asp-action="Index" asp-route-sort="desc">Descending</a>
+                </p>
             </div>
         </div>
-        <div class="form-group">
-                <label asp-for="Birthday" class="control-label"></label>
-                <input asp-for="Birthday" class="form-control" />
-                <span asp-validation-for="Birthday" class="text-danger"></span>
-            </div>
-        <div class="form-group">
-                <label asp-for="Department" class="control-label"></label>
-                <input asp-for="Department" class="form-control" />
-                <span asp-validation-for="Department" class="text-danger"></span>
-            </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn-primary btn-default" />
-            </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Full Name
+                        </th>
+                        <th>
+                            Gender
+                        </th>
+                        <th>
+                            Phone Number
+                        </th>
+                        <th>
+                            Address
+                        </th>
+                        <th>
+                            Birthday
+                        </th>
+                         <th>
+                            Department
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var item in Model.ToList())
+                    {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>@item.Gender</td>
+                        <td>@item.Phone</td>
+                        <td>@item.Address</td>
+                        <td>@item.Birthday</td>
+                        <td>@item.Department</td>
+                        <td>
+                            <a class="btn btn-success" asp-controller="Doctor" asp-action="Edit" asp-route-id="@item.Id" ><i class="far fa-edit"></i></a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
-</form>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
