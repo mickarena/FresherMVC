@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20221003090458_add-bed")]
+    partial class addbed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,41 +42,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("HospitalBeds");
-                });
-
-            modelBuilder.Entity("Core.Entities.Doctor", b =>
-                {
-                    b.Property<Guid>("IdDoctor")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Avatar")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Position")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Sex")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IdDoctor");
-
-                    b.ToTable("Doctor");
                 });
 
             modelBuilder.Entity("Core.Entities.Product", b =>
@@ -139,53 +106,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductTypes");
-                });
-
-            modelBuilder.Entity("Core.Entities.Shift", b =>
-                {
-                    b.Property<Guid>("IdShift")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ShiftName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Time")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IdShift");
-
-                    b.ToTable("Shift");
-                });
-
-            modelBuilder.Entity("Core.Entities.WorkShift", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("IdDoctor")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdShift")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdDoctor");
-
-                    b.HasIndex("IdShift");
-
-                    b.ToTable("WorkShift");
                 });
 
             modelBuilder.Entity("Core.Entity.MedicineBill", b =>
@@ -308,25 +228,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("ProductType");
                 });
 
-            modelBuilder.Entity("Core.Entities.WorkShift", b =>
-                {
-                    b.HasOne("Core.Entities.Doctor", "Doctor")
-                        .WithMany("WorkShift")
-                        .HasForeignKey("IdDoctor")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.Shift", "Shift")
-                        .WithMany("WorkShift")
-                        .HasForeignKey("IdShift")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
-
-                    b.Navigation("Shift");
-                });
-
             modelBuilder.Entity("Core.Entity.MedicineBillInfo", b =>
                 {
                     b.HasOne("Core.Entity.MedicineBill", "MedicineBills")
@@ -353,16 +254,6 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("MedicineType");
-                });
-
-            modelBuilder.Entity("Core.Entities.Doctor", b =>
-                {
-                    b.Navigation("WorkShift");
-                });
-
-            modelBuilder.Entity("Core.Entities.Shift", b =>
-                {
-                    b.Navigation("WorkShift");
                 });
 
             modelBuilder.Entity("Core.Entity.MedicineBill", b =>
