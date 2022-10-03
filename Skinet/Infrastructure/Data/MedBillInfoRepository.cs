@@ -8,31 +8,42 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
-    internal class MedBillInfoRepository : IMedBillRepository
+    internal class MedBillInfoRepository : IMedBillInfoRepository
     {
-        public Task<MedicineBill> Create(MedicineBill medicineBill)
+        private StoreContext _context;
+
+        public MedBillInfoRepository()
         {
-            throw new NotImplementedException();
+            _context = new StoreContext();
         }
 
-        public Task<MedicineBill> Delete(Guid id)
+        public void Create(MedicineBillInfo medicineBillInfo)
         {
-            throw new NotImplementedException();
+            _context.MedicineBillInfos.Add(medicineBillInfo);
+            _context.SaveChangesAsync();
         }
 
-        public Task<MedicineBill> GetById(Guid id)
+        public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var temp = _context!.MedicineBillInfos.FirstOrDefault(c => c.Id == id);
+            _context.MedicineBillInfos.Remove(temp!);
+            _context.SaveChangesAsync();
         }
 
-        public Task<MedicineBill> Update(MedicineBill medicineBill)
+        public async Task<MedicineBillInfo> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.MedicineBillInfos.FindAsync(id);
         }
 
-        Task<MedicineBill> IMedBillRepository.GetType()
+        public void Update(MedicineBillInfo medicineBillInfo)
         {
-            throw new NotImplementedException();
+            _context.MedicineBillInfos.Update(medicineBillInfo);
+            _context.SaveChangesAsync();
+        }
+
+        public List<MedicineBillInfo> GetType()
+        {
+            return _context.MedicineBillInfos.ToList();
         }
     }
 }
