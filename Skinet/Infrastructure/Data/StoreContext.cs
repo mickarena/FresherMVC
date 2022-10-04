@@ -3,7 +3,6 @@ using Core.Entities;
 using System.Reflection;
 using System.ComponentModel.DataAnnotations.Schema;
 using Core.Entity;
-using Core;
 
 namespace Infrastructure.Data
 {

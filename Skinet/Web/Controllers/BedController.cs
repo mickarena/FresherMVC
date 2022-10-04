@@ -1,8 +1,8 @@
 ﻿using Core.Interfaces;
-using Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Core.Entities;
 
 namespace Web.Controllers
 {
