@@ -9,14 +9,14 @@ namespace Core.Interfaces
 {
     public interface IMedBillInfoRepository
     {
-        Task<MedicineBillInfo> Create(MedicineBillInfo medicineBillInfo);
+        void Create(MedicineBillInfo medicineBillInfo);
 
-        Task<MedicineBillInfo> Update(MedicineBillInfo medicineBillInfo);
+        void Update(MedicineBillInfo medicineBillInfo);
 
-        Task<MedicineBillInfo> Delete(Guid id);
+        void Delete(Guid id);
 
         Task<MedicineBillInfo> GetById(Guid id);
 
-        Task<MedicineBillInfo> GetType();
+        List<MedicineBillInfo> GetType();
     }
 }
