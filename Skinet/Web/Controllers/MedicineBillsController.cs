@@ -22,7 +22,7 @@ namespace Web.Controllers
         // GET: MedicineBills
         public async Task<IActionResult> Index()
         {
-            return View(await _context.MedicineBills.ToListAsync());
+              return View(await _context.MedicineBills.ToListAsync());
         }
 
         // GET: MedicineBills/Details/5
@@ -54,7 +54,7 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PatientID,DoctorID,DateCreate,PayStatus,Id")] MedicineBill medicineBill)
+        public async Task<IActionResult> Create([Bind("DoctorID,DateCreate,PayStatus,Id")] MedicineBill medicineBill)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("PatientID,DoctorID,DateCreate,PayStatus,Id")] MedicineBill medicineBill)
+        public async Task<IActionResult> Edit(Guid id, [Bind("DoctorID,DateCreate,PayStatus,Id")] MedicineBill medicineBill)
         {
             if (id != medicineBill.Id)
             {
@@ -149,14 +149,14 @@ namespace Web.Controllers
             {
                 _context.MedicineBills.Remove(medicineBill);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MedicineBillExists(Guid id)
         {
-            return _context.MedicineBills.Any(e => e.Id == id);
+          return _context.MedicineBills.Any(e => e.Id == id);
         }
     }
 }
