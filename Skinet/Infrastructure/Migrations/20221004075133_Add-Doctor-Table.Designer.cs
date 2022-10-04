@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20221003080251_manage-medicine")]
-    partial class managemedicine
+    [Migration("20221004075133_Add-Doctor-Table")]
+    partial class AddDoctorTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,39 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Core.Entities.Doctor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<DateTime>("Birthday")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Department")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Doctors");
+                });
 
             modelBuilder.Entity("Core.Entities.Product", b =>
                 {
@@ -108,7 +141,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MedicineBill");
+                    b.ToTable("MedicineBills");
                 });
 
             modelBuilder.Entity("Core.Entity.MedicineBillInfo", b =>
@@ -117,10 +150,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("BillId")
+                    b.Property<Guid>("IdMedicineInfo")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("IdMedicineInfo")
+                    b.Property<Guid>("MedicineBillID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("MedicineInfomationId")
@@ -137,11 +170,11 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BillId");
+                    b.HasIndex("MedicineBillID");
 
                     b.HasIndex("MedicineInfomationId");
 
-                    b.ToTable("MedicineBillInfo");
+                    b.ToTable("MedicineBillInfos");
                 });
 
             modelBuilder.Entity("Core.Entity.MedicineInfomation", b =>
@@ -153,14 +186,14 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("ExpireDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("IdType")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("ImportDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsEmpty")
                         .HasColumnType("bit");
+
+                    b.Property<Guid>("MedicineIDType")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -170,9 +203,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdType");
+                    b.HasIndex("MedicineIDType");
 
-                    b.ToTable("MedicineInfomation");
+                    b.ToTable("MedicineInfomations");
                 });
 
             modelBuilder.Entity("Core.Entity.MedicineType", b =>
@@ -182,11 +215,12 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("MedicineType");
+                    b.ToTable("MedicineTypes");
                 });
 
             modelBuilder.Entity("Core.Entities.Product", b =>
@@ -212,7 +246,7 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Core.Entity.MedicineBill", "MedicineBills")
                         .WithMany("MedicineBillInfo")
-                        .HasForeignKey("BillId")
+                        .HasForeignKey("MedicineBillID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -229,7 +263,7 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Core.Entity.MedicineType", "MedicineType")
                         .WithMany("MedicineInfomations")
-                        .HasForeignKey("IdType")
+                        .HasForeignKey("MedicineIDType")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

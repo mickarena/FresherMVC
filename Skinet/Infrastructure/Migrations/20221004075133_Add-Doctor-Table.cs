@@ -5,12 +5,29 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class managemedicine : Migration
+    public partial class AddDoctorTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "MedicineBill",
+                name: "Doctors",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "NVARCHAR(255)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "NVARCHAR(255)", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    Birthday = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Department = table.Column<string>(type: "NVARCHAR(255)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Doctors", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MedicineBills",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -21,19 +38,19 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MedicineBill", x => x.Id);
+                    table.PrimaryKey("PK_MedicineBills", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "MedicineType",
+                name: "MedicineTypes",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MedicineType", x => x.Id);
+                    table.PrimaryKey("PK_MedicineTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -61,11 +78,11 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MedicineInfomation",
+                name: "MedicineInfomations",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdType = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MedicineIDType = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ImportDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ExpireDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
@@ -74,11 +91,11 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MedicineInfomation", x => x.Id);
+                    table.PrimaryKey("PK_MedicineInfomations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MedicineInfomation_MedicineType_IdType",
-                        column: x => x.IdType,
-                        principalTable: "MedicineType",
+                        name: "FK_MedicineInfomations_MedicineTypes_MedicineIDType",
+                        column: x => x.MedicineIDType,
+                        principalTable: "MedicineTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -113,11 +130,11 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MedicineBillInfo",
+                name: "MedicineBillInfos",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BillId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MedicineBillID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdMedicineInfo = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     UnitPrice = table.Column<int>(type: "int", nullable: false),
@@ -126,34 +143,34 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MedicineBillInfo", x => x.Id);
+                    table.PrimaryKey("PK_MedicineBillInfos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MedicineBillInfo_MedicineBill_BillId",
-                        column: x => x.BillId,
-                        principalTable: "MedicineBill",
+                        name: "FK_MedicineBillInfos_MedicineBills_MedicineBillID",
+                        column: x => x.MedicineBillID,
+                        principalTable: "MedicineBills",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MedicineBillInfo_MedicineInfomation_MedicineInfomationId",
+                        name: "FK_MedicineBillInfos_MedicineInfomations_MedicineInfomationId",
                         column: x => x.MedicineInfomationId,
-                        principalTable: "MedicineInfomation",
+                        principalTable: "MedicineInfomations",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_MedicineBillInfo_BillId",
-                table: "MedicineBillInfo",
-                column: "BillId");
+                name: "IX_MedicineBillInfos_MedicineBillID",
+                table: "MedicineBillInfos",
+                column: "MedicineBillID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MedicineBillInfo_MedicineInfomationId",
-                table: "MedicineBillInfo",
+                name: "IX_MedicineBillInfos_MedicineInfomationId",
+                table: "MedicineBillInfos",
                 column: "MedicineInfomationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MedicineInfomation_IdType",
-                table: "MedicineInfomation",
-                column: "IdType");
+                name: "IX_MedicineInfomations_MedicineIDType",
+                table: "MedicineInfomations",
+                column: "MedicineIDType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_ProductBrandId",
@@ -169,16 +186,19 @@ namespace Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "MedicineBillInfo");
+                name: "Doctors");
+
+            migrationBuilder.DropTable(
+                name: "MedicineBillInfos");
 
             migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "MedicineBill");
+                name: "MedicineBills");
 
             migrationBuilder.DropTable(
-                name: "MedicineInfomation");
+                name: "MedicineInfomations");
 
             migrationBuilder.DropTable(
                 name: "ProductBrands");
@@ -187,7 +207,7 @@ namespace Infrastructure.Migrations
                 name: "ProductTypes");
 
             migrationBuilder.DropTable(
-                name: "MedicineType");
+                name: "MedicineTypes");
         }
     }
 }
