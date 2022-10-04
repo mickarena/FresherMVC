@@ -1,6 +1,7 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Web.Controllers
@@ -34,8 +35,39 @@ namespace Web.Controllers
                 return RedirectToAction("Index");
             }
             return View(model);
+        }
+        
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var doctor = await _doctorRepository.GetById(id);
+            return View(doctor);
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> Edit(Doctor model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _doctorRepository.Update(model);
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
 
-
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var doctor =  await _doctorRepository.GetById(id);
+            return View(doctor);
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> Remove(Guid id)
+        {
+            if (ModelState.IsValid) {
+                await _doctorRepository.Delete(id);
+                return RedirectToAction("Index");
+            }              
+            return View(id);
         }
     }
 }

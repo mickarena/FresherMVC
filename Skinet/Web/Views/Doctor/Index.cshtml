@@ -1,6 +1,10 @@
 ﻿
 @model IEnumerable<Core.Entities.Doctor>;
 
+@{
+    ViewData["Title"] = "Doctor List";
+}
+
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Doctor list</h6>
@@ -29,9 +33,7 @@
                 <thead>
 
                     <tr>
-                        <th>
-                            ID
-                        </th>
+                        
                         <th>
                             Full Name
                         </th>
@@ -50,14 +52,16 @@
                          <th>
                             Department
                         </th>
-                        <th></th>
+                        <th>
+                            Action
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach(var item in Model)
                     {
                     <tr>
-                        <td>@item.Id</td>
+                        
                         <td>@item.Name</td>
                         <td>@item.Gender</td>
                         <td>@item.Phone</td>
@@ -66,6 +70,7 @@
                         <td>@item.Department</td>
                         <td>
                             <a class="btn btn-success" asp-controller="Doctor" asp-action="Edit" asp-route-id="@item.Id" ><i class="far fa-edit"></i></a>
+                            <a class="btn btn-success" asp-controller="Doctor" asp-action="Delete" asp-route-id="@item.Id" ><i class="fa-solid fa-user-slash"></i></a>
                         </td>
                     </tr>
                     }
