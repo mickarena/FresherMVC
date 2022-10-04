@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20221004081704_h1")]
+    partial class h1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,26 +23,6 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("Core.Entities.HospitalBed", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("IDPatient")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IDRoom")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("HospitalBeds");
-                });
 
             modelBuilder.Entity("Core.Entities.Product", b =>
                 {
@@ -115,7 +97,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("DateCreate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 4, 18, 4, 12, 466, DateTimeKind.Local).AddTicks(9336));
+                        .HasDefaultValue(new DateTime(2022, 10, 4, 15, 17, 3, 896, DateTimeKind.Local).AddTicks(5540));
 
                     b.Property<Guid>("DoctorID")
                         .HasColumnType("uniqueidentifier");
@@ -125,7 +107,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MedicineBill");
+                    b.ToTable("MedicineBills");
                 });
 
             modelBuilder.Entity("Core.Entity.MedicineBillInfo", b =>
@@ -158,7 +140,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("MedicineInfomationId");
 
-                    b.ToTable("MedicineBillInfo");
+                    b.ToTable("MedicineBillInfos");
                 });
 
             modelBuilder.Entity("Core.Entity.MedicineInfomation", b =>
@@ -173,7 +155,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("ImportDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 4, 11, 4, 12, 466, DateTimeKind.Utc).AddTicks(8313));
+                        .HasDefaultValue(new DateTime(2022, 10, 4, 8, 17, 3, 896, DateTimeKind.Utc).AddTicks(4075));
 
                     b.Property<bool>("IsEmpty")
                         .HasColumnType("bit");
@@ -198,7 +180,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("MedicineIDType");
 
-                    b.ToTable("MedicineInfomation");
+                    b.ToTable("MedicineInfomations");
                 });
 
             modelBuilder.Entity("Core.Entity.MedicineType", b =>
@@ -214,7 +196,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MedicineType");
+                    b.ToTable("MedicineTypes");
                 });
 
             modelBuilder.Entity("Core.Entities.Product", b =>
