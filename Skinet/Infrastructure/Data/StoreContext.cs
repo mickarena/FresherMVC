@@ -3,6 +3,7 @@ using Core.Entities;
 using System.Reflection;
 using System.ComponentModel.DataAnnotations.Schema;
 using Core.Entity;
+using Core;
 
 namespace Infrastructure.Data
 {
@@ -23,6 +24,11 @@ namespace Infrastructure.Data
         public DbSet<MedicineBillInfo>? MedicineBillInfos { get; set; }
         public DbSet<MedicineInfomation>? MedicineInfomations { get; set; }
         public DbSet<MedicineType>? MedicineTypes { get; set; }
+        public DbSet<MedicineBill>? MedicineBill { get; set; }
+        public DbSet<MedicineBillInfo>? MedicineBillInfo { get; set; }
+        public DbSet<MedicineInfomation>? MedicineInfomation { get; set; }
+        public DbSet<MedicineType>? MedicineType { get; set; }
+        public DbSet<HospitalBed> HospitalBeds { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
