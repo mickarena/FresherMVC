@@ -10,7 +10,10 @@ namespace Core.Entity
 {
     public class MedicineBillInfo : BaseEntity
     {
+        [Required]
         public Guid MedicineBillID { get; set; }
+
+        [Required]
         public Guid IdMedicineInfo { get; set; }
 
         [Range(0, int.MaxValue)]

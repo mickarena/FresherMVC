@@ -11,9 +11,13 @@ namespace Core.Entity
 {
     public class MedicineInfomation : BaseEntity
     {
+        [Required]
         public Guid MedicineIDType { get; set; }
 
         [Required]
+        [MaxLength(100)]
+        public string Name { get; set; }
+
         public DateTime ImportDate { get; set; }
 
         [Required]
@@ -23,6 +27,7 @@ namespace Core.Entity
         public int Quantity { get; set; }
 
         [Range(0, int.MaxValue)]
+        [Required]
         public int UnitPrice { get; set; }
 
         [Required]

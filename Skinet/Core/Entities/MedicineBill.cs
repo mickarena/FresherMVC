@@ -10,11 +10,10 @@ namespace Core.Entity
 {
     public class MedicineBill : BaseEntity
     {
-        public Guid PatientID { get; set; }
+        [Required]
         public Guid DoctorID { get; set; }
 
-        [Required]
-        public DateTime DateCreate { get; set; } = DateTime.UtcNow;
+        public DateTime DateCreate { get; set; }
 
         [Required]
         public bool PayStatus { get; set; }
