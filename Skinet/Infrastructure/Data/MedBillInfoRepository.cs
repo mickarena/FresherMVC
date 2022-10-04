@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
-    internal class MedBillInfoRepository : IMedBillInfoRepository
+    public class MedBillInfoRepository : IMedBillInfoRepository
     {
         private StoreContext _context;
 
