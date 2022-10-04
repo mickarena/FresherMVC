@@ -24,12 +24,6 @@ namespace Infrastructure.Data
         public DbSet<MedicineInfomation>? MedicineInfomations { get; set; }
         public DbSet<MedicineType>? MedicineTypes { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("Server=DESKTOP-1D6NN35;Database=Skinet;Trusted_Connection=True;MultipleActiveResultSets=true");
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
