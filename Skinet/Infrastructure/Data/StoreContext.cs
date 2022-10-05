@@ -20,6 +20,7 @@ namespace Infrastructure.Data
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<ProductBrand> ProductBrands { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
+<<<<<<< HEAD
         public DbSet<MedicineBill>? MedicineBills { get; set; }
         public DbSet<MedicineBillInfo>? MedicineBillInfos { get; set; }
         public DbSet<MedicineInfomation>? MedicineInfomations { get; set; }
@@ -29,6 +30,9 @@ namespace Infrastructure.Data
         public DbSet<MedicineInfomation>? MedicineInfomation { get; set; }
         public DbSet<MedicineType>? MedicineType { get; set; }
         public DbSet<HospitalBed> HospitalBeds { get; set; }
+=======
+        public DbSet<HospitalBed> HospitalBed { get; set; }
+>>>>>>> d6018042699817871a98843e6136829e8d5aa225
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
