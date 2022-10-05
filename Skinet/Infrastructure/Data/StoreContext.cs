@@ -28,6 +28,8 @@ namespace Infrastructure.Data
         public DbSet<MedicineInfomation>? MedicineInfomation { get; set; }
         public DbSet<MedicineType>? MedicineType { get; set; }
         public DbSet<HospitalBed> HospitalBeds { get; set; }
+        public DbSet<Shift> Shifts { get; set; }
+        public DbSet<WorkShift> WorkShifts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -68,6 +70,12 @@ namespace Infrastructure.Data
             modelBuilder.Entity<MedicineBillInfo>().Property(c => c.Price).IsRequired();
             modelBuilder.Entity<MedicineBillInfo>().Property(c => c.UnitPrice).IsRequired();
             modelBuilder.Entity<MedicineBillInfo>().Property(c => c.Quantity).IsRequired();
+
+            //fresher-2410-start
+            modelBuilder.Entity<Shift>().HasKey(c => c.IdShift);
+            modelBuilder.Entity<WorkShift>().HasKey(c => c.IdWork);
+            modelBuilder.Entity<WorkShift>().HasOne(a => a.Shift).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdShift);
+            //
         }
     }
 }
