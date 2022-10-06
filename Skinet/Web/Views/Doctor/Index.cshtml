@@ -1,0 +1,81 @@
+﻿
+@model IEnumerable<Core.Entities.Doctor>;
+
+@{
+    ViewData["Title"] = "Doctor List";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Doctor list</h6>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-8">
+                <p>
+                    <button type="submit" class="btn btn-primary"data-bs-toggle="modal" data-bs-target="#them">Add</button>
+                </p>
+            </div>
+            <div class="col-md-1">
+                <p>
+                    <a class="btn btn-primary" asp-controller="Doctor" asp-action="Index" asp-route-sort="asc">Ascending</a>
+                </p>
+            </div>
+            <div class="col-md-1">
+                <p>
+                    <a class="btn btn-primary" asp-controller="Doctor" asp-action="Index" asp-route-sort="desc">Descending</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+
+                    <tr>
+                        
+                        <th>
+                            Full Name
+                        </th>
+                        <th>
+                            Gender
+                        </th>
+                        <th>
+                            Phone Number
+                        </th>
+                        <th>
+                            Address
+                        </th>
+                        <th>
+                            Birthday
+                        </th>
+                         <th>
+                            Department
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var item in Model)
+                    {
+                    <tr>
+                        
+                        <td>@item.Name</td>
+                        <td>@item.Gender</td>
+                        <td>@item.Phone</td>
+                        <td>@item.Address</td>
+                        <td>@item.Birthday</td>
+                        <td>@item.Department</td>
+                        <td>
+                            <a class="btn btn-success" asp-controller="Doctor" asp-action="Edit" asp-route-id="@item.Id" ><i class="far fa-edit"></i></a>
+                            <a class="btn btn-success" asp-controller="Doctor" asp-action="Delete" asp-route-id="@item.Id" ><i class="fa-solid fa-user-slash"></i></a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
