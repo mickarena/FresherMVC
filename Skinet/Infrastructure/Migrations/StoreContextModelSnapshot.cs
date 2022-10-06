@@ -22,6 +22,39 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("Core.Entities.Doctor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<DateTime>("Birthday")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Department")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Doctors");
+                });
+
             modelBuilder.Entity("Core.Entities.HospitalBed", b =>
                 {
                     b.Property<Guid>("Id")
@@ -106,6 +139,59 @@ namespace Infrastructure.Migrations
                     b.ToTable("ProductTypes");
                 });
 
+            modelBuilder.Entity("Core.Entities.Shift", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdShift")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ShiftName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Time")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Shift");
+                });
+
+            modelBuilder.Entity("Core.Entities.WorkShift", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DoctorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdDoctor")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdShift")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ShiftId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("ShiftId");
+
+                    b.ToTable("WorkShift");
+                });
+
             modelBuilder.Entity("Core.Entity.MedicineBill", b =>
                 {
                     b.Property<Guid>("Id")
@@ -115,7 +201,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("DateCreate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 4, 18, 4, 12, 466, DateTimeKind.Local).AddTicks(9336));
+                        .HasDefaultValue(new DateTime(2022, 10, 5, 14, 45, 49, 640, DateTimeKind.Local).AddTicks(9310));
 
                     b.Property<Guid>("DoctorID")
                         .HasColumnType("uniqueidentifier");
@@ -173,7 +259,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("ImportDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 4, 11, 4, 12, 466, DateTimeKind.Utc).AddTicks(8313));
+                        .HasDefaultValue(new DateTime(2022, 10, 5, 7, 45, 49, 640, DateTimeKind.Utc).AddTicks(5508));
 
                     b.Property<bool>("IsEmpty")
                         .HasColumnType("bit");
@@ -236,6 +322,21 @@ namespace Infrastructure.Migrations
                     b.Navigation("ProductType");
                 });
 
+            modelBuilder.Entity("Core.Entities.WorkShift", b =>
+                {
+                    b.HasOne("Core.Entities.Doctor", "Doctor")
+                        .WithMany("WorkShift")
+                        .HasForeignKey("DoctorId");
+
+                    b.HasOne("Core.Entities.Shift", "Shift")
+                        .WithMany("WorkShift")
+                        .HasForeignKey("ShiftId");
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Shift");
+                });
+
             modelBuilder.Entity("Core.Entity.MedicineBillInfo", b =>
                 {
                     b.HasOne("Core.Entity.MedicineBill", "MedicineBills")
@@ -262,6 +363,16 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("MedicineType");
+                });
+
+            modelBuilder.Entity("Core.Entities.Doctor", b =>
+                {
+                    b.Navigation("WorkShift");
+                });
+
+            modelBuilder.Entity("Core.Entities.Shift", b =>
+                {
+                    b.Navigation("WorkShift");
                 });
 
             modelBuilder.Entity("Core.Entity.MedicineBill", b =>
