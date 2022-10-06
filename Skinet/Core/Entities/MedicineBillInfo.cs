@@ -25,7 +25,7 @@ namespace Core.Entity
         [Range(0, int.MaxValue)]
         public int Price { get; set; }
 
-        public MedicineInfomation? MedicineInfomation { get; set; }
+        public MedicineInfomation? MedicineInfomations { get; set; }
         public MedicineBill? MedicineBills { get; set; }
     }
 }

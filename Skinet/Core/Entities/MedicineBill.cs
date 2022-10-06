@@ -18,6 +18,6 @@ namespace Core.Entity
         [Required]
         public bool PayStatus { get; set; }
 
-        public IEnumerable<MedicineBillInfo>? MedicineBillInfo { get; set; }
+        public IEnumerable<MedicineBillInfo>? MedicineBillInfos { get; set; }
     }
 }

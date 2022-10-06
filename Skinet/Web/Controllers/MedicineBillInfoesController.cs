@@ -22,7 +22,7 @@ namespace Web.Controllers
         // GET: MedicineBillInfoes
         public async Task<IActionResult> Index()
         {
-            var storeContext = _context.MedicineBillInfos.Include(m => m.MedicineBills);
+            var storeContext = _context.MedicineBillInfos.Include(m => m.MedicineBills).Include(c => c.MedicineInfomations);
             return View(await storeContext.ToListAsync());
         }
 
@@ -35,7 +35,7 @@ namespace Web.Controllers
             }
 
             var medicineBillInfo = await _context.MedicineBillInfos
-                .Include(m => m.MedicineBills)
+                .Include(m => m.MedicineBills).Include(c => c.MedicineInfomations)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (medicineBillInfo == null)
             {
@@ -49,6 +49,7 @@ namespace Web.Controllers
         public IActionResult Create()
         {
             ViewData["MedicineBillID"] = new SelectList(_context.MedicineBills, "Id", "Id");
+            ViewData["IdMedicineInfo"] = new SelectList(_context.MedicineInfomations, "Id", "Name");
             return View();
         }
 
@@ -57,16 +58,19 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MedicineBillID,IdMedicineInfo,Quantity,UnitPrice,Price,Id")] MedicineBillInfo medicineBillInfo)
+        public async Task<IActionResult> Create([Bind("MedicineBillID,IdMedicineInfo,Quantity,UnitPrice,Id")] MedicineBillInfo medicineBillInfo)
         {
+            ModelState.Remove("Price");
             if (ModelState.IsValid)
             {
                 medicineBillInfo.Id = Guid.NewGuid();
+                medicineBillInfo.Price = medicineBillInfo.UnitPrice * medicineBillInfo.Quantity;
                 _context.Add(medicineBillInfo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MedicineBillID"] = new SelectList(_context.MedicineBills, "Id", "Id", medicineBillInfo.MedicineBillID);
+            ViewData["IdMedicineInfo"] = new SelectList(_context.MedicineInfomations, "Id", "Name", medicineBillInfo.IdMedicineInfo);
             return View(medicineBillInfo);
         }
 
@@ -84,6 +88,7 @@ namespace Web.Controllers
                 return NotFound();
             }
             ViewData["MedicineBillID"] = new SelectList(_context.MedicineBills, "Id", "Id", medicineBillInfo.MedicineBillID);
+            ViewData["IdMedicineInfo"] = new SelectList(_context.MedicineInfomations, "Id", "Name", medicineBillInfo.IdMedicineInfo);
             return View(medicineBillInfo);
         }
 
@@ -92,8 +97,9 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("MedicineBillID,IdMedicineInfo,Quantity,UnitPrice,Price,Id")] MedicineBillInfo medicineBillInfo)
+        public async Task<IActionResult> Edit(Guid id, [Bind("MedicineBillID,IdMedicineInfo,Quantity,UnitPrice,Id")] MedicineBillInfo medicineBillInfo)
         {
+            ModelState.Remove("Price");
             if (id != medicineBillInfo.Id)
             {
                 return NotFound();
@@ -103,6 +109,7 @@ namespace Web.Controllers
             {
                 try
                 {
+                    medicineBillInfo.Price = medicineBillInfo.UnitPrice * medicineBillInfo.Quantity;
                     _context.Update(medicineBillInfo);
                     await _context.SaveChangesAsync();
                 }
@@ -120,6 +127,7 @@ namespace Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MedicineBillID"] = new SelectList(_context.MedicineBills, "Id", "Id", medicineBillInfo.MedicineBillID);
+            ViewData["IdMedicineInfo"] = new SelectList(_context.MedicineInfomations, "Id", "Name", medicineBillInfo.IdMedicineInfo);
             return View(medicineBillInfo);
         }
 
@@ -132,7 +140,7 @@ namespace Web.Controllers
             }
 
             var medicineBillInfo = await _context.MedicineBillInfos
-                .Include(m => m.MedicineBills)
+                .Include(m => m.MedicineBills).Include(c => c.MedicineInfomations)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (medicineBillInfo == null)
             {

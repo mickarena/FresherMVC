@@ -11,41 +11,47 @@
     <h4>MedicineInfomation</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImportDate)
+        <dt class="col-sm-2">
+            Tên thuốc
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Ngày nhập
+        </dt>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ImportDate)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ExpireDate)
+        <dt class="col-sm-2">
+            Ngày hết hạn
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ExpireDate)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Quantity)
+        <dt class="col-sm-2">
+            Số lượng
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Quantity)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UnitPrice)
+        <dt class="col-sm-2">
+            Đơn giá
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.UnitPrice)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsEmpty)
+        <dt class="col-sm-2">
+            Tình trạng còn hàng
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsEmpty)
+        <dd class="col-sm-10">
+            @(Model.IsEmpty == true ? "Hết hàng<" : "Còn hàng")
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MedicineType)
+        <dt class="col-sm-2">
+            Loại thuốc
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MedicineType.Name)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MedicineTypes.Name)
         </dd>
     </dl>
     

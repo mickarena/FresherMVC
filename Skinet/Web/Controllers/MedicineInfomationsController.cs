@@ -1,5 +1,4 @@
 ﻿using System;
-
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,7 +22,7 @@ namespace Web.Controllers
         // GET: MedicineInfomations
         public async Task<IActionResult> Index()
         {
-            var storeContext = _context.MedicineInfomations.Include(m => m.MedicineType);
+            var storeContext = _context.MedicineInfomations.Include(m => m.MedicineTypes);
             return View(await storeContext.ToListAsync());
         }
 
@@ -36,7 +35,7 @@ namespace Web.Controllers
             }
 
             var medicineInfomation = await _context.MedicineInfomations
-                .Include(m => m.MedicineType)
+                .Include(m => m.MedicineTypes)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (medicineInfomation == null)
             {
@@ -58,7 +57,7 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MedicineIDType,ImportDate,ExpireDate,Quantity,UnitPrice,IsEmpty,Id")] MedicineInfomation medicineInfomation)
+        public async Task<IActionResult> Create([Bind("MedicineIDType,Name,ImportDate,ExpireDate,Quantity,UnitPrice,IsEmpty,Id")] MedicineInfomation medicineInfomation)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +92,7 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("MedicineIDType,ImportDate,ExpireDate,Quantity,UnitPrice,IsEmpty,Id")] MedicineInfomation medicineInfomation)
+        public async Task<IActionResult> Edit(Guid id, [Bind("MedicineIDType,Name,ImportDate,ExpireDate,Quantity,UnitPrice,IsEmpty,Id")] MedicineInfomation medicineInfomation)
         {
             if (id != medicineInfomation.Id)
             {
@@ -133,7 +132,7 @@ namespace Web.Controllers
             }
 
             var medicineInfomation = await _context.MedicineInfomations
-                .Include(m => m.MedicineType)
+                .Include(m => m.MedicineTypes)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (medicineInfomation == null)
             {
@@ -157,14 +156,14 @@ namespace Web.Controllers
             {
                 _context.MedicineInfomations.Remove(medicineInfomation);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MedicineInfomationExists(Guid id)
         {
-            return _context.MedicineInfomations.Any(e => e.Id == id);
+          return _context.MedicineInfomations.Any(e => e.Id == id);
         }
     }
 }

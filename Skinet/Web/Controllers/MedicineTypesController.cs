@@ -22,7 +22,7 @@ namespace Web.Controllers
         // GET: MedicineTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.MedicineTypes.ToListAsync());
+              return View(await _context.MedicineTypes.ToListAsync());
         }
 
         // GET: MedicineTypes/Details/5
@@ -149,14 +149,14 @@ namespace Web.Controllers
             {
                 _context.MedicineTypes.Remove(medicineType);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MedicineTypeExists(Guid id)
         {
-            return _context.MedicineTypes.Any(e => e.Id == id);
+          return _context.MedicineTypes.Any(e => e.Id == id);
         }
     }
 }

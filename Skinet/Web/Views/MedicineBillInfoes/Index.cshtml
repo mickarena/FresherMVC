@@ -13,19 +13,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IdMedicineInfo)
+                Tên thuốc
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Quantity)
+               Số lượng
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UnitPrice)
+                Đơn giá
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                Tổng
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MedicineBills)
+                Mã HĐ
             </th>
             <th></th>
         </tr>
@@ -34,7 +34,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.IdMedicineInfo)
+                @Html.DisplayFor(modelItem => item.MedicineInfomations.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Quantity)

@@ -11,40 +11,46 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImportDate)
+            Tên thuốc
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            Ngày nhập
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ImportDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ExpireDate)
+            Ngày hết hạn
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ExpireDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Quantity)
+            Số lượng
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Quantity)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UnitPrice)
+            Đơn giá
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.UnitPrice)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsEmpty)
+            Tình trạng còn hàng
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsEmpty)
+            @(Model.IsEmpty == true ? "Hết hàng" : "Còn hàng")
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MedicineType)
+            Loại thuốc
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MedicineType.Name)
+            @Html.DisplayFor(model => model.MedicineTypes.Name)
         </dd>
     </dl>
 </div>
