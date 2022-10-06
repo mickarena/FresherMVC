@@ -12,12 +12,11 @@ namespace Core.Entities
     {
         public Guid IdWork { get; set; }
         public Guid IdShift { get; set; }
-        [Column(TypeName = "NVARCHAR(50)")]
-        public string DoctorName { get; set; }
+        public Guid Id { get; set; }
         [DataType(DataType.Date)]
         public DateTime? Date { get; set; }
-        [Column(TypeName = "NVARCHAR(20)")]
         public string? Status { get; set; }
         public Shift? Shift { get; set; }
+        public Doctor? Doctor { get; set; }
     }
 }
