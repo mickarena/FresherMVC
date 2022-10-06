@@ -9,10 +9,11 @@ namespace Core.Entities
 {
     public class Shift
     {
-        public Guid IdShift { get; set; }
+        public int IdShift { get; set; }
         [Column(TypeName = "NVARCHAR(30)")]
         public string? ShiftName { get; set; }
-        public string? Time { get; set; }
+        public string? StartTime { get; set; }
+        public string? EndTime { get; set; }
         public ICollection<WorkShift> WorkShift { get; set; }
     }
 }
