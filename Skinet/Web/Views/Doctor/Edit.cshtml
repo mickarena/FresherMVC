@@ -6,7 +6,7 @@
 }
 
 <div class="card shadow mb-2">
-    <form method="POST" asp-area="" asp-controller="Doctor" asp-action="Edit">
+    <form method="POST" asp-area="" asp-controller="Doctor" asp-action="Edit" enctype="multipart/form-data">
         <div class="form-group">
             <label asp-for="Id"></label>
             <input disable class="form-control" asp-for="Id" placeholder="Doctor ID">
@@ -35,6 +35,12 @@
         <div class="form-group">
             <label asp-for="Department">Department</label>
             <input class="form-control" asp-for="Department" placeholder="Department">
+        </div>
+        <div class="form-group">
+            <label asp-for="ImageFile">Image</label>
+            <img src="~/image/doctors/@Model.Image" asp-append-version="true" width="100px" height=100px>
+            <input asp-for="ImageFile" type="file" class="form-control" accept="image/*" />
+            <span asp-validation-for="ImageFile" class="text-danger"></span>
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-success">Update</button>

@@ -1,7 +1,9 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Web.Controllers
@@ -9,9 +11,11 @@ namespace Web.Controllers
     public class DoctorController : Controller
     {
         private readonly IDoctorRepository _doctorRepository;
-        public DoctorController(IDoctorRepository doctorRepository)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public DoctorController(IDoctorRepository doctorRepository, IWebHostEnvironment webHostEnvironment)
         {
             _doctorRepository = doctorRepository;
+            _webHostEnvironment = webHostEnvironment;
         }       
         public async Task<IActionResult> Index()
         {
@@ -29,8 +33,18 @@ namespace Web.Controllers
         public async Task<IActionResult> Create(Doctor model)
         {
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
+                string extension = Path.GetExtension(model.ImageFile.FileName);
+                model.Image = fileName + DateTime.Now.ToString("yymmssffff") + extension;
+                string path = Path.Combine(wwwRootPath + "/image/doctors", model.Image);
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await model.ImageFile.CopyToAsync(fileStream);
+                }
+
                 await _doctorRepository.Create(model);
                 return RedirectToAction("Index");
             }
@@ -46,8 +60,17 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Doctor model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
+                string extension = Path.GetExtension(model.ImageFile.FileName);
+                model.Image = fileName + DateTime.Now.ToString("yymmssffff") + extension;
+                string path = Path.Combine(wwwRootPath + "/image/doctors", model.Image);
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await model.ImageFile.CopyToAsync(fileStream);
+                }
                 await _doctorRepository.Update(model);
                 return RedirectToAction("Index");
             }
@@ -68,6 +91,12 @@ namespace Web.Controllers
                 return RedirectToAction("Index");
             }              
             return View(id);
+        }
+
+        public async Task<IActionResult> Search(string searchName)
+        {
+            var result = await _doctorRepository.Search(searchName);
+            return View("Index", result);
         }
     }
 }

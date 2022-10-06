@@ -46,5 +46,15 @@ namespace Infrastructure.Data
             _context.Entry(doctor).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<Doctor>> Search(string name)
+        {
+            IQueryable<Doctor> query = _context.Doctors;
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(e => e.Name.Contains(name) || e.Department.Contains(name) || e.Address.Contains(name));
+            }
+            return await query.ToListAsync();
+        }
     }
 }

@@ -16,15 +16,13 @@
                     <button type="submit" class="btn btn-primary"data-bs-toggle="modal" data-bs-target="#them">Add</button>
                 </p>
             </div>
-            <div class="col-md-1">
-                <p>
-                    <a class="btn btn-primary" asp-controller="Doctor" asp-action="Index" asp-route-sort="asc">Ascending</a>
-                </p>
-            </div>
-            <div class="col-md-1">
-                <p>
-                    <a class="btn btn-primary" asp-controller="Doctor" asp-action="Index" asp-route-sort="desc">Descending</a>
-                </p>
+            <div class="col-md-4">
+                <form asp-controller="Doctor" asp-action="Search">
+                    <span class="btn-group col-md-12">
+                        <input class="form-control " type="text" name="searchName" placeholder="Search Key" />
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </span>
+                </form>
             </div>
         </div>
 
@@ -53,6 +51,9 @@
                             Department
                         </th>
                         <th>
+                            Image
+                        </th>
+                        <th>
                             Action
                         </th>
                     </tr>
@@ -68,6 +69,9 @@
                         <td>@item.Address</td>
                         <td>@item.Birthday</td>
                         <td>@item.Department</td>
+                        <td>
+                            <img src="~/image/doctors/@item.Image" asp-append-version="true" width="100px" height=100px>
+                        </td>
                         <td>
                             <a class="btn btn-success" asp-controller="Doctor" asp-action="Edit" asp-route-id="@item.Id" ><i class="far fa-edit"></i></a>
                             <a class="btn btn-success" asp-controller="Doctor" asp-action="Delete" asp-route-id="@item.Id" ><i class="fa-solid fa-user-slash"></i></a>

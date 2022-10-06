@@ -28,6 +28,7 @@ namespace Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IMedicineInfoRepository, MedInfoRepository>();
             services.AddScoped<IMedicineTypeRepository, MedTypeRepository>();
             services.AddScoped<IMedBillInfoRepository, MedBillInfoRepository>();
