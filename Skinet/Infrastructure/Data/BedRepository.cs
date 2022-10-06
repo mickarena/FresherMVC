@@ -1,5 +1,7 @@
 ﻿using Core.Entities;
+using Core.Entity;
 using Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,21 +26,25 @@ namespace Infrastructure.Data
             return request;
         }
 
-        public async Task<HospitalBed> Delete(int Id)
+        public async Task<HospitalBed> Delete(Guid Id)
         {
             var HospitalBeds = await _context.HospitalBeds.FindAsync(Id);
             _context.HospitalBeds.Remove(HospitalBeds);
+            await _context.SaveChangesAsync();
             return HospitalBeds;
+        }
+
+        public async Task<HospitalBed> GetById(Guid Id)
+        {
+            return await _context.HospitalBeds.FirstOrDefaultAsync(x => x.Id == Id);
         }
 
         public async Task<HospitalBed> Update(HospitalBed request)
         {
-            var BedTranslation = _context.HospitalBeds.FirstOrDefault(x => x.Id == request.Id);
-            BedTranslation.Status = request.Status;
-            BedTranslation.IDPatient = request.IDPatient;
-            BedTranslation.IDRoom = request.IDRoom;
+
+            _context.HospitalBeds.Update(request);
             await _context.SaveChangesAsync();
-            return BedTranslation;
+            return request;
         }
     }
 }
