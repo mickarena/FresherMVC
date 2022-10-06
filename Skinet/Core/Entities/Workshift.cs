@@ -11,7 +11,7 @@ namespace Core.Entities
     public class WorkShift
     {
         public Guid IdWork { get; set; }
-        public Guid IdShift { get; set; }
+        public int IdShift { get; set; }
         public Guid Id { get; set; }
         [DataType(DataType.Date)]
         public DateTime? Date { get; set; }
