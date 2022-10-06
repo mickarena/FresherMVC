@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20221005074549_add-bed")]
-    partial class addbed
+    [Migration("20221006233709_SkinetF1")]
+    partial class SkinetF1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -143,55 +143,53 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.Shift", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdShift")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("IdShift")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("EndTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ShiftName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("NVARCHAR(30)");
+
+                    b.Property<string>("StartTime")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Time")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("IdShift");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Shift");
+                    b.ToTable("Shifts");
                 });
 
             modelBuilder.Entity("Core.Entities.WorkShift", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdWork")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreateAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("DoctorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdDoctor")
+                    b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdShift")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ShiftId")
-                        .HasColumnType("uniqueidentifier");
+                    b.HasKey("IdWork");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasIndex("Id");
 
-                    b.HasKey("Id");
+                    b.HasIndex("IdShift");
 
-                    b.HasIndex("DoctorId");
-
-                    b.HasIndex("ShiftId");
-
-                    b.ToTable("WorkShift");
+                    b.ToTable("WorkShifts");
                 });
 
             modelBuilder.Entity("Core.Entity.MedicineBill", b =>
@@ -203,7 +201,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("DateCreate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 5, 14, 45, 49, 640, DateTimeKind.Local).AddTicks(9310));
+                        .HasDefaultValue(new DateTime(2022, 10, 7, 6, 37, 9, 531, DateTimeKind.Local).AddTicks(3781));
 
                     b.Property<Guid>("DoctorID")
                         .HasColumnType("uniqueidentifier");
@@ -261,7 +259,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("ImportDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 5, 7, 45, 49, 640, DateTimeKind.Utc).AddTicks(5508));
+                        .HasDefaultValue(new DateTime(2022, 10, 6, 23, 37, 9, 531, DateTimeKind.Utc).AddTicks(2401));
 
                     b.Property<bool>("IsEmpty")
                         .HasColumnType("bit");
@@ -328,11 +326,15 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Core.Entities.Doctor", "Doctor")
                         .WithMany("WorkShift")
-                        .HasForeignKey("DoctorId");
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Core.Entities.Shift", "Shift")
                         .WithMany("WorkShift")
-                        .HasForeignKey("ShiftId");
+                        .HasForeignKey("IdShift")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Doctor");
 

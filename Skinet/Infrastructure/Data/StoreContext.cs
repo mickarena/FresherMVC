@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using System.Reflection;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -77,7 +77,8 @@ namespace Infrastructure.Data
             modelBuilder.Entity<Doctor>().HasKey(c => c.Id);
             modelBuilder.Entity<WorkShift>().HasKey(c => c.IdWork);
             modelBuilder.Entity<WorkShift>().HasOne(a => a.Shift).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdShift);
-            modelBuilder.Entity<WorkShift>().HasOne(b => b.Doctor).WithMany(e => e.WorkShift).HasForeignKey(f => f.Id);
+            modelBuilder.Entity<WorkShift>().HasOne(a => a.Doctor).WithMany(c => c.WorkShift).HasForeignKey(d => d.Id);
+            //
         }
     }
 }
