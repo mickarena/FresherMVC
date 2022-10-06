@@ -1,0 +1,60 @@
+﻿@model List<Core.Entities.HospitalBed>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>ID Giường</td>
+
+            <td>ID Phòng</td>
+
+            <td>ID Bệnh nhân</td>
+
+            <td>Trạng thái</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IDRoom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IDPatient)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                
+                <td>
+                    <a href="bed/Edit/@item.Id">Edit</a>
+                   
+                    <a href="bed/Delete/@item.Id">Delete</a>
+                </td>
+                
+
+            </tr>
+        }
+    </tbody>
+</table>
