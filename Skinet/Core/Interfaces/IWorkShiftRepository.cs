@@ -9,11 +9,14 @@ namespace Core.Interfaces
 {
     public interface IWorkShiftRepository
     {
-        Task<WorkShift> Create(WorkShift request);
+        void Create(WorkShift workShift);
 
-        Task<WorkShift> Update(WorkShift request);
+        void Update(WorkShift workShift);
 
-        Task<WorkShift> Delete(Guid IdWork);
-        Task<WorkShift> GetById(Guid IdWork);
+        void Delete(Guid id);
+
+        Task<WorkShift> GetById(Guid id);
+
+        List<WorkShift> GetType();
     }
 }

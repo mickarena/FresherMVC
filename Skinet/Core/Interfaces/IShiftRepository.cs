@@ -9,11 +9,14 @@ namespace Core.Interfaces
 {
     public interface IShiftRepository
     {
-        Task<Shift> Create(Shift request);
+        void Create(Shift shift);
 
-        Task<Shift> Update(Shift request);
+        void Update(Shift shift);
 
-        Task<Shift> Delete(Guid IdShift);
-        Task<Shift> GetById(Guid IdShift);
+        void Delete(Guid id);
+
+        Task<Shift> GetById(Guid id);
+
+        List<Shift> GetType();
     }
 }

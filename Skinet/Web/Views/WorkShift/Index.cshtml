@@ -1,60 +1,53 @@
-﻿@model List<Core.Entities.HospitalBed>
+﻿@model IEnumerable<Core.Entities.WorkShift>
 
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
-<form asp-action="Index" method="get">
-    <div class="form-actions no-color">
-        <p>
-            Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-            <input type="submit" value="Search" class="btn btn-primary" /> |
-            <a asp-action="Index">Back to Full List</a>
-        </p>
-    </div>
-</form>
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-
 <table class="table">
     <thead>
         <tr>
-            <td>ID Giường</td>
-
-            <td>ID Phòng</td>
-
-            <td>ID Bệnh nhân</td>
-
-            <td>Trạng thái</td>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Shift)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Doctor)
+            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IDRoom)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IDPatient)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                
-                <td>
-                    <a href="bed/Edit/@item.Id">Edit</a>
-                   
-                    <a href="bed/Delete/@item.Id">Delete</a>
-                </td>
-                
-
-            </tr>
-        }
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Shift.IdShift)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Doctor.Address)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdWork">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdWork">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdWork">Delete</a>
+            </td>
+        </tr>
+}
     </tbody>
 </table>
