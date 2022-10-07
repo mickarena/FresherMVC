@@ -1,8 +1,16 @@
-﻿
+﻿@using Core.Entities
+
 @model IEnumerable<Core.Entities.Doctor>;
 
 @{
     ViewData["Title"] = "Doctor List";
+    Page page = new Page();
+    int pageNo = 0;
+    if(ViewBag.Page != null)
+    {
+        page = ViewBag.Page;
+        pageNo = page.CurrentPage;
+    }
 }
 
 <div class="card shadow mb-4">
@@ -82,4 +90,42 @@
             </table>
         </div>
     </div>
+</div>
+
+
+<div class="container">
+    @if(page.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-end">
+
+            @if(page.CurrentPage > 1)
+            {
+                <li  class="page-item">
+                    <a class="page-link" asp-controller="Doctor" asp-action="Index" asp-route-pg="1">First</a>
+                </li>
+                <li>
+                    <a class="page-link" asp-controller="Doctor" asp-action="Index" asp-route-pg="@(page.CurrentPage - 1)">Previous</a>
+                </li>
+            }
+
+
+            @for(var pge = page.StartPage; pge <= page.EndPage; pge++)
+            {
+                <li class="page-item @(pge == page.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="Doctor" asp-action="Index" asp-route-pg="@pge">@pge</a>
+                </li>
+            }
+
+            @if(page.CurrentPage < page.TotalPages){
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Doctor" asp-action="Index" asp-route-pg="@(page.CurrentPage +1)">Next</a>
+                </li>
+                 <li  class="page-item">
+                    <a class="page-link" asp-controller="Doctor" asp-action="Index" asp-route-pg="@(page.TotalPages)">Last</a>
+                </li>
+            }
+            
+
+        </ul>
+    }
 </div>

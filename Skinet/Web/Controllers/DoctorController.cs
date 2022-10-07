@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Web.Controllers
@@ -17,10 +18,25 @@ namespace Web.Controllers
             _doctorRepository = doctorRepository;
             _webHostEnvironment = webHostEnvironment;
         }       
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pg = 1)
         {
             var model = await _doctorRepository.GetDoctor();
-            return View(model);
+
+            const int pageSize = 3;
+            if (pg < 1)
+                pg = 1;
+            int recsCount = model.Count();
+
+            var page = new Page(recsCount, pg, pageSize);
+
+            int recSkip = (pg - 1) * pageSize;
+
+            var data = model.Skip(recSkip).Take(page.PageSize).ToList();
+
+            this.ViewBag.Page = page;
+
+            //return View(model);
+            return View(data);
 
         }
 
