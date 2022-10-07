@@ -32,6 +32,8 @@ namespace Web.Controllers
         // View Create
         public IActionResult Create()
         {
+            ViewData["Shift"] = new SelectList(_workShiftRepository., "IdShift", "ShiftName");
+            ViewData["Doctor"] = new SelectList(_context.Doctors, "Id", "Name");
             return View();
         }
 
