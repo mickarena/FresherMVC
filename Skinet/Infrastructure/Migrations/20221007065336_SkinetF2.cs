@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class SkinetF1 : Migration
+    public partial class SkinetF2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,7 +46,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DoctorID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DateCreate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 7, 6, 37, 9, 531, DateTimeKind.Local).AddTicks(3781)),
+                    DateCreate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 7, 13, 53, 36, 819, DateTimeKind.Local).AddTicks(7984)),
                     PayStatus = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -111,7 +111,7 @@ namespace Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     MedicineIDType = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ImportDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 6, 23, 37, 9, 531, DateTimeKind.Utc).AddTicks(2401)),
+                    ImportDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 7, 6, 53, 36, 819, DateTimeKind.Utc).AddTicks(6781)),
                     ExpireDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
                     UnitPrice = table.Column<int>(type: "int", nullable: false),
@@ -165,7 +165,7 @@ namespace Infrastructure.Migrations
                     IdShift = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreateAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    CreateAt = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2022, 10, 7, 13, 53, 36, 820, DateTimeKind.Local).AddTicks(6479))
                 },
                 constraints: table =>
                 {

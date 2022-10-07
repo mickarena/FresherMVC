@@ -18,9 +18,13 @@ namespace Web.Controllers
     {
         private readonly IWorkShiftRepository _workShiftRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public WorkShiftController(IWorkShiftRepository workShiftRepository, IWebHostEnvironment webHostEnvironment)
+        private readonly IShiftRepository _shiftRepository;
+        private readonly IDoctorRepository _doctorRepository;
+        public WorkShiftController(IWorkShiftRepository workShiftRepository, IShiftRepository shiftRepository, IDoctorRepository doctorRepository, IWebHostEnvironment webHostEnvironment)
         {
             _workShiftRepository = workShiftRepository;
+            _shiftRepository = shiftRepository;
+            _doctorRepository = doctorRepository;
             _webHostEnvironment = webHostEnvironment;
         }
         public async Task<IActionResult> Index()
@@ -32,8 +36,8 @@ namespace Web.Controllers
         // View Create
         public IActionResult Create()
         {
-            ViewData["Shift"] = new SelectList(_workShiftRepository., "IdShift", "ShiftName");
-            ViewData["Doctor"] = new SelectList(_context.Doctors, "Id", "Name");
+            ViewData["IdShift"] = new SelectList(_shiftRepository.GetType(), "IdShift", "ShiftName");
+            ViewData["Id"] = new SelectList(_doctorRepository.GetType(), "Id", "Name");
             return View();
         }
 
@@ -41,11 +45,13 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(WorkShift workShift)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 await _workShiftRepository.Create(workShift);
                 return RedirectToAction("Index");
             }
+            ViewData["IdShift"] = new SelectList(_shiftRepository.GetType(), "IdShift", "ShiftName", workShift.IdWork);
+            ViewData["Id"] = new SelectList(_doctorRepository.GetType(), "Id", "Name", workShift.IdWork);
             return View(workShift);
         }
 
@@ -53,6 +59,8 @@ namespace Web.Controllers
         public async Task<IActionResult> Edit(Guid id)
         {
             var workShift = await _workShiftRepository.GetById(id);
+            ViewData["IdShift"] = new SelectList(_shiftRepository.GetType(), "IdShift", "ShiftName");
+            ViewData["Id"] = new SelectList(_doctorRepository.GetType(), "Id", "Name");
             return View(workShift);
         }
 
@@ -60,11 +68,13 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(WorkShift workShift)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 await _workShiftRepository.Update(workShift);
                 return RedirectToAction("Index");
             }
+            ViewData["IdShift"] = new SelectList(_shiftRepository.GetType(), "IdShift", "ShiftName", workShift.IdWork);
+            ViewData["Id"] = new SelectList(_doctorRepository.GetType(), "Id", "Name", workShift.IdWork);
             return View(workShift);
         }
 

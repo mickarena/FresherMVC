@@ -55,5 +55,10 @@ namespace Infrastructure.Data
             }
             return await query.ToListAsync();
         }
+
+        public List<Shift> GetType()
+        {
+            return _context.Shifts.AsNoTracking().ToList();
+        }
     }
 }

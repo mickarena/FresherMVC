@@ -46,5 +46,10 @@ namespace Infrastructure.Data
             _context.Entry(doctor).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+
+        public List<Doctor> GetType()
+        {
+            return _context.Doctors.AsNoTracking().ToList();
+        }
     }
 }

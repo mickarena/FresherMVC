@@ -14,5 +14,6 @@ namespace Core.Interfaces
         Task<Doctor> Create(Doctor doctor);
         Task Update(Doctor doctor);
         Task Delete(Guid id);
+        List<Doctor> GetType();
     }
 }

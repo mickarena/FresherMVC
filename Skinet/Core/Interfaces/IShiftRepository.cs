@@ -17,5 +17,6 @@ namespace Core.Interfaces
         Task Delete(Guid id);
         Task<IEnumerable<Shift>> GetShift();
         Task<IEnumerable<Shift>> Search(string name);
+        List<Shift> GetType();
     }
 }
