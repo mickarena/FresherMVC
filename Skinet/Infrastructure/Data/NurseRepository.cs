@@ -14,9 +14,9 @@ namespace Infrastructure.Data
     public class NurseRepository : INurseRepository
     {
         readonly StoreContext _db;
-        public NurseRepository(StoreContext _db)
+        public NurseRepository(StoreContext context)
         { 
-            _db = _db;
+            _db = context;
         }
 
         public void Create(Nurse nurse)
@@ -34,7 +34,7 @@ namespace Infrastructure.Data
 
         public IEnumerable<Nurse> GetAll()
         {
-            return _db.Nurse;
+            return _db.Nurse.ToList();
         }
 
         public Nurse GetbyId(Guid id)

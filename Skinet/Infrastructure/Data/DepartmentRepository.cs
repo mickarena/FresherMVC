@@ -12,9 +12,9 @@ namespace Infrastructure.Data
     public class DepartmentRepository : IDepartmentRepository
     {
         readonly StoreContext _db;
-        public DepartmentRepository(StoreContext _db)
+        public DepartmentRepository(StoreContext context)
         {
-            _db = _db;
+            _db = context;
         }
 
         public void Create(Departments departments)
@@ -32,7 +32,7 @@ namespace Infrastructure.Data
 
         public IEnumerable<Departments> GetAll()
         {
-            return _db.Departments;
+            return _db.Departments.ToList();
         }
 
         public Departments GetbyId(Guid id)
