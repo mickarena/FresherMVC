@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20221006092321_Update-Doctor-Table")]
+    partial class UpdateDoctorTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,69 +24,13 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-<<<<<<< HEAD
-            modelBuilder.Entity("Core.Entities.Departments", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool?>("IsDelete")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("JoinDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Departments");
-                });
-
-            modelBuilder.Entity("Core.Entities.Nurse", b =>
-=======
             modelBuilder.Entity("Core.Entities.Doctor", b =>
->>>>>>> 52aa290bc651c47719936150a6925b98f60a981f
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
-<<<<<<< HEAD
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("DepartmentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool?>("IsDelete")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("JoinDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Phone")
-=======
                         .IsRequired()
                         .HasColumnType("NVARCHAR(255)");
 
@@ -98,22 +44,20 @@ namespace Infrastructure.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("NVARCHAR(255)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
->>>>>>> 52aa290bc651c47719936150a6925b98f60a981f
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-<<<<<<< HEAD
-                    b.HasIndex("DepartmentId");
-
-                    b.ToTable("Nurse");
-=======
                     b.ToTable("Doctors");
                 });
 
@@ -135,13 +79,11 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("HospitalBeds");
->>>>>>> 52aa290bc651c47719936150a6925b98f60a981f
                 });
 
             modelBuilder.Entity("Core.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -172,13 +114,12 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ProductTypeId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Core.Entities.ProductBrand", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -187,13 +128,12 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductBrand");
+                    b.ToTable("ProductBrands");
                 });
 
             modelBuilder.Entity("Core.Entities.ProductType", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -202,12 +142,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductType");
+                    b.ToTable("ProductTypes");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("Core.Entities.Nurse", b =>
-=======
             modelBuilder.Entity("Core.Entities.Shift", b =>
                 {
                     b.Property<Guid>("Id")
@@ -262,21 +199,15 @@ namespace Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("Core.Entity.MedicineBill", b =>
->>>>>>> 52aa290bc651c47719936150a6925b98f60a981f
                 {
-                    b.HasOne("Core.Entities.Departments", "Departments")
-                        .WithMany("Nurses")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-<<<<<<< HEAD
-                    b.Navigation("Departments");
-=======
                     b.Property<DateTime>("DateCreate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 5, 14, 45, 49, 640, DateTimeKind.Local).AddTicks(9310));
+                        .HasDefaultValue(new DateTime(2022, 10, 6, 16, 23, 20, 918, DateTimeKind.Local).AddTicks(11));
 
                     b.Property<Guid>("DoctorID")
                         .HasColumnType("uniqueidentifier");
@@ -334,7 +265,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("ImportDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 5, 7, 45, 49, 640, DateTimeKind.Utc).AddTicks(5508));
+                        .HasDefaultValue(new DateTime(2022, 10, 6, 9, 23, 20, 917, DateTimeKind.Utc).AddTicks(8342));
 
                     b.Property<bool>("IsEmpty")
                         .HasColumnType("bit");
@@ -376,7 +307,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MedicineType");
->>>>>>> 52aa290bc651c47719936150a6925b98f60a981f
                 });
 
             modelBuilder.Entity("Core.Entities.Product", b =>
@@ -398,11 +328,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("ProductType");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("Core.Entities.Departments", b =>
-                {
-                    b.Navigation("Nurses");
-=======
             modelBuilder.Entity("Core.Entities.WorkShift", b =>
                 {
                     b.HasOne("Core.Entities.Doctor", "Doctor")
@@ -469,7 +394,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Entity.MedicineType", b =>
                 {
                     b.Navigation("MedicineInfomations");
->>>>>>> 52aa290bc651c47719936150a6925b98f60a981f
                 });
 #pragma warning restore 612, 618
         }
