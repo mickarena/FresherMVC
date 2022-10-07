@@ -14,7 +14,7 @@ namespace Core.Entities
         public DateTime? ModifyDate { get; set; }
         public DateTime? JoinDate { get; set; }
 
-        public ICollection<Nurse> Nurses { get; set; }
+        public ICollection<Nurse>? Nurses { get; set; }
 
     }
 }

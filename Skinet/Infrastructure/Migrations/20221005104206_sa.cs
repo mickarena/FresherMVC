@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace Infrastructure.Data.Migrations
+namespace Infrastructure.Migrations
 {
-    public partial class ssss : Migration
+    public partial class sa : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

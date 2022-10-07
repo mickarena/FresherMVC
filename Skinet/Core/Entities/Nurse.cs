@@ -14,13 +14,13 @@ namespace Core.Entities
         public string? Address { get; set; }
 
         public Guid DepartmentId { get; set; }
-        public Departments Departments { get; set; }
+        public Departments? Departments { get; set; }
         public bool? IsDelete { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? ModifyDate { get; set; }
         public DateTime? JoinDate { get; set; }
 
-       
+        
 
     }
 }
