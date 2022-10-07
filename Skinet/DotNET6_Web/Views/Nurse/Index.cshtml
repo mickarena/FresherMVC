@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Core.Entities.Nurse>
 @{
-    Layout = null;
+    ViewData["Title"] = "Index";
 }
 
 <!DOCTYPE html>
@@ -26,6 +26,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Address)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DepartmentId)
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -43,19 +46,7 @@
                         @Html.DisplayFor(modelItem => item.Address)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.IsDelete)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreateDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ModifyDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.JoinDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DepartmentId)
+                        @Html.DisplayFor(modelItem => item.Departments.Name)
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

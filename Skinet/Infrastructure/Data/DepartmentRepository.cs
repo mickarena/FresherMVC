@@ -43,7 +43,7 @@ namespace Infrastructure.Data
 
         public void Update(Departments departments)
         {
-            _db.Entry(departments).State = EntityState.Modified;
+            _db.Departments.Update(departments);
         }
     }
 }

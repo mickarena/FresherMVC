@@ -1,7 +1,7 @@
 ﻿@model Core.Entities.Nurse
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Details";
 }
 
 <!DOCTYPE html>
@@ -36,34 +36,10 @@
                 @Html.DisplayFor(model => model.Address)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.IsDelete)
+                @Html.DisplayNameFor(model => model.DepartmentId)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.IsDelete)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.CreateDate)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.CreateDate)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ModifyDate)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ModifyDate)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.JoinDate)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.JoinDate)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Departments)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.DepartmentId)
+                @Html.DisplayFor(model => model.Departments.Name)
             </dd>
         </dl>
     </div>

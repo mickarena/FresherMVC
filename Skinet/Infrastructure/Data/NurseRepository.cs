@@ -34,7 +34,7 @@ namespace Infrastructure.Data
 
         public IEnumerable<Nurse> GetAll()
         {
-            return _db.Nurse.ToList();
+            return _db.Nurse.Include(x => x.Departments).ToList();
         }
 
         public Nurse GetbyId(Guid id)
@@ -45,7 +45,8 @@ namespace Infrastructure.Data
 
         public void Update(Nurse nurse)
         {
-            _db.Entry(nurse).State = EntityState.Modified;
+            _db.Nurse.Update(nurse);
+            _db.SaveChanges();
         }
     }
 }

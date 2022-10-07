@@ -16,14 +16,13 @@ namespace Web.Controllers
 
         private INurseRepository _nurseRepository;
 
-        public NurseController(INurseRepository nurseRepository)
+        private IDepartmentRepository _departmentRepository;
+
+        public NurseController(INurseRepository nurseRepository, IDepartmentRepository departmentRepository)
         {
             _nurseRepository = nurseRepository;
+            _departmentRepository = departmentRepository;
         }
-
-
-
-
 
         // GET: Nurses
         public ActionResult Index()
@@ -36,6 +35,7 @@ namespace Web.Controllers
         public ActionResult Details(Guid id)
         {
             var nurses = _nurseRepository.GetbyId(id);
+            LoadData();
 
             return View(nurses);
         }
@@ -43,6 +43,8 @@ namespace Web.Controllers
         // GET: Nurses/Create
         public ActionResult Create()
         {
+            LoadData();
+
             return View();
         }
 
@@ -56,6 +58,7 @@ namespace Web.Controllers
                 _nurseRepository.Create(nurse);
                 return RedirectToAction("Index");
             }
+            LoadData();
             return View(nurse);
         }
 
@@ -63,6 +66,7 @@ namespace Web.Controllers
         public ActionResult Edit(Guid id)
         {
             var nurses = _nurseRepository.GetbyId(id);
+            LoadData();
             return View(nurses);
         }
 
@@ -77,6 +81,7 @@ namespace Web.Controllers
                 _nurseRepository.Update(nurse);
                 return RedirectToAction("Index");
             }
+            LoadData();
             return View(nurse);
         }
 
@@ -95,6 +100,12 @@ namespace Web.Controllers
         {
             _nurseRepository.Delete(id);
             return RedirectToAction("Index");
+        }
+
+        public void LoadData()
+        {
+            var departments = _departmentRepository.GetAll();
+            ViewBag.SelectDDepartments = new SelectList(departments, "Id", "Name");
         }
     }
 }

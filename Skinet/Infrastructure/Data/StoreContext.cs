@@ -27,7 +27,7 @@ namespace Infrastructure.Data
         //public DbSet<MedicineInfomation>? MedicineInfomation { get; set; }
         //public DbSet<MedicineType>? MedicineType { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Doctor> Doctors { get; set; }
+        //public DbSet<Doctor> Doctors { get; set; }
         public DbSet<ProductBrand> ProductBrands { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<MedicineBill>? MedicineBills { get; set; }
