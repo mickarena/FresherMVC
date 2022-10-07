@@ -78,6 +78,7 @@ namespace Infrastructure.Data
             modelBuilder.Entity<WorkShift>().HasKey(c => c.IdWork);
             modelBuilder.Entity<WorkShift>().HasOne(a => a.Shift).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdShift);
             modelBuilder.Entity<WorkShift>().HasOne(a => a.Doctor).WithMany(c => c.WorkShift).HasForeignKey(d => d.Id);
+            modelBuilder.Entity<WorkShift>().Property(c => c.CreateAt).HasDefaultValue(DateTime.Now);
             //
         }
     }

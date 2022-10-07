@@ -1,14 +1,14 @@
 ﻿@model Core.Entities.WorkShift
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete Work Shift";
 }
 
 <h1>Delete</h1>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>WorkShift</h4>
+    <h4>Work Shift</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -39,7 +39,7 @@
     
     <form asp-action="Remove" asp-controller="WorkShift" method="Post">
         <input type="hidden" asp-for="IdWork" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" asp-route-id="@Model.IdShift" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>

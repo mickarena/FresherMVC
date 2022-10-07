@@ -1,27 +1,26 @@
 ﻿@model Core.Entities.WorkShift
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Work Shift";
 }
 
-<h1>Create</h1>
+<h1>Create Work Shift</h1>
 
-<h4>WorkShift</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" asp-controller="WorkShift" method="Post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="IdShift" class="control-label"></label>
+                <label asp-for="IdShift" class="control-label">Shift Name</label>
                 <select asp-for="IdShift" class ="form-control" asp-items="ViewBag.IdShift"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
+                <label asp-for="Id" class="control-label">Doctor Name</label>
                 <select asp-for="Id" class ="form-control" asp-items="ViewBag.Id"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
+                <label asp-for="Date" class="control-label">Date Work</label>
                 <input asp-for="Date" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>

@@ -59,11 +59,11 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Remove(Guid id)
+        public async Task<IActionResult> Remove(Guid IdShift)
         {
             if (ModelState.IsValid)
             {
-                await _shiftRepository.Delete(id);
+                await _shiftRepository.Delete(IdShift);
                 return RedirectToAction("Index");
             }
             return View(id);
