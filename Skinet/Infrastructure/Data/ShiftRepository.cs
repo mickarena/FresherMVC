@@ -58,7 +58,7 @@ namespace Infrastructure.Data
 
         public List<Shift> GetType()
         {
-            return _context.Shifts.AsNoTracking().ToList();
+            return _context.Shifts.ToList();
         }
     }
 }

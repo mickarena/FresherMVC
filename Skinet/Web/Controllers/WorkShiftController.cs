@@ -7,7 +7,6 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
@@ -17,19 +16,18 @@ namespace Web.Controllers
     public class WorkShiftController : Controller
     {
         private readonly IWorkShiftRepository _workShiftRepository;
-        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IShiftRepository _shiftRepository;
         private readonly IDoctorRepository _doctorRepository;
-        public WorkShiftController(IWorkShiftRepository workShiftRepository, IShiftRepository shiftRepository, IDoctorRepository doctorRepository, IWebHostEnvironment webHostEnvironment)
+        public WorkShiftController(IWorkShiftRepository workShiftRepository, IShiftRepository shiftRepository, IDoctorRepository doctorRepository)
         {
             _workShiftRepository = workShiftRepository;
             _shiftRepository = shiftRepository;
             _doctorRepository = doctorRepository;
-            _webHostEnvironment = webHostEnvironment;
         }
         public async Task<IActionResult> Index()
         {
             var model = await _workShiftRepository.GetWorkShift();
+            var storeContext = _workShiftRepository.GetType();
             return View(model);
         }
 

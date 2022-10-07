@@ -11,11 +11,9 @@ namespace Web.Controllers
     public class ShiftController : Controller
     {
         private readonly IShiftRepository _shiftRepository;
-        private readonly IWebHostEnvironment _webHostEnvironment;
-        public ShiftController(IShiftRepository shiftRepository, IWebHostEnvironment webHostEnvironment)
+        public ShiftController(IShiftRepository shiftRepository)
         {
             _shiftRepository = shiftRepository;
-            _webHostEnvironment = webHostEnvironment;
         }
         public async Task<IActionResult> Index()
         {

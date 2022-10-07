@@ -49,7 +49,7 @@ namespace Infrastructure.Data
 
         public List<Doctor> GetType()
         {
-            return _context.Doctors.AsNoTracking().ToList();
+            return _context.Doctors.ToList();
         }
     }
 }
