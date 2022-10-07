@@ -5,38 +5,33 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Core.Entity;
+using Core.Entities;
 using Infrastructure.Data;
+using Core.Interfaces;
 
 namespace Web.Controllers
 {
     public class MedicineInfomationsController : Controller
     {
-        private readonly StoreContext _context;
+        private IMedicineInfoRepository _medicineInfo;
+        private IMedicineTypeRepository _medicineType;
 
-        public MedicineInfomationsController(StoreContext context)
+        public MedicineInfomationsController(IMedicineInfoRepository medicineInfo, IMedicineTypeRepository medicineType)
         {
-            _context = context;
+            _medicineInfo = medicineInfo;
+            _medicineType = medicineType;
         }
 
         // GET: MedicineInfomations
         public async Task<IActionResult> Index()
         {
-            var storeContext = _context.MedicineInfomations.Include(m => m.MedicineTypes);
-            return View(await storeContext.ToListAsync());
+            return View(_medicineInfo.GetType());
         }
 
         // GET: MedicineInfomations/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            if (id == null || _context.MedicineInfomations == null)
-            {
-                return NotFound();
-            }
-
-            var medicineInfomation = await _context.MedicineInfomations
-                .Include(m => m.MedicineTypes)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var medicineInfomation = _medicineInfo.GetById(id).Result;
             if (medicineInfomation == null)
             {
                 return NotFound();
@@ -48,7 +43,7 @@ namespace Web.Controllers
         // GET: MedicineInfomations/Create
         public IActionResult Create()
         {
-            ViewData["MedicineIDType"] = new SelectList(_context.MedicineTypes, "Id", "Name");
+            ViewData["MedicineIDType"] = new SelectList(_medicineType.GetType(), "Id", "Name");
             return View();
         }
 
@@ -62,28 +57,22 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 medicineInfomation.Id = Guid.NewGuid();
-                _context.Add(medicineInfomation);
-                await _context.SaveChangesAsync();
+                _medicineInfo.Create(medicineInfomation);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MedicineIDType"] = new SelectList(_context.MedicineTypes, "Id", "Name", medicineInfomation.MedicineIDType);
+            ViewData["MedicineIDType"] = new SelectList(_medicineType.GetType(), "Id", "Name", medicineInfomation.MedicineIDType);
             return View(medicineInfomation);
         }
 
         // GET: MedicineInfomations/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            if (id == null || _context.MedicineInfomations == null)
-            {
-                return NotFound();
-            }
-
-            var medicineInfomation = await _context.MedicineInfomations.FindAsync(id);
+            var medicineInfomation = _medicineInfo.GetById(id).Result;
             if (medicineInfomation == null)
             {
                 return NotFound();
             }
-            ViewData["MedicineIDType"] = new SelectList(_context.MedicineTypes, "Id", "Name", medicineInfomation.MedicineIDType);
+            ViewData["MedicineIDType"] = new SelectList(_medicineType.GetType(), "Id", "Name");
             return View(medicineInfomation);
         }
 
@@ -103,8 +92,7 @@ namespace Web.Controllers
             {
                 try
                 {
-                    _context.Update(medicineInfomation);
-                    await _context.SaveChangesAsync();
+                    _medicineInfo.Update(medicineInfomation);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -119,21 +107,14 @@ namespace Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MedicineIDType"] = new SelectList(_context.MedicineTypes, "Id", "Name", medicineInfomation.MedicineIDType);
+            ViewData["MedicineIDType"] = new SelectList(_medicineType.GetType(), "Id", "Name", medicineInfomation.MedicineIDType);
             return View(medicineInfomation);
         }
 
         // GET: MedicineInfomations/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null || _context.MedicineInfomations == null)
-            {
-                return NotFound();
-            }
-
-            var medicineInfomation = await _context.MedicineInfomations
-                .Include(m => m.MedicineTypes)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var medicineInfomation = _medicineInfo.GetById(id).Result;
             if (medicineInfomation == null)
             {
                 return NotFound();
@@ -147,23 +128,21 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.MedicineInfomations == null)
+            if (_medicineInfo.GetById(id).IsFaulted == null)
             {
                 return Problem("Entity set 'StoreContext.MedicineInfomations'  is null.");
             }
-            var medicineInfomation = await _context.MedicineInfomations.FindAsync(id);
+            var medicineInfomation = _medicineInfo.GetById(id);
             if (medicineInfomation != null)
             {
-                _context.MedicineInfomations.Remove(medicineInfomation);
+                _medicineInfo.Delete(id);
             }
-            
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MedicineInfomationExists(Guid id)
         {
-          return _context.MedicineInfomations.Any(e => e.Id == id);
+            return _medicineInfo.GetById(id).IsCompletedSuccessfully;
         }
     }
 }

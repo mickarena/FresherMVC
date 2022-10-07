@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Core.Entity.MedicineBill>
+﻿@model IEnumerable<Core.Entities.MedicineBill>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,13 +13,13 @@
     <thead>
         <tr>
             <th>
-                Mã bác sĩ
+                Doctor ID
             </th>
             <th>
-                Ngày tạo
+                Created date
             </th>
             <th>
-               Tình trạng thanh toán
+               Purchase status
             </th>
             <th></th>
         </tr>
@@ -34,7 +34,7 @@
                 @item.DateCreate.ToString("dd/MM/yyyy")
             </td>
             <td>
-                    @(item.PayStatus == false ? "Chưa thanh toán" : "Đã thanh toán")
+                    @(item.PayStatus == false ? "No" : "Yes")
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

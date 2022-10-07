@@ -2,7 +2,8 @@
 using Core.Entities;
 using System.Reflection;
 using System.ComponentModel.DataAnnotations.Schema;
-using Core.Entity;
+
+using Core.Entities;
 
 namespace Infrastructure.Data
 {

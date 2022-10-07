@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Core.Entity.MedicineInfomation>
+﻿@model IEnumerable<Core.Entities.MedicineInfomation>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,25 +13,25 @@
     <thead>
         <tr>
             <th>
-                Tên thuốc
+                Medicine name
             </th>
             <th>
-                Ngày nhập
+                Import date
             </th>
             <th>
-                Ngày hết hạn
+                Expire date
             </th>
             <th>
-                Số lượng
+                Quantity
             </th>
             <th>
-                Đơn giá
+               Unit price
             </th>
             <th>
-                Tình trạng còn hàng
+                Status
             </th>
             <th>
-                Loại thuốc
+                Medicine type
             </th>
             <th></th>
         </tr>
@@ -56,7 +56,7 @@
                     @Html.DisplayFor(modelItem => item.UnitPrice)
                 </td>
                 <td>
-                    @(item.IsEmpty == true ? "Hết hàng" : "Còn hàng")
+                    @(item.IsEmpty == true ? "Out of stock" : "In stock")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.MedicineTypes.Name)

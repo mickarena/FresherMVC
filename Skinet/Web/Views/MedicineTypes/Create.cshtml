@@ -1,4 +1,4 @@
-﻿@model Core.Entity.MedicineType
+﻿@model Core.Entities.MedicineType
 
 @{
     ViewData["Title"] = "Create";
@@ -13,7 +13,7 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label class="control-label">Tên loại thuốc</label>
+                <label class="control-label">Medicine Type</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>

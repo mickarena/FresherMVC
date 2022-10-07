@@ -1,4 +1,4 @@
-﻿@model Core.Entity.MedicineInfomation
+﻿@model Core.Entities.MedicineInfomation
 
 @{
     ViewData["Title"] = "Edit";
@@ -13,34 +13,34 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label class="control-label">Loại thuốc</label>
+                <label class="control-label">Medicine type</label>
                 <select asp-for="MedicineIDType" class="form-control" asp-items="ViewBag.MedicineIDType"></select>
             </div>
             <div class="form-group">
-                <label class="control-label">Tên thuốc</label>
+                <label class="control-label">Medicine name</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Ngày hết hạn</label>
+                <label class="control-label">Expire date</label>
                 <input asp-for="ExpireDate" class="form-control" type="date" placeholder="dd/mm/yyyy"/>
                 <span asp-validation-for="ExpireDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Đơn giá</label>
+                <label class="control-label">Unit price</label>
                 <input asp-for="UnitPrice" class="form-control" />
                 <span asp-validation-for="UnitPrice" class="text-danger"></span>
             </div>
             <div class="form-group form-check-inline">
                 <label class="form-check-label">
                     <input type="radio" class="form-check-input" value="false" id="radio1" name="IsEmpty" asp-for="IsEmpty" />
-                    <label class="form-check-label" for="radio1">Còn hàng</label>
+                    <label class="form-check-label" for="radio1">In stock</label>
                 </label>
             </div>
             <div class="form-group form-check-inline">
                 <label class="form-check-label">
                     <input type="radio" class="form-check-input" value="true" id="radio2" name="IsEmpty" asp-for="IsEmpty" />
-                    <label class="form-check-label" for="radio2">Hết hàng</label>
+                    <label class="form-check-label" for="radio2">Out of stock</label>
                 </label>
             </div>
             <input type="hidden" asp-for="Id" />

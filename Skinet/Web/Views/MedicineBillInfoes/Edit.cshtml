@@ -1,4 +1,4 @@
-﻿@model Core.Entity.MedicineBillInfo
+﻿@model Core.Entities.MedicineBillInfo
 
 @{
     ViewData["Title"] = "Edit";
@@ -13,22 +13,22 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label class="control-label">Hoá đơn</label>
+                <label class="control-label">ID Bill</label>
                 <select asp-for="MedicineBillID" class="form-control" asp-items="ViewBag.MedicineBillID"></select>
                 <span asp-validation-for="MedicineBillID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Tên thuốc</label>
+                <label class="control-label">Medince name</label>
                 <select asp-for="IdMedicineInfo" class="form-control" asp-items="ViewBag.IdMedicineInfo"></select>
                 <span asp-validation-for="IdMedicineInfo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Số lượng</label>
+                <label class="control-label">Quantity</label>
                 <input asp-for="Quantity" class="form-control" />
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Đơn giá</label>
+                <label class="control-label">Unit price</label>
                 <input asp-for="UnitPrice" class="form-control" />
                 <span asp-validation-for="UnitPrice" class="text-danger"></span>
             </div>
