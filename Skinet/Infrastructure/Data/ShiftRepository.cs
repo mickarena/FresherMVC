@@ -23,6 +23,12 @@ namespace Infrastructure.Data
             return shift;
         }
 
+        public async Task Update(Shift shift)
+        {
+            _context.Entry(shift).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
         public async Task Delete(Guid id)
         {
             var deleteShift = await _context.Shifts.FindAsync(id);
@@ -38,12 +44,6 @@ namespace Infrastructure.Data
         public async Task<Shift> GetById(Guid id)
         {
             return await _context.Shifts.FirstOrDefaultAsync(x => x.IdShift == id);
-        }
-
-        public async Task Update(Shift shift)
-        {
-            _context.Entry(shift).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Shift>> Search(string name)

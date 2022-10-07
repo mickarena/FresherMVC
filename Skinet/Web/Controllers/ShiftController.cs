@@ -27,11 +27,29 @@ namespace Web.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> Create(Shift shift)
+        {
+            if (!ModelState.IsValid)
+            {
+                await _shiftRepository.Create(shift);
+                return RedirectToAction("Index");
+            } return View(shift);
+        }
 
         public async Task<IActionResult> Edit(Guid id)
         {
             var shift = await _shiftRepository.GetById(id);
             return View(shift);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(Shift shift)
+        {
+            if (!ModelState.IsValid)
+            {
+                await _shiftRepository.Update(shift);
+                return RedirectToAction("Index");
+            } return View(shift);
         }
 
         public async Task<IActionResult> Delete(Guid id)
