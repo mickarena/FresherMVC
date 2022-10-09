@@ -44,6 +44,7 @@ namespace Infrastructure.Data
         public void Update(Departments departments)
         {
             _db.Departments.Update(departments);
+            _db.SaveChanges();
         }
     }
 }
