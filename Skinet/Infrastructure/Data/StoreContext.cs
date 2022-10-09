@@ -73,11 +73,12 @@ namespace Infrastructure.Data
             modelBuilder.Entity<MedicineBillInfo>().Property(c => c.Quantity).IsRequired();
 
             //fresher-2410-start
-            modelBuilder.Entity<Shift>().HasKey(c => c.IdShift);
+            modelBuilder.Entity<Shift>().HasKey(c => c.Id);
             modelBuilder.Entity<Doctor>().HasKey(c => c.Id);
-            modelBuilder.Entity<WorkShift>().HasKey(c => c.IdWork);
+            modelBuilder.Entity<WorkShift>().HasKey(c => c.Id);
             modelBuilder.Entity<WorkShift>().HasOne(a => a.Shift).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdShift);
-            modelBuilder.Entity<WorkShift>().HasOne(b => b.Doctor).WithMany(e => e.WorkShift).HasForeignKey(f => f.Id);
+            modelBuilder.Entity<WorkShift>().HasOne(a => a.Doctor).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdDoctor);
+            modelBuilder.Entity<WorkShift>().Property(c => c.CreateAt).HasDefaultValue(DateTime.Now);
             //
         }
     }
