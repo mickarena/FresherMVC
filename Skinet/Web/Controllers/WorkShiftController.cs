@@ -10,7 +10,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
-using Core.Entity;
+using Microsoft.Extensions.Logging;
 
 namespace Web.Controllers
 {
@@ -19,12 +19,27 @@ namespace Web.Controllers
         private readonly IWorkShiftRepository _workShiftRepository;
         private readonly IShiftRepository _shiftRepository;
         private readonly IDoctorRepository _doctorRepository;
-        public WorkShiftController(IWorkShiftRepository workShiftRepository, IShiftRepository shiftRepository, IDoctorRepository doctorRepository)
+        private readonly StoreContext _context;
+        public WorkShiftController(IWorkShiftRepository workShiftRepository, IShiftRepository shiftRepository, IDoctorRepository doctorRepository, StoreContext context)
         {
             _workShiftRepository = workShiftRepository;
             _shiftRepository = shiftRepository;
             _doctorRepository = doctorRepository;
+            _context = context;
         }
+
+        //public async Task<ActionResult> About()
+        //{
+        //    IQueryable<WorkAbout> data =
+        //        from student in _context.Students
+        //        group student by student.EnrollmentDate into dateGroup
+        //        select new EnrollmentDateGroup()
+        //        {
+        //            EnrollmentDate = dateGroup.Key,
+        //            StudentCount = dateGroup.Count()
+        //        };
+        //    return View(await data.AsNoTracking().ToListAsync());
+        //}
 
         // GET/Index
         public async Task<IActionResult> Index()
