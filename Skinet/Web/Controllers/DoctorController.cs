@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using PagedList;
 
 namespace Web.Controllers
 {
@@ -20,11 +21,11 @@ namespace Web.Controllers
         }       
         public async Task<IActionResult> Index(int pg = 1)
         {
+            
             var model = await _doctorRepository.GetDoctor();
 
-            const int pageSize = 3;
-            if (pg < 1)
-                pg = 1;
+            const int pageSize = 6;
+            
             int recsCount = model.Count();
 
             var page = new Page(recsCount, pg, pageSize);
@@ -92,15 +93,16 @@ namespace Web.Controllers
             }
             return View(model);
         }
-
+        
         public async Task<IActionResult> Delete(Guid id)
         {
             var doctor =  await _doctorRepository.GetById(id);
             return View(doctor);
         }
         
+        
         [HttpPost]
-        public async Task<IActionResult> Remove(Guid id)
+        public async Task<IActionResult> Deleted(Guid id)
         {
             if (ModelState.IsValid) {
                 await _doctorRepository.Delete(id);

@@ -1,6 +1,7 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,8 +44,8 @@ namespace Infrastructure.Data
 
         public async Task Update(Doctor doctor)
         {
-            _context.Entry(doctor).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            _context.Doctors.Update(doctor);
+            await _context.SaveChangesAsync();           
         }
 
         public async Task<IEnumerable<Doctor>> Search(string name)

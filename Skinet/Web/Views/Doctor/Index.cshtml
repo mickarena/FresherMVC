@@ -1,12 +1,10 @@
-﻿@using Core.Entities
-
-@model IEnumerable<Core.Entities.Doctor>;
-
+﻿@using Core.Entities;
+@model IEnumerable<Core.Entities.Doctor>
 @{
     ViewData["Title"] = "Doctor List";
     Page page = new Page();
     int pageNo = 0;
-    if(ViewBag.Page != null)
+    if (ViewBag.Page != null)
     {
         page = ViewBag.Page;
         pageNo = page.CurrentPage;
@@ -21,7 +19,7 @@
         <div class="row">
             <div class="col-md-8">
                 <p>
-                    <button type="submit" class="btn btn-primary"data-bs-toggle="modal" data-bs-target="#them">Add</button>
+                    <a  class="btn btn-primary" asp-controller="Doctor" asp-action="Create">Add</a>
                 </p>
             </div>
             <div class="col-md-4">
@@ -41,25 +39,25 @@
                     <tr>
                         
                         <th>
-                            Full Name
+                            @Html.DisplayNameFor(model => model.Name)
                         </th>
                         <th>
-                            Gender
+                            @Html.DisplayNameFor(model => model.Gender)
                         </th>
                         <th>
-                            Phone Number
+                            @Html.DisplayNameFor(model => model.Phone)
                         </th>
                         <th>
-                            Address
+                            @Html.DisplayNameFor(model => model.Address)
                         </th>
                         <th>
-                            Birthday
+                            @Html.DisplayNameFor(model => model.Birthday)
                         </th>
                          <th>
-                            Department
+                            @Html.DisplayNameFor(model => model.Department)
                         </th>
                         <th>
-                            Image
+                            @Html.DisplayNameFor(model => model.Image)
                         </th>
                         <th>
                             Action
@@ -88,11 +86,9 @@
                     }
                 </tbody>
             </table>
-        </div>
+        
     </div>
 </div>
-
-
 <div class="container">
     @if(page.TotalPages > 0)
     {
@@ -124,7 +120,7 @@
                     <a class="page-link" asp-controller="Doctor" asp-action="Index" asp-route-pg="@(page.TotalPages)">Last</a>
                 </li>
             }
-            
+
 
         </ul>
     }
