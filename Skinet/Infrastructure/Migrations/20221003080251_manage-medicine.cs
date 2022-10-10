@@ -5,48 +5,18 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class initdata : Migration
+    public partial class managemedicine : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Doctors",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "NVARCHAR(255)", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "NVARCHAR(255)", nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false),
-                    Birthday = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Department = table.Column<string>(type: "NVARCHAR(255)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Doctors", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "HospitalBeds",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IDRoom = table.Column<int>(type: "int", nullable: false),
-                    IDPatient = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_HospitalBeds", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "MedicineBill",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PatientID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DoctorID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DateCreate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 5, 11, 8, 52, 112, DateTimeKind.Local).AddTicks(8308)),
+                    DateCreate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PayStatus = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -59,7 +29,7 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -91,29 +61,14 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Shift",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdShift = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ShiftName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Time = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Shift", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "MedicineInfomation",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MedicineIDType = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ImportDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 5, 4, 8, 52, 112, DateTimeKind.Utc).AddTicks(7085)),
+                    IdType = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ImportDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ExpireDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
                     UnitPrice = table.Column<int>(type: "int", nullable: false),
                     IsEmpty = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -121,8 +76,8 @@ namespace Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_MedicineInfomation", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MedicineInfomation_MedicineType_MedicineIDType",
-                        column: x => x.MedicineIDType,
+                        name: "FK_MedicineInfomation_MedicineType_IdType",
+                        column: x => x.IdType,
                         principalTable: "MedicineType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -158,38 +113,11 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "WorkShift",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdDoctor = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdShift = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ShiftId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DoctorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WorkShift", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_WorkShift_Doctors_DoctorId",
-                        column: x => x.DoctorId,
-                        principalTable: "Doctors",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_WorkShift_Shift_ShiftId",
-                        column: x => x.ShiftId,
-                        principalTable: "Shift",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "MedicineBillInfo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MedicineBillID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BillId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdMedicineInfo = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     UnitPrice = table.Column<int>(type: "int", nullable: false),
@@ -200,8 +128,8 @@ namespace Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_MedicineBillInfo", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MedicineBillInfo_MedicineBill_MedicineBillID",
-                        column: x => x.MedicineBillID,
+                        name: "FK_MedicineBillInfo_MedicineBill_BillId",
+                        column: x => x.BillId,
                         principalTable: "MedicineBill",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -213,9 +141,9 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_MedicineBillInfo_MedicineBillID",
+                name: "IX_MedicineBillInfo_BillId",
                 table: "MedicineBillInfo",
-                column: "MedicineBillID");
+                column: "BillId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MedicineBillInfo_MedicineInfomationId",
@@ -223,9 +151,9 @@ namespace Infrastructure.Migrations
                 column: "MedicineInfomationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MedicineInfomation_MedicineIDType",
+                name: "IX_MedicineInfomation_IdType",
                 table: "MedicineInfomation",
-                column: "MedicineIDType");
+                column: "IdType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_ProductBrandId",
@@ -236,31 +164,15 @@ namespace Infrastructure.Migrations
                 name: "IX_Products_ProductTypeId",
                 table: "Products",
                 column: "ProductTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_WorkShift_DoctorId",
-                table: "WorkShift",
-                column: "DoctorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_WorkShift_ShiftId",
-                table: "WorkShift",
-                column: "ShiftId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "HospitalBeds");
-
-            migrationBuilder.DropTable(
                 name: "MedicineBillInfo");
 
             migrationBuilder.DropTable(
                 name: "Products");
-
-            migrationBuilder.DropTable(
-                name: "WorkShift");
 
             migrationBuilder.DropTable(
                 name: "MedicineBill");
@@ -273,12 +185,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductTypes");
-
-            migrationBuilder.DropTable(
-                name: "Doctors");
-
-            migrationBuilder.DropTable(
-                name: "Shift");
 
             migrationBuilder.DropTable(
                 name: "MedicineType");

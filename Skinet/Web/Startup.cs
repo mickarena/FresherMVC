@@ -28,14 +28,11 @@ namespace Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IMedicineInfoRepository, MedInfoRepository>();
             services.AddScoped<IMedicineTypeRepository, MedTypeRepository>();
             services.AddScoped<IMedBillInfoRepository, MedBillInfoRepository>();
             services.AddScoped<IMedBillRepository, MedBillRepository>();
             services.AddScoped<IBedRepository, BedRepository>();
-            services.AddScoped<IShiftRepository, ShiftRepository>();
-            services.AddScoped<IWorkShiftRepository, WorkShiftRepository>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddDbContext<StoreContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();

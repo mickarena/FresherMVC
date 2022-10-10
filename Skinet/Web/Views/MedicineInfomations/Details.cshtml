@@ -1,4 +1,4 @@
-﻿@model Core.Entity.MedicineInfomation
+﻿@model Core.Entities.MedicineInfomation
 
 @{
     ViewData["Title"] = "Details";
@@ -11,40 +11,46 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImportDate)
+            Medicine name
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            Import date
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ImportDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ExpireDate)
+            Expire date
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ExpireDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Quantity)
+            Quantity
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Quantity)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UnitPrice)
+           Unit price
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.UnitPrice)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsEmpty)
+            Status
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsEmpty)
+            @(Model.IsEmpty == true ? "Out of stock" : "In stock")
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MedicineType)
+            Medicine type
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MedicineType.Name)
+            @Html.DisplayFor(model => model.MedicineTypes.Name)
         </dd>
     </dl>
 </div>

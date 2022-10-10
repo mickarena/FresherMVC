@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20221009073657_SkinetV1")]
-    partial class SkinetV1
+    [Migration("20221004110412_h10")]
+    partial class h10
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,39 +23,6 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("Core.Entities.Doctor", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(255)");
-
-                    b.Property<DateTime>("Birthday")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Department")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(255)");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(255)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Doctors");
-                });
 
             modelBuilder.Entity("Core.Entities.HospitalBed", b =>
                 {
@@ -141,62 +108,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("ProductTypes");
                 });
 
-            modelBuilder.Entity("Core.Entities.Shift", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("EndTime")
-                        .IsRequired()
-                        .HasMaxLength(5)
-                        .HasColumnType("VARCHAR(5)");
-
-                    b.Property<string>("ShiftName")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("NVARCHAR(30)");
-
-                    b.Property<string>("StartTime")
-                        .IsRequired()
-                        .HasMaxLength(5)
-                        .HasColumnType("VARCHAR(5)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Shifts");
-                });
-
-            modelBuilder.Entity("Core.Entities.WorkShift", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreateAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 9, 14, 36, 57, 477, DateTimeKind.Local).AddTicks(6159));
-
-                    b.Property<DateTime?>("Date")
-                        .IsRequired()
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("IdDoctor")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdShift")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdDoctor");
-
-                    b.HasIndex("IdShift");
-
-                    b.ToTable("WorkShifts");
-                });
-
             modelBuilder.Entity("Core.Entity.MedicineBill", b =>
                 {
                     b.Property<Guid>("Id")
@@ -206,7 +117,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("DateCreate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 9, 14, 36, 57, 477, DateTimeKind.Local).AddTicks(1072));
+                        .HasDefaultValue(new DateTime(2022, 10, 4, 18, 4, 12, 466, DateTimeKind.Local).AddTicks(9336));
 
                     b.Property<Guid>("DoctorID")
                         .HasColumnType("uniqueidentifier");
@@ -264,7 +175,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("ImportDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 9, 7, 36, 57, 477, DateTimeKind.Utc).AddTicks(5));
+                        .HasDefaultValue(new DateTime(2022, 10, 4, 11, 4, 12, 466, DateTimeKind.Utc).AddTicks(8313));
 
                     b.Property<bool>("IsEmpty")
                         .HasColumnType("bit");
@@ -327,25 +238,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("ProductType");
                 });
 
-            modelBuilder.Entity("Core.Entities.WorkShift", b =>
-                {
-                    b.HasOne("Core.Entities.Doctor", "Doctor")
-                        .WithMany("WorkShift")
-                        .HasForeignKey("IdDoctor")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.Shift", "Shift")
-                        .WithMany("WorkShift")
-                        .HasForeignKey("IdShift")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
-
-                    b.Navigation("Shift");
-                });
-
             modelBuilder.Entity("Core.Entity.MedicineBillInfo", b =>
                 {
                     b.HasOne("Core.Entity.MedicineBill", "MedicineBills")
@@ -372,16 +264,6 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("MedicineType");
-                });
-
-            modelBuilder.Entity("Core.Entities.Doctor", b =>
-                {
-                    b.Navigation("WorkShift");
-                });
-
-            modelBuilder.Entity("Core.Entities.Shift", b =>
-                {
-                    b.Navigation("WorkShift");
                 });
 
             modelBuilder.Entity("Core.Entity.MedicineBill", b =>

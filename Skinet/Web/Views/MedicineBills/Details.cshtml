@@ -1,4 +1,4 @@
-﻿@model Core.Entity.MedicineBill
+﻿@model Core.Entities.MedicineBill
 
 @{
     ViewData["Title"] = "Details";
@@ -11,22 +11,22 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DoctorID)
+            Doctor ID
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DoctorID)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateCreate)
+            Created date
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DateCreate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PayStatus)
+            Purchase status
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PayStatus)
+            @(Model.PayStatus == false ? "No" : "Yes")
         </dd>
     </dl>
 </div>

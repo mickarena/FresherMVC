@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20221003080251_manage-medicine")]
+    partial class managemedicine
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,26 +23,6 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("Core.Entities.HospitalBed", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("IDPatient")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IDRoom")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("HospitalBeds");
-                });
 
             modelBuilder.Entity("Core.Entities.Product", b =>
                 {
@@ -113,11 +95,12 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 4, 18, 4, 12, 466, DateTimeKind.Local).AddTicks(9336));
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("DoctorID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PatientID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("PayStatus")
@@ -134,10 +117,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("IdMedicineInfo")
+                    b.Property<Guid>("BillId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("MedicineBillID")
+                    b.Property<Guid>("IdMedicineInfo")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("MedicineInfomationId")
@@ -154,7 +137,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MedicineBillID");
+                    b.HasIndex("BillId");
 
                     b.HasIndex("MedicineInfomationId");
 
@@ -170,33 +153,24 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("ExpireDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("IdType")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("ImportDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 4, 11, 4, 12, 466, DateTimeKind.Utc).AddTicks(8313));
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsEmpty")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("MedicineIDType")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<int>("Quantity")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
+                        .HasColumnType("int");
 
                     b.Property<int>("UnitPrice")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MedicineIDType");
+                    b.HasIndex("IdType");
 
                     b.ToTable("MedicineInfomation");
                 });
@@ -208,9 +182,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -240,7 +212,7 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Core.Entity.MedicineBill", "MedicineBills")
                         .WithMany("MedicineBillInfo")
-                        .HasForeignKey("MedicineBillID")
+                        .HasForeignKey("BillId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -257,7 +229,7 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Core.Entity.MedicineType", "MedicineType")
                         .WithMany("MedicineInfomations")
-                        .HasForeignKey("MedicineIDType")
+                        .HasForeignKey("IdType")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
