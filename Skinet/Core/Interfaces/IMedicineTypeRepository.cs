@@ -10,6 +10,10 @@ namespace Core.Interfaces
 
         void Delete(Guid id);
 
+        dsfsfs
+
+            dfsf
+
         Task<MedicineType> GetById(Guid id);
 
         List<MedicineType> GetType();
