@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Core.Entities
 {
@@ -7,7 +6,6 @@ namespace Core.Entities
     {
         [Required]
         [MaxLength(100)]
-        [DisplayName("Name")]
         public string? Name { get; set; }
 
         public IEnumerable<MedicineInfomation>? MedicineInfomations { get; set; }

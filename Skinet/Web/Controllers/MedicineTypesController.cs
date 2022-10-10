@@ -49,7 +49,7 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(MedicineType medicineType)
+        public async Task<IActionResult> Create([Bind("Name,Id")] MedicineType medicineType)
         {
             if (ModelState.IsValid)
             {
@@ -76,7 +76,7 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, MedicineType medicineType)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Name,Id")] MedicineType medicineType)
         {
             if (id != medicineType.Id)
             {

@@ -28,7 +28,7 @@ namespace Infrastructure.Data
 
         public async Task<MedicineBillInfo> GetById(Guid id)
         {
-            return await _context.MedicineBillInfos.FindAsync(id);
+            return _context.MedicineBillInfos.AsNoTracking().FirstOrDefault(c => c.Id == id);
         }
 
         public void Update(MedicineBillInfo medicineBillInfo)
@@ -37,9 +37,9 @@ namespace Infrastructure.Data
             _context.SaveChangesAsync();
         }
 
-        public IEnumerable<MedicineBillInfo> GetType()
+        public List<MedicineBillInfo> GetType()
         {
-            return _context.MedicineBillInfos.Include(m => m.MedicineBills).Include(c => c.MedicineInfomations).ToList();
+            return _context.MedicineBillInfos.Include(m => m.MedicineBills).Include(c => c.MedicineInfomations).AsNoTracking().ToList();
         }
     }
 }

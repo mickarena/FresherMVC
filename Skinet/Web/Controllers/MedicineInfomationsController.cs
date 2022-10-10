@@ -41,7 +41,7 @@ namespace Web.Controllers
         }
 
         // GET: MedicineInfomations/Create
-        public async Task<IActionResult> CreateAsync()
+        public IActionResult Create()
         {
             ViewData["MedicineIDType"] = new SelectList(_medicineType.GetType(), "Id", "Name");
             return View();
@@ -52,7 +52,7 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(MedicineInfomation medicineInfomation)
+        public async Task<IActionResult> Create([Bind("MedicineIDType,Name,ImportDate,ExpireDate,Quantity,UnitPrice,IsEmpty,Id")] MedicineInfomation medicineInfomation)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, MedicineInfomation medicineInfomation)
+        public async Task<IActionResult> Edit(Guid id, [Bind("MedicineIDType,Name,ImportDate,ExpireDate,Quantity,UnitPrice,IsEmpty,Id")] MedicineInfomation medicineInfomation)
         {
             if (id != medicineInfomation.Id)
             {
