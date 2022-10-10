@@ -17,7 +17,7 @@ namespace Core.Entities
         public Page() { }
         public Page(int totalItems, int page, int pageSize)
         {
-            int totalPages = (int)Math.Ceiling((decimal)totalItems / (decimal)pageSize);
+            int totalPages = (int)Math.Ceiling((decimal)(totalItems / pageSize));
             int currentPage = page;
             int startPage = currentPage -3;
             int endPage = currentPage + 3;

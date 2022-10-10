@@ -24,7 +24,7 @@ namespace Web.Controllers
             
             var model = await _doctorRepository.GetDoctor();
 
-            const int pageSize = 6;
+            const int pageSize = 4;
             
             int recsCount = model.Count();
 
