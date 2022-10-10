@@ -15,5 +15,6 @@ namespace Core.Interfaces
         Task Update(Doctor doctor);
         Task Delete(Guid id);
         Task<IEnumerable<Doctor>> Search(string name);
+        List<Shift> GetType();
     }
 }

@@ -34,6 +34,8 @@ namespace Web
             services.AddScoped<IMedBillInfoRepository, MedBillInfoRepository>();
             services.AddScoped<IMedBillRepository, MedBillRepository>();
             services.AddScoped<IBedRepository, BedRepository>();
+            services.AddScoped<IShiftRepository, ShiftRepository>();
+            services.AddScoped<IWorkShiftRepository, WorkShiftRepository>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddDbContext<StoreContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
