@@ -1,10 +1,6 @@
-﻿using Core.Entity;
+﻿using Core.Entities;
 using Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
@@ -43,7 +39,7 @@ namespace Infrastructure.Data
 
         public List<MedicineType> GetType()
         {
-            return _context.MedicineTypes.ToList();
+            return _context.MedicineTypes.AsNoTracking().ToList();
         }
     }
 }

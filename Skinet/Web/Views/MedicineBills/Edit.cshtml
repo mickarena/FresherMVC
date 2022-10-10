@@ -1,4 +1,4 @@
-﻿@model Core.Entity.MedicineBill
+﻿@model Core.Entities.MedicineBill
 
 @{
     ViewData["Title"] = "Edit";
@@ -13,18 +13,20 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="DoctorID" class="control-label"></label>
+                <label class="control-label">Doctor ID</label>
                 <input asp-for="DoctorID" class="form-control" />
                 <span asp-validation-for="DoctorID" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="DateCreate" class="control-label"></label>
-                <input asp-for="DateCreate" class="form-control" />
-                <span asp-validation-for="DateCreate" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
+            <div class="form-group form-check-inline">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="PayStatus" /> @Html.DisplayNameFor(model => model.PayStatus)
+                    <input type="radio" class="form-check-input" value="false" id="radio1" name="PayStatus" asp-for="PayStatus" />
+                    <label class="form-check-label" for="radio1">No</label>
+                </label>
+            </div>
+            <div class="form-group form-check-inline">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" value="true" id="radio2" name="PayStatus" asp-for="PayStatus" />
+                    <label class="form-check-label" for="radio2">Yes</label>
                 </label>
             </div>
             <input type="hidden" asp-for="Id" />

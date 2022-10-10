@@ -1,10 +1,6 @@
-﻿using Core.Entity;
+﻿using Core.Entities;
 using Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
@@ -32,7 +28,7 @@ namespace Infrastructure.Data
 
         public async Task<MedicineBillInfo> GetById(Guid id)
         {
-            return await _context.MedicineBillInfos.FindAsync(id);
+            return _context.MedicineBillInfos.AsNoTracking().FirstOrDefault(c => c.Id == id);
         }
 
         public void Update(MedicineBillInfo medicineBillInfo)
@@ -43,7 +39,7 @@ namespace Infrastructure.Data
 
         public List<MedicineBillInfo> GetType()
         {
-            return _context.MedicineBillInfos.ToList();
+            return _context.MedicineBillInfos.Include(m => m.MedicineBills).Include(c => c.MedicineInfomations).AsNoTracking().ToList();
         }
     }
 }

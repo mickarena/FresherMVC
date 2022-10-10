@@ -1,4 +1,4 @@
-﻿@model Core.Entity.MedicineBillInfo
+﻿@model Core.Entities.MedicineBillInfo
 
 @{
     ViewData["Title"] = "Details";
@@ -11,31 +11,31 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdMedicineInfo)
+            Medince name
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdMedicineInfo)
+            @Html.DisplayFor(model => model.MedicineInfomations.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Quantity)
+          Quantity
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Quantity)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UnitPrice)
+         Unit price
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.UnitPrice)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
+           Total price
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Price)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MedicineBills)
+            ID Bill
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.MedicineBills.Id)

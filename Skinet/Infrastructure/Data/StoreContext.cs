@@ -2,32 +2,27 @@
 using Core.Entities;
 using System.Reflection;
 using System.ComponentModel.DataAnnotations.Schema;
-using Core.Entity;
+
+using Core.Entities;
 
 namespace Infrastructure.Data
 {
     public class StoreContext : DbContext
     {
-        public StoreContext()
-        {
-        }
 
         public StoreContext(DbContextOptions<StoreContext> options) : base(options)
         {
+
         }
 
         public DbSet<Product> Products { get; set; }
-        public DbSet<Doctor> Doctors { get; set; }
+        //public DbSet<Doctor> Doctors { get; set; }
         public DbSet<ProductBrand> ProductBrands { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
-        public DbSet<MedicineBill>? MedicineBills { get; set; }
         public DbSet<MedicineBillInfo>? MedicineBillInfos { get; set; }
         public DbSet<MedicineInfomation>? MedicineInfomations { get; set; }
         public DbSet<MedicineType>? MedicineTypes { get; set; }
-        public DbSet<MedicineBill>? MedicineBill { get; set; }
-        public DbSet<MedicineBillInfo>? MedicineBillInfo { get; set; }
-        public DbSet<MedicineInfomation>? MedicineInfomation { get; set; }
-        public DbSet<MedicineType>? MedicineType { get; set; }
+        public DbSet<MedicineBill>? MedicineBills { get; set; }
         public DbSet<HospitalBed> HospitalBeds { get; set; }
         public DbSet<Shift> Shifts { get; set; }
         public DbSet<WorkShift> WorkShifts { get; set; }
@@ -43,8 +38,9 @@ namespace Infrastructure.Data
             modelBuilder.Entity<MedicineBill>().HasKey(c => c.Id);
             modelBuilder.Entity<MedicineInfomation>().HasKey(c => c.Id);
             modelBuilder.Entity<MedicineBillInfo>().HasKey(c => c.Id);
-            modelBuilder.Entity<MedicineInfomation>().HasOne(a => a.MedicineType).WithMany(c => c.MedicineInfomations).HasForeignKey(d => d.MedicineIDType);
-            modelBuilder.Entity<MedicineBillInfo>().HasOne(a => a.MedicineBills).WithMany(c => c.MedicineBillInfo).HasForeignKey(d => d.MedicineBillID);
+            modelBuilder.Entity<MedicineInfomation>().HasOne(a => a.MedicineTypes).WithMany(c => c.MedicineInfomations).HasForeignKey(d => d.MedicineIDType);
+            modelBuilder.Entity<MedicineBillInfo>().HasOne(a => a.MedicineBills).WithMany(c => c.MedicineBillInfos).HasForeignKey(d => d.MedicineBillID);
+            modelBuilder.Entity<MedicineBillInfo>().HasOne(a => a.MedicineInfomations).WithMany(c => c.MedicineBillInfos).HasForeignKey(d => d.IdMedicineInfo);
 
             //Thuộc tính của model edit từ đây
             modelBuilder.Entity<MedicineInfomation>().Property(c => c.MedicineIDType).IsRequired();
@@ -71,12 +67,6 @@ namespace Infrastructure.Data
             modelBuilder.Entity<MedicineBillInfo>().Property(c => c.Price).IsRequired();
             modelBuilder.Entity<MedicineBillInfo>().Property(c => c.UnitPrice).IsRequired();
             modelBuilder.Entity<MedicineBillInfo>().Property(c => c.Quantity).IsRequired();
-
-            //fresher-2410-start
-            modelBuilder.Entity<Shift>().HasKey(c => c.IdShift);
-            modelBuilder.Entity<WorkShift>().HasKey(c => c.IdWork);
-            modelBuilder.Entity<WorkShift>().HasOne(a => a.Shift).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdShift);
-            //
         }
     }
 }
