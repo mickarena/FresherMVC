@@ -21,14 +21,14 @@ namespace Infrastructure.Data
 
         public async void Delete(Guid id)
         {
-            var temp = _context!.MedicineInfomations.FirstOrDefault(c => c.Id == id);
-            _context.MedicineInfomations.Remove(temp!);
+            var temp = _context.MedicineInfomations.FirstOrDefault(c => c.Id == id);
+            _context.MedicineInfomations.Remove(temp);
             await _context.SaveChangesAsync();
         }
 
         public async Task<MedicineInfomation> GetById(Guid id)
         {
-            return _context.MedicineInfomations.Include(c => c.MedicineTypes).AsNoTracking().FirstOrDefault(c => c.Id == id);
+            return await _context.MedicineInfomations.FindAsync(id);
         }
 
         public async void Update(MedicineInfomation medicineInfomation)
@@ -37,9 +37,9 @@ namespace Infrastructure.Data
             await _context.SaveChangesAsync();
         }
 
-        public List<MedicineInfomation> GetType()
+        public IEnumerable<MedicineInfomation> GetType()
         {
-            return _context.MedicineInfomations.Include(m => m.MedicineTypes).AsNoTracking().ToList();
+            return _context.MedicineInfomations.Include(m => m.MedicineTypes).ToList();
         }
     }
 }

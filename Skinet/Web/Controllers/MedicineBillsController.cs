@@ -49,7 +49,7 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DoctorID,DateCreate,PayStatus,Id")] MedicineBill medicineBill)
+        public async Task<IActionResult> Create(MedicineBill medicineBill)
         {
             if (ModelState.IsValid)
             {
@@ -76,7 +76,7 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("DoctorID,DateCreate,PayStatus,Id")] MedicineBill medicineBill)
+        public async Task<IActionResult> Edit(Guid id, MedicineBill medicineBill)
         {
             if (id != medicineBill.Id)
             {

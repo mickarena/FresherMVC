@@ -44,7 +44,7 @@ namespace Web.Controllers
         }
 
         // GET: MedicineBillInfoes/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(), "Id", "Id");
             ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(), "Id", "Name");
@@ -56,7 +56,7 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MedicineBillID,IdMedicineInfo,Quantity,UnitPrice,Id")] MedicineBillInfo medicineBillInfo)
+        public async Task<IActionResult> Create(MedicineBillInfo medicineBillInfo)
         {
             ModelState.Remove("Price");
             if (ModelState.IsValid)
@@ -89,7 +89,7 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("MedicineBillID,IdMedicineInfo,Quantity,UnitPrice,Id")] MedicineBillInfo medicineBillInfo)
+        public async Task<IActionResult> Edit(Guid id, MedicineBillInfo medicineBillInfo)
         {
             ModelState.Remove("Price");
             if (id != medicineBillInfo.Id)

@@ -13,28 +13,28 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label class="control-label">ID Bill</label>
+                <label asp-for="MedicineBillID" class="control-label"></label>
                 <select asp-for="MedicineBillID" class="form-control" asp-items="ViewBag.MedicineBillID"></select>
                 <span asp-validation-for="MedicineBillID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Medince name</label>
-                <select asp-for="IdMedicineInfo" class="form-control" asp-items="ViewBag.IdMedicineInfo"></select>
+                <label asp-for="IdMedicineInfo" class="control-label"></label>
+                <select asp-for="IdMedicineInfo" asp-items="ViewBag.IdMedicineInfo" class="form-control"></select>
                 <span asp-validation-for="IdMedicineInfo" class="text-danger"></span>
+
             </div>
             <div class="form-group">
-                <label class="control-label">Quantity</label>
+                <label asp-for="Quantity" class="control-label"></label>
                 <input asp-for="Quantity" class="form-control" />
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Unit price</label>
+                <label asp-for="UnitPrice" class="control-label"></label>
                 <input asp-for="UnitPrice" class="form-control" />
                 <span asp-validation-for="UnitPrice" class="text-danger"></span>
             </div>
-            <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>

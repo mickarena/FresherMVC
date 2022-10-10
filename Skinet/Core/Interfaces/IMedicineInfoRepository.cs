@@ -12,6 +12,6 @@ namespace Core.Interfaces
 
         Task<MedicineInfomation> GetById(Guid id);
 
-        List<MedicineInfomation> GetType();
+        IEnumerable<MedicineInfomation> GetType();
     }
 }
