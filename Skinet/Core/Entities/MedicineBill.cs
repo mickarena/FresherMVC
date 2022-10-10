@@ -15,3 +15,4 @@ namespace Core.Entities
         public IEnumerable<MedicineBillInfo>? MedicineBillInfos { get; set; }
     }
 }
+
