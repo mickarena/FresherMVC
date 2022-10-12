@@ -9,15 +9,19 @@ namespace Infrastructure.Data
 {
     public class StoreContext : DbContext
     {
+        public StoreContext()
+        {
+        }
 
         public StoreContext(DbContextOptions<StoreContext> options) : base(options)
         {
-
         }
 
         public DbSet<Product> Products { get; set; }
+
         //public DbSet<Doctor> Doctors { get; set; }
         public DbSet<ProductBrand> ProductBrands { get; set; }
+
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<MedicineBillInfo>? MedicineBillInfos { get; set; }
         public DbSet<MedicineInfomation>? MedicineInfomations { get; set; }
