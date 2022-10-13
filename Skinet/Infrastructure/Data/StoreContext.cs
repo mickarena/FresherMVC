@@ -45,6 +45,13 @@ namespace Infrastructure.Data
             modelBuilder.Entity<MedicineBillInfo>().HasOne(a => a.MedicineBills).WithMany(c => c.MedicineBillInfo).HasForeignKey(d => d.MedicineBillID);
 
             //Thuộc tính của model edit từ đây
+            modelBuilder.Entity<Doctor>().Property(d => d.Name).IsRequired().HasMaxLength(255);
+            modelBuilder.Entity<Doctor>().Property(d => d.Phone).IsRequired().HasMaxLength(100);
+            modelBuilder.Entity<Doctor>().Property(d => d.Address).IsRequired().HasMaxLength(255);
+            modelBuilder.Entity<Doctor>().Property(d => d.Birthday).HasDefaultValue(DateTime.Now);
+            modelBuilder.Entity<Doctor>().Property(d => d.Department).IsRequired().HasMaxLength(255);
+            modelBuilder.Entity<Doctor>().Property(d => d.Image).IsRequired().HasMaxLength(255);
+
             modelBuilder.Entity<MedicineInfomation>().Property(c => c.MedicineIDType).IsRequired();
             modelBuilder.Entity<MedicineInfomation>().Property(c => c.IsEmpty).IsRequired();
             modelBuilder.Entity<MedicineInfomation>().Property(c => c.ImportDate).IsRequired();

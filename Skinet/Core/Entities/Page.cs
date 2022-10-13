@@ -17,19 +17,19 @@ namespace Core.Entities
         public Page() { }
         public Page(int totalItems, int page, int pageSize)
         {
-            int totalPages = (int)Math.Ceiling((decimal)(totalItems / pageSize));
+            int totalPages = (int)Math.Ceiling((decimal)totalItems / (decimal)pageSize);
             int currentPage = page;
-            int startPage = currentPage -3;
+            int startPage = currentPage - 3;
             int endPage = currentPage + 3;
 
             if (startPage <= 1)
             {
-                
+
                 startPage = 1;
-            }     
+            }
             if (endPage > totalPages)
             {
-                endPage = totalPages;               
+                endPage = totalPages;
             }
 
             TotalItems = totalItems;
