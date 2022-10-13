@@ -8,9 +8,9 @@ namespace Infrastructure.Data
     {
         private StoreContext _context;
 
-        public MedInfoRepository()
+        public MedInfoRepository(StoreContext context)
         {
-            _context = new StoreContext();
+            _context = context;
         }
 
         public void Create(MedicineInfomation medicineInfomation)

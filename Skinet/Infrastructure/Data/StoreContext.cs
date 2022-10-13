@@ -1,22 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using System.Reflection;
-using System.ComponentModel.DataAnnotations.Schema;
-
-using Core.Entities;
 
 namespace Infrastructure.Data
 {
     public class StoreContext : DbContext
     {
-
         public StoreContext(DbContextOptions<StoreContext> options) : base(options)
         {
 
         }
 
         public DbSet<Product> Products { get; set; }
-        //public DbSet<Doctor> Doctors { get; set; }
+
+        public DbSet<Doctor> Doctors { get; set; }
         public DbSet<ProductBrand> ProductBrands { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<MedicineBillInfo>? MedicineBillInfos { get; set; }
@@ -41,7 +38,7 @@ namespace Infrastructure.Data
             modelBuilder.Entity<MedicineInfomation>().HasKey(c => c.Id);
             modelBuilder.Entity<MedicineBillInfo>().HasKey(c => c.Id);
             modelBuilder.Entity<MedicineInfomation>().HasOne(a => a.MedicineTypes).WithMany(c => c.MedicineInfomations).HasForeignKey(d => d.MedicineIDType);
-            modelBuilder.Entity<MedicineBillInfo>().HasOne(a => a.MedicineBills).WithMany(c => c.MedicineBillInfos).HasForeignKey(d => d.MedicineBillID);
+            modelBuilder.Entity<MedicineBillInfo>().HasOne(a => a.MedicineBills).WithMany(c => c.MedicineBillInfo).HasForeignKey(d => d.MedicineBillID);
             modelBuilder.Entity<MedicineBillInfo>().HasOne(a => a.MedicineInfomations).WithMany(c => c.MedicineBillInfos).HasForeignKey(d => d.IdMedicineInfo);
 
             //Thuộc tính của model edit từ đây
