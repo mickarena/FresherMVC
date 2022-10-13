@@ -1,25 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using System.Reflection;
-using System.ComponentModel.DataAnnotations.Schema;
-
-using Core.Entities;
 
 namespace Infrastructure.Data
 {
     public class StoreContext : DbContext
     {
-        public StoreContext()
-        {
-        }
-
         public StoreContext(DbContextOptions<StoreContext> options) : base(options)
         {
         }
 
         public DbSet<Product> Products { get; set; }
 
-        //public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
         public DbSet<ProductBrand> ProductBrands { get; set; }
 
         public DbSet<ProductType> ProductTypes { get; set; }
@@ -71,6 +64,15 @@ namespace Infrastructure.Data
             modelBuilder.Entity<MedicineBillInfo>().Property(c => c.Price).IsRequired();
             modelBuilder.Entity<MedicineBillInfo>().Property(c => c.UnitPrice).IsRequired();
             modelBuilder.Entity<MedicineBillInfo>().Property(c => c.Quantity).IsRequired();
+
+            //fresher-2410-start
+            modelBuilder.Entity<Shift>().HasKey(c => c.Id);
+            modelBuilder.Entity<Doctor>().HasKey(c => c.Id);
+            modelBuilder.Entity<WorkShift>().HasKey(c => c.Id);
+            modelBuilder.Entity<WorkShift>().HasOne(a => a.Shift).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdShift);
+            modelBuilder.Entity<WorkShift>().HasOne(a => a.Doctor).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdDoctor);
+            modelBuilder.Entity<WorkShift>().Property(c => c.CreateAt).HasDefaultValue(DateTime.Now);
+            //
         }
     }
 }
