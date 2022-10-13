@@ -1,10 +1,6 @@
-﻿using Core.Entity;
+﻿using Core.Entities;
 using Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
@@ -12,9 +8,9 @@ namespace Infrastructure.Data
     {
         private StoreContext _context;
 
-        public MedInfoRepository()
+        public MedInfoRepository(StoreContext context)
         {
-            _context = new StoreContext();
+            _context = context;
         }
 
         public void Create(MedicineInfomation medicineInfomation)
@@ -23,27 +19,27 @@ namespace Infrastructure.Data
             _context.SaveChangesAsync();
         }
 
-        public void Delete(Guid id)
+        public async void Delete(Guid id)
         {
             var temp = _context!.MedicineInfomations.FirstOrDefault(c => c.Id == id);
             _context.MedicineInfomations.Remove(temp!);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         public async Task<MedicineInfomation> GetById(Guid id)
         {
-            return await _context.MedicineInfomations.FindAsync(id);
+            return _context.MedicineInfomations.Include(c => c.MedicineTypes).AsNoTracking().FirstOrDefault(c => c.Id == id);
         }
 
-        public void Update(MedicineInfomation medicineInfomation)
+        public async void Update(MedicineInfomation medicineInfomation)
         {
-            _context.MedicineInfomations.Update(medicineInfomation);
-            _context.SaveChangesAsync();
+            var data = _context.MedicineInfomations.Update(medicineInfomation);
+            await _context.SaveChangesAsync();
         }
 
         public List<MedicineInfomation> GetType()
         {
-            return _context.MedicineInfomations.ToList();
+            return _context.MedicineInfomations.Include(m => m.MedicineTypes).AsNoTracking().ToList();
         }
     }
 }

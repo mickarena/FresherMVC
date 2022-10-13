@@ -1,5 +1,4 @@
 ﻿using Core.Entities;
-using Core.Entity;
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;

@@ -1,4 +1,4 @@
-﻿@model Core.Entity.MedicineInfomation
+﻿@model Core.Entities.MedicineInfomation
 
 @{
     ViewData["Title"] = "Details";
@@ -10,6 +10,12 @@
     <h4>MedicineInfomation</h4>
     <hr />
     <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ImportDate)
         </dt>
@@ -38,13 +44,13 @@
             @Html.DisplayNameFor(model => model.IsEmpty)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsEmpty)
+            @(Model.IsEmpty == true ? "Out of stock" : "In stock")
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MedicineType)
+            @Html.DisplayNameFor(model => model.MedicineTypes.Name)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MedicineType.Name)
+            @Html.DisplayFor(model => model.MedicineTypes.Name)
         </dd>
     </dl>
 </div>

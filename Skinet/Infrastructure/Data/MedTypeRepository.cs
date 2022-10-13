@@ -1,10 +1,6 @@
-﻿using Core.Entity;
+﻿using Core.Entities;
 using Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
@@ -12,9 +8,9 @@ namespace Infrastructure.Data
     {
         private StoreContext _context;
 
-        public MedTypeRepository()
+        public MedTypeRepository(StoreContext context)
         {
-            _context = new StoreContext();
+            _context = context;
         }
 
         public void Create(MedicineType medicineType)
@@ -43,7 +39,7 @@ namespace Infrastructure.Data
 
         public List<MedicineType> GetType()
         {
-            return _context.MedicineTypes.ToList();
+            return _context.MedicineTypes.AsNoTracking().ToList();
         }
     }
 }

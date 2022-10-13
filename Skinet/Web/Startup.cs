@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Core.Entity;
 
 namespace Web
 {
@@ -28,6 +27,7 @@ namespace Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IMedicineInfoRepository, MedInfoRepository>();
             services.AddScoped<IMedicineTypeRepository, MedTypeRepository>();
             services.AddScoped<IMedBillInfoRepository, MedBillInfoRepository>();
