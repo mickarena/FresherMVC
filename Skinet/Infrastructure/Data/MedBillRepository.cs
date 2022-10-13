@@ -8,9 +8,9 @@ namespace Infrastructure.Data
     {
         private StoreContext _context;
 
-        public MedBillRepository()
+        public MedBillRepository(StoreContext context)
         {
-            _context = new StoreContext();
+            _context = context;
         }
 
         public void Create(MedicineBill medicineBill)
