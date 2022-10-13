@@ -13,19 +13,19 @@
     <thead>
         <tr>
             <th>
-                Medince name
+                @Html.DisplayNameFor(Model => Model.MedicineInfomations.Name)
             </th>
             <th>
-              Quantity
+                @Html.DisplayNameFor(Model => Model.Quantity)
             </th>
             <th>
-               Unit price
+                @Html.DisplayNameFor(Model => Model.UnitPrice)
             </th>
             <th>
-                Total price
+                @Html.DisplayNameFor(Model => Model.Price)
             </th>
             <th>
-                ID Bill
+                @Html.DisplayNameFor(Model => Model.MedicineBills.Id)
             </th>
             <th></th>
         </tr>
@@ -37,7 +37,7 @@
                 @Html.DisplayFor(modelItem => item.MedicineInfomations.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
+                    @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UnitPrice)
