@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using System.Reflection;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace Infrastructure.Data
 {
@@ -23,8 +25,8 @@ namespace Infrastructure.Data
         public DbSet<HospitalBed> HospitalBeds { get; set; }
         public DbSet<Shift> Shifts { get; set; }
         public DbSet<WorkShift> WorkShifts { get; set; }
-        public DbSet<Shift> Shifts { get; set; }
-        public DbSet<WorkShift> WorkShifts { get; set; }
+        public DbSet<Shift> Shift { get; set; }
+        public DbSet<WorkShift> WorkShift { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
