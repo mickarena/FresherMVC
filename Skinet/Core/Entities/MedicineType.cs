@@ -1,11 +1,10 @@
-<<<<<<< HEAD
 using Core.Entities;
 using System;
 using System.Collections.Generic;
-=======
-using System.ComponentModel;
->>>>>>> 251164ab22390e254035d91341fc3f66630d375f
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Core.Entities
 {
@@ -13,7 +12,6 @@ namespace Core.Entities
     {
         [Required]
         [MaxLength(100)]
-        [DisplayName("Name")]
         public string? Name { get; set; }
 
         public IEnumerable<MedicineInfomation>? MedicineInfomations { get; set; }
