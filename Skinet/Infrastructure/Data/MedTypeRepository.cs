@@ -1,4 +1,5 @@
-﻿using Core.Entity;
+﻿using Core.Entities;
+
 using Core.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,9 @@ namespace Infrastructure.Data
     {
         private StoreContext _context;
 
-        public MedTypeRepository()
+        public MedTypeRepository(StoreContext context)
         {
-            _context = new StoreContext();
+            _context = context;
         }
 
         public void Create(MedicineType medicineType)

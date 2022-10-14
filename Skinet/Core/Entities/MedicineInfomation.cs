@@ -33,7 +33,7 @@ namespace Core.Entities
         [Required]
         public bool IsEmpty { get; set; }
 
-        public MedicineType? MedicineType { get; set; }
+        public MedicineType? MedicineTypes { get; set; }
         public IEnumerable<MedicineBillInfo>? MedicineBillInfos { get; set; }
     }
 }

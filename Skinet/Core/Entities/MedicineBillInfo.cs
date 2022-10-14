@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -25,7 +24,7 @@ namespace Core.Entities
         [Range(0, int.MaxValue)]
         public int Price { get; set; }
 
-        public MedicineInfomation? MedicineInfomation { get; set; }
+        public MedicineInfomation? MedicineInfomations { get; set; }
         public MedicineBill? MedicineBills { get; set; }
     }
 }
