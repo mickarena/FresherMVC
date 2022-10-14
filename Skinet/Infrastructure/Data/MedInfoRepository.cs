@@ -21,7 +21,7 @@ namespace Infrastructure.Data
 
         public async void Delete(Guid id)
         {
-            var temp = _context!.MedicineInfomations.FirstOrDefault(c => c.Id == id);
+            var temp = _context.MedicineInfomations.FirstOrDefault(c => c.Id == id);
             _context.MedicineInfomations.Remove(temp!);
             await _context.SaveChangesAsync();
         }
