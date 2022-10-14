@@ -1,4 +1,4 @@
-﻿@model Core.Entity.MedicineBillInfo
+﻿@model Core.Entities.MedicineBillInfo
 
 @{
     ViewData["Title"] = "Details";
@@ -10,34 +10,34 @@
     <h4>MedicineBillInfo</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdMedicineInfo)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MedicineInfomations.Name)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdMedicineInfo)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MedicineInfomations.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Quantity)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Quantity)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.UnitPrice)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.UnitPrice)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Price)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Price)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MedicineBills)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MedicineBills.Id)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.MedicineBills.Id)
         </dd>
     </dl>

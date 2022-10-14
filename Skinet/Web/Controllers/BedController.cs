@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Core.Entities;
+using System;
 
 namespace Web.Controllers
 {
@@ -18,10 +19,16 @@ namespace Web.Controllers
         // GET: BedController
         public async Task<ActionResult> Index()
         {
+ 
             var test = await _bedRepository.ListAllAsync();
             return View(test);
         }
 
+        public async Task<IActionResult> Search(string searchName)
+        {
+            var result = await _bedRepository.Search(searchName);
+            return View("Index", result);
+        }
         // GET: BedController/Details/5
         public ActionResult Details(int id)
         {
@@ -36,7 +43,7 @@ namespace Web.Controllers
 
         // POST: BedController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
+       
         public async Task<ActionResult> Create(HospitalBed bed)
         {
             try
@@ -51,18 +58,19 @@ namespace Web.Controllers
         }
 
         // GET: BedController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(Guid id)
         {
-            return View();
+            var beds = await _bedRepository.GetById(id);
+            return View(beds);
         }
 
         // POST: BedController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task< ActionResult> Edit(HospitalBed bed)
         {
             try
             {
+                var beds = await _bedRepository.Update(bed);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -72,23 +80,25 @@ namespace Web.Controllers
         }
 
         // GET: BedController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task< ActionResult> Delete(Guid id)
         {
-            return View();
+            var beds = await _bedRepository.GetById(id);
+            return View(beds);
         }
 
         // POST: BedController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        
+        public async Task<ActionResult>Deleted(Guid id)
         {
             try
-            {
+             {
+                var beds = await _bedRepository.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View(id);
             }
         }
     }

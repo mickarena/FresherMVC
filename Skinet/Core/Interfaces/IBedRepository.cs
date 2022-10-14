@@ -13,6 +13,8 @@ namespace Core.Interfaces
 
         Task<HospitalBed> Update(HospitalBed request);
 
-        Task<HospitalBed> Delete(int Id);
+        Task<HospitalBed> Delete(Guid Id);
+        Task<HospitalBed> GetById(Guid Id);
+        Task<IEnumerable<HospitalBed>> Search(string name);
     }
 }
