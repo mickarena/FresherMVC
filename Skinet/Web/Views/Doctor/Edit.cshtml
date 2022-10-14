@@ -6,11 +6,7 @@
 }
 
 <div class="card shadow mb-2">
-    <form method="POST" asp-area="" asp-controller="Doctor" asp-action="Edit" enctype="multipart/form-data">
-        <div class="form-group">
-            <label asp-for="Id"></label>
-            <input disable class="form-control" asp-for="Id" placeholder="Doctor ID">
-        </div>
+    <form method="POST" asp-area="" asp-controller="Doctor" asp-action="Edit" enctype="multipart/form-data">       
         <div class="form-group">
             <label asp-for="Name">Full Name</label>
             <input disable class="form-control" asp-for="Name" placeholder="Full Name">
