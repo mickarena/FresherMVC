@@ -39,7 +39,7 @@ namespace Infrastructure.Data
 
         public List<MedicineBill> GetType()
         {
-            return _context.MedicineBills.ToList();
+            return _context.MedicineBills.AsNoTracking().ToList();
         }
     }
 }

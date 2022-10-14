@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Core.Entities.MedicineInfomation>
+﻿@model IEnumerable<Core.Entity.MedicineInfomation>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,60 +13,53 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(item => item.Name)
+                @Html.DisplayNameFor(model => model.ImportDate)
             </th>
             <th>
-                @Html.DisplayNameFor(item => item.ImportDate)
+                @Html.DisplayNameFor(model => model.ExpireDate)
             </th>
             <th>
-                @Html.DisplayNameFor(item => item.ExpireDate)
+                @Html.DisplayNameFor(model => model.Quantity)
             </th>
             <th>
-                @Html.DisplayNameFor(item => item.Quantity)
+                @Html.DisplayNameFor(model => model.UnitPrice)
             </th>
             <th>
-                @Html.DisplayNameFor(item => item.UnitPrice)
+                @Html.DisplayNameFor(model => model.IsEmpty)
             </th>
             <th>
-                @Html.DisplayNameFor(item => item.IsEmpty)
-            </th>
-            <th>
-                @Html.DisplayNameFor(item => item.MedicineTypes.Name)
+                @Html.DisplayNameFor(model => model.MedicineType)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @item.ImportDate.ToString("dd/MM/yyyy")
-                </td>
-                <td>
-                    @item.ExpireDate.ToString("dd/MM/yyyy")
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UnitPrice)
-                </td>
-                <td>
-                    @(item.IsEmpty == true ? "Out of stock" : "In stock")
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MedicineTypes.Name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImportDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpireDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsEmpty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MedicineType.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
     </tbody>
 </table>

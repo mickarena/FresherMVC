@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Core.Entities.MedicineBill>
+﻿@model IEnumerable<Core.Entity.MedicineBill>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,13 +13,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(item => item.DoctorID)
+                @Html.DisplayNameFor(model => model.DoctorID)
             </th>
             <th>
-                @Html.DisplayNameFor(item => item.DateCreate)
+                @Html.DisplayNameFor(model => model.DateCreate)
             </th>
             <th>
-                @Html.DisplayNameFor(item => item.PayStatus)
+                @Html.DisplayNameFor(model => model.PayStatus)
             </th>
             <th></th>
         </tr>
@@ -31,10 +31,10 @@
                 @Html.DisplayFor(modelItem => item.DoctorID)
             </td>
             <td>
-                @item.DateCreate.ToString("dd/MM/yyyy")
+                @Html.DisplayFor(modelItem => item.DateCreate)
             </td>
             <td>
-                    @(item.PayStatus == false ? "No" : "Yes")
+                @Html.DisplayFor(modelItem => item.PayStatus)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
