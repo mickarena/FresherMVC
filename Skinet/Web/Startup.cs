@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Core.Entity;
 
 namespace Web
 {

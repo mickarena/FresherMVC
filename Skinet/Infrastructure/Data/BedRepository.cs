@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿//using Core.Entities;
 //using Core.Entity;
 //using Core.Interfaces;
@@ -7,6 +8,16 @@
 //using System.Linq;
 //using System.Text;
 //using System.Threading.Tasks;
+=======
+﻿using Core.Entities;
+using Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+>>>>>>> 251164ab22390e254035d91341fc3f66630d375f
 
 //namespace Infrastructure.Data
 //{
@@ -39,8 +50,23 @@
 //            return await _context.HospitalBeds.FirstOrDefaultAsync(x => x.Id == Id);
 //        }
 
+<<<<<<< HEAD
 //        public async Task<HospitalBed> Update(HospitalBed request)
 //        {
+=======
+        public async Task<IEnumerable<HospitalBed>> Search(string name)
+        {
+            IQueryable<HospitalBed> query = _context.HospitalBeds;
+                       if (!string.IsNullOrEmpty(name))
+                       {
+                           query = query.Where(e => e.IDRoom.Contains(name) || e.IDPatient.Contains(name));
+                       }
+                        return await query.ToListAsync();
+        }
+
+        public async Task<HospitalBed> Update(HospitalBed request)
+        {
+>>>>>>> 251164ab22390e254035d91341fc3f66630d375f
 
 //            _context.HospitalBeds.Update(request);
 //            await _context.SaveChangesAsync();

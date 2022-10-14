@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿//using Core.Entities;
 //using Core.Interfaces;
 //using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,11 @@
 //using System.Linq;
 //using System.Text;
 //using System.Threading.Tasks;
+=======
+﻿using Core.Entities;
+using Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
+>>>>>>> 251164ab22390e254035d91341fc3f66630d375f
 
 //namespace Infrastructure.Data
 //{
@@ -41,11 +47,19 @@
 
 //        }
 
+<<<<<<< HEAD
 //        public async Task Update(Doctor doctor)
 //        {
 //            _context.Entry(doctor).State = EntityState.Modified;
 //            await _context.SaveChangesAsync();
 //        }
+=======
+        public async Task Update(Doctor doctor)
+        {
+            _context.Doctors.Update(doctor);
+            await _context.SaveChangesAsync();           
+        }
+>>>>>>> 251164ab22390e254035d91341fc3f66630d375f
 
 //        public async Task<IEnumerable<Doctor>> Search(string name)
 //        {

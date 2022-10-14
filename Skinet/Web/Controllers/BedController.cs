@@ -19,12 +19,16 @@ namespace Web.Controllers
         // GET: BedController
         public async Task<ActionResult> Index()
         {
-            
-            
+ 
             var test = await _bedRepository.ListAllAsync();
             return View(test);
         }
 
+        public async Task<IActionResult> Search(string searchName)
+        {
+            var result = await _bedRepository.Search(searchName);
+            return View("Index", result);
+        }
         // GET: BedController/Details/5
         public ActionResult Details(int id)
         {

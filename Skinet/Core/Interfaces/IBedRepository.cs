@@ -15,6 +15,6 @@ namespace Core.Interfaces
 
         Task<HospitalBed> Delete(Guid Id);
         Task<HospitalBed> GetById(Guid Id);
-       // List<HospitalBed> GetAllPaging(string keywork,int pageIndex,int pageSize);
+        Task<IEnumerable<HospitalBed>> Search(string name);
     }
 }

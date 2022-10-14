@@ -1,14 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using System.Reflection;
+<<<<<<< HEAD
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
+=======
+>>>>>>> 251164ab22390e254035d91341fc3f66630d375f
 
 namespace Infrastructure.Data
 {
     public class StoreContext : DbContext
     {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 251164ab22390e254035d91341fc3f66630d375f
         public StoreContext(DbContextOptions<StoreContext> options) : base(options)
         {
 
@@ -27,17 +33,19 @@ namespace Infrastructure.Data
         //public DbSet<MedicineInfomation>? MedicineInfomation { get; set; }
         //public DbSet<MedicineType>? MedicineType { get; set; }
         public DbSet<Product> Products { get; set; }
+<<<<<<< HEAD
         //public DbSet<Doctor> Doctors { get; set; }
+=======
+
+        public DbSet<Doctor> Doctors { get; set; }
+>>>>>>> 251164ab22390e254035d91341fc3f66630d375f
         public DbSet<ProductBrand> ProductBrands { get; set; }
+
         public DbSet<ProductType> ProductTypes { get; set; }
-        public DbSet<MedicineBill>? MedicineBills { get; set; }
         public DbSet<MedicineBillInfo>? MedicineBillInfos { get; set; }
         public DbSet<MedicineInfomation>? MedicineInfomations { get; set; }
         public DbSet<MedicineType>? MedicineTypes { get; set; }
-        public DbSet<MedicineBill>? MedicineBill { get; set; }
-        public DbSet<MedicineBillInfo>? MedicineBillInfo { get; set; }
-        public DbSet<MedicineInfomation>? MedicineInfomation { get; set; }
-        public DbSet<MedicineType>? MedicineType { get; set; }
+        public DbSet<MedicineBill>? MedicineBills { get; set; }
         public DbSet<HospitalBed> HospitalBeds { get; set; }
         public DbSet<Shift> Shifts { get; set; }
         public DbSet<WorkShift> WorkShifts { get; set; }
@@ -71,10 +79,18 @@ namespace Infrastructure.Data
             modelBuilder.Entity<MedicineBill>().HasKey(c => c.Id);
             modelBuilder.Entity<MedicineInfomation>().HasKey(c => c.Id);
             modelBuilder.Entity<MedicineBillInfo>().HasKey(c => c.Id);
-            modelBuilder.Entity<MedicineInfomation>().HasOne(a => a.MedicineType).WithMany(c => c.MedicineInfomations).HasForeignKey(d => d.MedicineIDType);
-            modelBuilder.Entity<MedicineBillInfo>().HasOne(a => a.MedicineBills).WithMany(c => c.MedicineBillInfo).HasForeignKey(d => d.MedicineBillID);
+            modelBuilder.Entity<MedicineInfomation>().HasOne(a => a.MedicineTypes).WithMany(c => c.MedicineInfomations).HasForeignKey(d => d.MedicineIDType);
+            modelBuilder.Entity<MedicineBillInfo>().HasOne(a => a.MedicineBills).WithMany(c => c.MedicineBillInfos).HasForeignKey(d => d.MedicineBillID);
+            modelBuilder.Entity<MedicineBillInfo>().HasOne(a => a.MedicineInfomations).WithMany(c => c.MedicineBillInfos).HasForeignKey(d => d.IdMedicineInfo);
 
             //Thuộc tính của model edit từ đây
+            modelBuilder.Entity<Doctor>().Property(d => d.Name).IsRequired().HasMaxLength(255);
+            modelBuilder.Entity<Doctor>().Property(d => d.Phone).IsRequired().HasMaxLength(100);
+            modelBuilder.Entity<Doctor>().Property(d => d.Address).IsRequired().HasMaxLength(255);
+            modelBuilder.Entity<Doctor>().Property(d => d.Birthday).HasDefaultValue(DateTime.Now);
+            modelBuilder.Entity<Doctor>().Property(d => d.Department).IsRequired().HasMaxLength(255);
+            modelBuilder.Entity<Doctor>().Property(d => d.Image).IsRequired().HasMaxLength(255);
+
             modelBuilder.Entity<MedicineInfomation>().Property(c => c.MedicineIDType).IsRequired();
             modelBuilder.Entity<MedicineInfomation>().Property(c => c.IsEmpty).IsRequired();
             modelBuilder.Entity<MedicineInfomation>().Property(c => c.ImportDate).IsRequired();
@@ -101,9 +117,12 @@ namespace Infrastructure.Data
             modelBuilder.Entity<MedicineBillInfo>().Property(c => c.Quantity).IsRequired();
 
             //fresher-2410-start
-            modelBuilder.Entity<Shift>().HasKey(c => c.IdShift);
-            modelBuilder.Entity<WorkShift>().HasKey(c => c.IdWork);
+            modelBuilder.Entity<Shift>().HasKey(c => c.Id);
+            modelBuilder.Entity<Doctor>().HasKey(c => c.Id);
+            modelBuilder.Entity<WorkShift>().HasKey(c => c.Id);
             modelBuilder.Entity<WorkShift>().HasOne(a => a.Shift).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdShift);
+            modelBuilder.Entity<WorkShift>().HasOne(a => a.Doctor).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdDoctor);
+            modelBuilder.Entity<WorkShift>().Property(c => c.CreateAt).HasDefaultValue(DateTime.Now);
             //
         }
     }
