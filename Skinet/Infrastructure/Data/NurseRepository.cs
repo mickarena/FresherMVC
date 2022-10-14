@@ -14,9 +14,12 @@ namespace Infrastructure.Data
     public class NurseRepository : INurseRepository
     {
         readonly StoreContext _db;
+        private List<Nurse> nurses = new List<Nurse>();
+
         public NurseRepository(StoreContext context)
         { 
             _db = context;
+            this.nurses = _db.Nurse.Include(x => x.Departments).ToList();
         }
 
         public void Create(Nurse nurse)
@@ -48,5 +51,7 @@ namespace Infrastructure.Data
             _db.Nurse.Update(nurse);
             _db.SaveChanges();
         }
+
+      
     }
 }

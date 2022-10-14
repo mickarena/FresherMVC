@@ -18,5 +18,9 @@ namespace Core.Interfaces
         IEnumerable<Departments> GetAll();
 
         Departments GetbyId(Guid id);
+
+        //int totalDepartment();
+        //int numberPage(int totalDepartment, int limit);
+        //IEnumerable<Departments> paginationDepartments(int start, int limit);
     }
 }

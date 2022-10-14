@@ -14,5 +14,6 @@ namespace Core.Interfaces
         IEnumerable<Nurse> GetAll();
 
         Nurse GetbyId(Guid id);
+
     }
 }

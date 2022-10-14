@@ -1,7 +1,5 @@
-﻿@model IEnumerable<Core.Entities.Nurse>
-@{
-    ViewData["Title"] = "Index";
-}
+﻿@model Core.Entities.Pages
+
 
 <!DOCTYPE html>
 
@@ -11,51 +9,76 @@
     <title>Index</title>
 </head>
 <body>
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-    <table class="table">
+    <form>
+        <div class="form-group ">
+    <button type="button" class="btn btn-outline-primary btn-sm">
+        <a asp-action="Create" >Thêm mới</a>
+    </button>
+            <table class="table border">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Name)
+                    <h5>Tên</h5>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Phone)
+                    <h5>Số điện thoại</h5>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Address)
+                    <h5>Địa chỉ</h5>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.DepartmentId)
+                    <h5>Phòng ban</h5>
                 </th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Phone)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Address)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Departments.Name)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-            }
+                    @foreach (var nurses in Model.Nurses)
+                    {
+                        <tr>
+                            <td>@nurses.Name</td>
+                            <td>
+                                @nurses.Phone
+                            </td>
+                            <td>
+                                @nurses.Address
+                            </td>
+                            <td>
+                                @nurses.Departments.Name
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@nurses.Id" type="button" class="btn btn-outline-primary btn-sm">Chỉnh Sửa</a> |
+                                <a asp-action="Delete" asp-route-id="@nurses.Id" type="button" class="btn btn-outline-primary btn-sm">Xóa</a>
+                            </td>
+                        </tr>
+                    }
         </tbody>
     </table>
+    </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+                @for (int i = 0; i < Model.PageCount; i++)
+                {
+                    @if (i != ViewBag.CurrentPageIndex)
+                    {
+
+                        <li class="page-item"><a class="page-link" asp-action="Index" asp-route-currentPageIndex="@i" asp-route-currentPage="@i">@(i + 1)</a></li>
+                    }
+                    else
+                    {
+
+                        <li class="page-item"><a class="page-link" asp-action="Index" asp-route-currentPageIndex="@i" asp-route-currentPage="@i">@(i + 1)</a></li>
+
+                    }
+                }
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </form>
 </body>
 </html>

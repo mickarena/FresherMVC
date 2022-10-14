@@ -15,18 +15,24 @@ namespace Web.Controllers
     {
         private IDepartmentRepository _departmentRepository;
 
-        public DepartmentsController(IDepartmentRepository departmentRepository)
+        private IPageRepository _pageRepository;
+
+        public DepartmentsController(IDepartmentRepository departmentRepository, IPageRepository pageRepository)
         {
             _departmentRepository = departmentRepository;
+            _pageRepository = pageRepository;
         }
-
 
         // GET: Department
-        public ActionResult Index()
+        public ActionResult Index( int currentPage)
         {
-            var departments = _departmentRepository.GetAll();
-            return View(departments);
+            ViewBag.CurrentPageIndex = currentPage;
+            var Page = _pageRepository.GetDepartments( currentPage);
+            ViewBag.PageCount = Page.PageCount;
+            
+            return View(Page);
         }
+
 
         // GET: Department/Details/5
         public ActionResult Details(Guid id)

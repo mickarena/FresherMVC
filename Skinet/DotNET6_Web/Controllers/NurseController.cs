@@ -17,18 +17,23 @@ namespace Web.Controllers
         private INurseRepository _nurseRepository;
 
         private IDepartmentRepository _departmentRepository;
+        private IPageRepository _pageRepository;
 
-        public NurseController(INurseRepository nurseRepository, IDepartmentRepository departmentRepository)
+        public NurseController(INurseRepository nurseRepository, IDepartmentRepository departmentRepository, IPageRepository pageRepository)
         {
             _nurseRepository = nurseRepository;
             _departmentRepository = departmentRepository;
+
+            _pageRepository = pageRepository;
         }
 
         // GET: Nurses
-        public ActionResult Index()
+        public ActionResult Index(int currentPage)
         {
-            var nurses = _nurseRepository.GetAll();
-            return View(nurses);
+            ViewBag.CurrentPageIndex = currentPage;
+            var Page = _pageRepository.GetDepartments(currentPage);
+            ViewBag.PageCount = Page.PageCount;
+            return View(Page);
         }
 
         // GET: Nurses/Details/5
