@@ -1,27 +1,23 @@
-﻿//using Core.Entity;
-//using Core.Interfaces;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using Core.Entities;
+using Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
-//namespace Infrastructure.Data
-//{
-//    public class MedBillRepository : IMedBillRepository
-//    {
-//        private StoreContext _context;
+namespace Infrastructure.Data
+{
+    public class MedBillRepository : IMedBillRepository
+    {
+        private StoreContext _context;
 
-//        public MedBillRepository()
-//        {
-//            _context = new StoreContext();
-//        }
+        public MedBillRepository(StoreContext context)
+        {
+            _context = context;
+        }
 
-//        public void Create(MedicineBill medicineBill)
-//        {
-//            _context.MedicineBills.Add(medicineBill);
-//            _context.SaveChangesAsync();
-//        }
+        public void Create(MedicineBill medicineBill)
+        {
+            _context.MedicineBills.Add(medicineBill);
+            _context.SaveChangesAsync();
+        }
 
         public void Delete(Guid id)
         {
