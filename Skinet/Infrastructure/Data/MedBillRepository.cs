@@ -21,7 +21,7 @@ namespace Infrastructure.Data
 
         public void Delete(Guid id)
         {
-            var temp = _context!.MedicineBills.AsNoTracking().FirstOrDefault(c => c.Id == id);
+            var temp = _context.MedicineBills.FirstOrDefault(c => c.Id == id);
             _context.MedicineBills.Remove(temp!);
             _context.SaveChangesAsync();
         }
@@ -39,7 +39,7 @@ namespace Infrastructure.Data
 
         public List<MedicineBill> GetType()
         {
-            return _context.MedicineBills.AsNoTracking().ToList();
+            return _context.MedicineBills.ToList();
         }
     }
 }
