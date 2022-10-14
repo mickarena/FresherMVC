@@ -22,37 +22,30 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Core.Entities.Doctor", b =>
+            modelBuilder.Entity("Core.Entities.Departments", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(255)");
-
-                    b.Property<DateTime>("Birthday")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Department")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(255)");
+                    b.Property<bool?>("IsDelete")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
+                    b.Property<DateTime?>("JoinDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(255)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Doctors");
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("Core.Entities.HospitalBed", b =>
@@ -61,13 +54,11 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("IDPatient")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("IDPatient")
+                        .HasColumnType("int");
 
-                    b.Property<string>("IDRoom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("IDRoom")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -75,6 +66,157 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("HospitalBeds");
+                });
+
+            modelBuilder.Entity("Core.Entities.MedicineBill", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateCreate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2022, 10, 7, 16, 30, 17, 88, DateTimeKind.Local).AddTicks(7507));
+
+                    b.Property<Guid>("DoctorID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("PayStatus")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MedicineBill");
+                });
+
+            modelBuilder.Entity("Core.Entities.MedicineBillInfo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdMedicineInfo")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MedicineBillID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("MedicineInfomationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UnitPrice")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicineBillID");
+
+                    b.HasIndex("MedicineInfomationId");
+
+                    b.ToTable("MedicineBillInfo");
+                });
+
+            modelBuilder.Entity("Core.Entities.MedicineInfomation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ExpireDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ImportDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2022, 10, 7, 9, 30, 17, 88, DateTimeKind.Utc).AddTicks(6400));
+
+                    b.Property<bool>("IsEmpty")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("MedicineIDType")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Quantity")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
+
+                    b.Property<int>("UnitPrice")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicineIDType");
+
+                    b.ToTable("MedicineInfomation");
+                });
+
+            modelBuilder.Entity("Core.Entities.MedicineType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MedicineType");
+                });
+
+            modelBuilder.Entity("Core.Entities.Nurse", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DepartmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool?>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("JoinDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("Nurse");
                 });
 
             modelBuilder.Entity("Core.Entities.Product", b =>
@@ -143,166 +285,84 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.Shift", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdShift")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("IdShift")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("ShiftName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR(30)");
 
                     b.Property<string>("Time")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdShift");
 
-                    b.ToTable("Shift");
+                    b.ToTable("Shifts");
                 });
 
             modelBuilder.Entity("Core.Entities.WorkShift", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdWork")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("DoctorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdDoctor")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("DoctorName")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(50)");
 
                     b.Property<Guid>("IdShift")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ShiftId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR(20)");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdWork");
 
-                    b.HasIndex("DoctorId");
+                    b.HasIndex("IdShift");
 
-                    b.HasIndex("ShiftId");
-
-                    b.ToTable("WorkShift");
+                    b.ToTable("WorkShifts");
                 });
 
-            modelBuilder.Entity("Core.Entity.MedicineBill", b =>
+            modelBuilder.Entity("Core.Entities.MedicineBillInfo", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.HasOne("Core.Entities.MedicineBill", "MedicineBills")
+                        .WithMany("MedicineBillInfo")
+                        .HasForeignKey("MedicineBillID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<DateTime>("DateCreate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 6, 11, 10, 24, 467, DateTimeKind.Local).AddTicks(8277));
+                    b.HasOne("Core.Entities.MedicineInfomation", "MedicineInfomation")
+                        .WithMany("MedicineBillInfos")
+                        .HasForeignKey("MedicineInfomationId");
 
-                    b.Property<Guid>("DoctorID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Navigation("MedicineBills");
 
-                    b.Property<bool>("PayStatus")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MedicineBill");
+                    b.Navigation("MedicineInfomation");
                 });
 
-            modelBuilder.Entity("Core.Entity.MedicineBillInfo", b =>
+            modelBuilder.Entity("Core.Entities.MedicineInfomation", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.HasOne("Core.Entities.MedicineType", "MedicineType")
+                        .WithMany("MedicineInfomations")
+                        .HasForeignKey("MedicineIDType")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<Guid>("IdMedicineInfo")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("MedicineBillID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("MedicineInfomationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UnitPrice")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MedicineBillID");
-
-                    b.HasIndex("MedicineInfomationId");
-
-                    b.ToTable("MedicineBillInfo");
+                    b.Navigation("MedicineType");
                 });
 
-            modelBuilder.Entity("Core.Entity.MedicineInfomation", b =>
+            modelBuilder.Entity("Core.Entities.Nurse", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.HasOne("Core.Entities.Departments", "Departments")
+                        .WithMany("Nurses")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<DateTime>("ExpireDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ImportDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 6, 4, 10, 24, 467, DateTimeKind.Utc).AddTicks(5469));
-
-                    b.Property<bool>("IsEmpty")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("MedicineIDType")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("Quantity")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
-
-                    b.Property<int>("UnitPrice")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MedicineIDType");
-
-                    b.ToTable("MedicineInfomation");
-                });
-
-            modelBuilder.Entity("Core.Entity.MedicineType", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MedicineType");
+                    b.Navigation("Departments");
                 });
 
             modelBuilder.Entity("Core.Entities.Product", b =>
@@ -326,70 +386,38 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.WorkShift", b =>
                 {
-                    b.HasOne("Core.Entities.Doctor", "Doctor")
-                        .WithMany("WorkShift")
-                        .HasForeignKey("DoctorId");
-
                     b.HasOne("Core.Entities.Shift", "Shift")
                         .WithMany("WorkShift")
-                        .HasForeignKey("ShiftId");
-
-                    b.Navigation("Doctor");
+                        .HasForeignKey("IdShift")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Shift");
                 });
 
-            modelBuilder.Entity("Core.Entity.MedicineBillInfo", b =>
+            modelBuilder.Entity("Core.Entities.Departments", b =>
                 {
-                    b.HasOne("Core.Entity.MedicineBill", "MedicineBills")
-                        .WithMany("MedicineBillInfo")
-                        .HasForeignKey("MedicineBillID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entity.MedicineInfomation", "MedicineInfomation")
-                        .WithMany("MedicineBillInfos")
-                        .HasForeignKey("MedicineInfomationId");
-
-                    b.Navigation("MedicineBills");
-
-                    b.Navigation("MedicineInfomation");
+                    b.Navigation("Nurses");
                 });
 
-            modelBuilder.Entity("Core.Entity.MedicineInfomation", b =>
+            modelBuilder.Entity("Core.Entities.MedicineBill", b =>
                 {
-                    b.HasOne("Core.Entity.MedicineType", "MedicineType")
-                        .WithMany("MedicineInfomations")
-                        .HasForeignKey("MedicineIDType")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MedicineType");
+                    b.Navigation("MedicineBillInfo");
                 });
 
-            modelBuilder.Entity("Core.Entities.Doctor", b =>
+            modelBuilder.Entity("Core.Entities.MedicineInfomation", b =>
                 {
-                    b.Navigation("WorkShift");
+                    b.Navigation("MedicineBillInfos");
+                });
+
+            modelBuilder.Entity("Core.Entities.MedicineType", b =>
+                {
+                    b.Navigation("MedicineInfomations");
                 });
 
             modelBuilder.Entity("Core.Entities.Shift", b =>
                 {
                     b.Navigation("WorkShift");
-                });
-
-            modelBuilder.Entity("Core.Entity.MedicineBill", b =>
-                {
-                    b.Navigation("MedicineBillInfo");
-                });
-
-            modelBuilder.Entity("Core.Entity.MedicineInfomation", b =>
-                {
-                    b.Navigation("MedicineBillInfos");
-                });
-
-            modelBuilder.Entity("Core.Entity.MedicineType", b =>
-                {
-                    b.Navigation("MedicineInfomations");
                 });
 #pragma warning restore 612, 618
         }

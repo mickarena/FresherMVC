@@ -31,11 +31,11 @@ namespace Infrastructure.Data
             return _context.MedicineInfomations.Include(c => c.MedicineTypes).FirstOrDefault(c => c.Id == id);
         }
 
-        public async void Update(MedicineInfomation medicineInfomation)
-        {
-            var data = _context.MedicineInfomations.Update(medicineInfomation);
-            await _context.SaveChangesAsync();
-        }
+//        public void Update(MedicineInfomation medicineInfomation)
+//        {
+//            _context.MedicineInfomations.Update(medicineInfomation);
+//            _context.SaveChangesAsync();
+//        }
 
         public List<MedicineInfomation> GetType()
         {

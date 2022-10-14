@@ -1,4 +1,4 @@
-﻿@model Core.Entities.MedicineBillInfo
+﻿@model Core.Entity.MedicineBillInfo
 
 @{
     ViewData["Title"] = "Create";
@@ -18,8 +18,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdMedicineInfo" class="control-label"></label>
-                <select asp-for="IdMedicineInfo" asp-items="ViewBag.IdMedicineInfo" class="form-control"></select>
-                
+                <input asp-for="IdMedicineInfo" class="form-control" />
+                <span asp-validation-for="IdMedicineInfo" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Quantity" class="control-label"></label>
@@ -30,6 +30,11 @@
                 <label asp-for="UnitPrice" class="control-label"></label>
                 <input asp-for="UnitPrice" class="form-control" />
                 <span asp-validation-for="UnitPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

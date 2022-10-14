@@ -5,31 +5,36 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Core.Entities;
+using Core.Entity;
 using Infrastructure.Data;
-using Core.Interfaces;
 
 namespace Web.Controllers
 {
     public class MedicineTypesController : Controller
     {
-        private IMedicineTypeRepository _medicineType;
+        private readonly StoreContext _context;
 
-        public MedicineTypesController(IMedicineTypeRepository medicineType)
+        public MedicineTypesController(StoreContext context)
         {
-            _medicineType = medicineType;
+            _context = context;
         }
 
         // GET: MedicineTypes
         public async Task<IActionResult> Index()
         {
-            return View(_medicineType.GetType());
+            return View(await _context.MedicineTypes.ToListAsync());
         }
 
         // GET: MedicineTypes/Details/5
-        public async Task<IActionResult> Details(Guid id)
+        public async Task<IActionResult> Details(Guid? id)
         {
-            var medicineType = _medicineType.GetById(id).Result;
+            if (id == null || _context.MedicineTypes == null)
+            {
+                return NotFound();
+            }
+
+            var medicineType = await _context.MedicineTypes
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (medicineType == null)
             {
                 return NotFound();
@@ -54,16 +59,22 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 medicineType.Id = Guid.NewGuid();
-                _medicineType.Create(medicineType);
+                _context.Add(medicineType);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(medicineType);
         }
 
         // GET: MedicineTypes/Edit/5
-        public async Task<IActionResult> Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
-            var medicineType = _medicineType.GetById(id).Result;
+            if (id == null || _context.MedicineTypes == null)
+            {
+                return NotFound();
+            }
+
+            var medicineType = await _context.MedicineTypes.FindAsync(id);
             if (medicineType == null)
             {
                 return NotFound();
@@ -87,7 +98,8 @@ namespace Web.Controllers
             {
                 try
                 {
-                    _medicineType.Update(medicineType);
+                    _context.Update(medicineType);
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -106,9 +118,15 @@ namespace Web.Controllers
         }
 
         // GET: MedicineTypes/Delete/5
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
-            var medicineType = _medicineType.GetById(id).Result;
+            if (id == null || _context.MedicineTypes == null)
+            {
+                return NotFound();
+            }
+
+            var medicineType = await _context.MedicineTypes
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (medicineType == null)
             {
                 return NotFound();
@@ -122,22 +140,23 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_medicineType.GetType() == null)
+            if (_context.MedicineTypes == null)
             {
                 return Problem("Entity set 'StoreContext.MedicineTypes'  is null.");
             }
-            var medicineType = _medicineType.GetById(id);
+            var medicineType = await _context.MedicineTypes.FindAsync(id);
             if (medicineType != null)
             {
-                _medicineType.Delete(id);
+                _context.MedicineTypes.Remove(medicineType);
             }
 
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MedicineTypeExists(Guid id)
         {
-            return _medicineType.GetById(id).IsCompletedSuccessfully;
+            return _context.MedicineTypes.Any(e => e.Id == id);
         }
     }
 }
