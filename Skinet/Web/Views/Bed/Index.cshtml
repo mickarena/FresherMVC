@@ -1,17 +1,16 @@
-﻿@model IEnumerable<Core.Entities.HospitalBed>;
+﻿@model List<Core.Entities.HospitalBed>
+
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
-<form asp-action="Search" method="get">
+<form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
-            Find by name: <input type="text" name="searchName" placeholder="Search Key" />
-            <input type="submit" value="Search" class="btn btn-primary" /> 
-            
-                <a asp-action="Index">Back to List</a>
-         
+            Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-action="Index">Back to Full List</a>
         </p>
     </div>
 </form>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Core.Entities.MedicineBillInfo>
+﻿@model IEnumerable<Core.Entity.MedicineBillInfo>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,19 +13,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(Model => Model.MedicineInfomations.Name)
+                @Html.DisplayNameFor(model => model.IdMedicineInfo)
             </th>
             <th>
-                @Html.DisplayNameFor(Model => Model.Quantity)
+                @Html.DisplayNameFor(model => model.Quantity)
             </th>
             <th>
-                @Html.DisplayNameFor(Model => Model.UnitPrice)
+                @Html.DisplayNameFor(model => model.UnitPrice)
             </th>
             <th>
-                @Html.DisplayNameFor(Model => Model.Price)
+                @Html.DisplayNameFor(model => model.Price)
             </th>
             <th>
-                @Html.DisplayNameFor(Model => Model.MedicineBills.Id)
+                @Html.DisplayNameFor(model => model.MedicineBills)
             </th>
             <th></th>
         </tr>
@@ -34,10 +34,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.MedicineInfomations.Name)
+                @Html.DisplayFor(modelItem => item.IdMedicineInfo)
             </td>
             <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
+                @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UnitPrice)

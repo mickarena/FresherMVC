@@ -5,36 +5,38 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Core.Entities;
+using Core.Entity;
 using Infrastructure.Data;
-using Core.Interfaces;
 
 namespace Web.Controllers
 {
     public class MedicineBillInfoesController : Controller
     {
-        public MedicineBillInfoesController(IMedBillRepository medicineBill, IMedBillInfoRepository medicineBillInfo, IMedicineInfoRepository medicineInfo)
-        {
-            _MedicineBill = medicineBill;
-            _MedicineBillInfo = medicineBillInfo;
-            _MedicineInfo = medicineInfo;
-        }
+        private readonly StoreContext _context;
 
-        private IMedBillRepository _MedicineBill { get; set; }
-        private IMedBillInfoRepository _MedicineBillInfo { get; set; }
-        private IMedicineInfoRepository _MedicineInfo { get; set; }
+        public MedicineBillInfoesController(StoreContext context)
+        {
+            _context = context;
+        }
 
         // GET: MedicineBillInfoes
         public async Task<IActionResult> Index()
         {
-            var storeContext = _MedicineBillInfo.GetType();
-            return View(storeContext);
+            var storeContext = _context.MedicineBillInfos.Include(m => m.MedicineBills);
+            return View(await storeContext.ToListAsync());
         }
 
         // GET: MedicineBillInfoes/Details/5
-        public async Task<IActionResult> Details(Guid id)
+        public async Task<IActionResult> Details(Guid? id)
         {
-            var medicineBillInfo = _MedicineBillInfo.GetById(id).Result;
+            if (id == null || _context.MedicineBillInfos == null)
+            {
+                return NotFound();
+            }
+
+            var medicineBillInfo = await _context.MedicineBillInfos
+                .Include(m => m.MedicineBills)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (medicineBillInfo == null)
             {
                 return NotFound();
@@ -46,8 +48,7 @@ namespace Web.Controllers
         // GET: MedicineBillInfoes/Create
         public IActionResult Create()
         {
-            ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(), "Id", "Id");
-            ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(), "Id", "Name");
+            ViewData["MedicineBillID"] = new SelectList(_context.MedicineBills, "Id", "Id");
             return View();
         }
 
@@ -56,31 +57,33 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MedicineBillID,IdMedicineInfo,Quantity,UnitPrice,Id")] MedicineBillInfo medicineBillInfo)
+        public async Task<IActionResult> Create([Bind("MedicineBillID,IdMedicineInfo,Quantity,UnitPrice,Price,Id")] MedicineBillInfo medicineBillInfo)
         {
-            ModelState.Remove("Price");
             if (ModelState.IsValid)
             {
                 medicineBillInfo.Id = Guid.NewGuid();
-                medicineBillInfo.Price = medicineBillInfo.UnitPrice * medicineBillInfo.Quantity;
-                _MedicineBillInfo.Create(medicineBillInfo);
+                _context.Add(medicineBillInfo);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(), "Id", "Id", medicineBillInfo.MedicineBillID);
-            ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(), "Id", "Name", medicineBillInfo.IdMedicineInfo);
+            ViewData["MedicineBillID"] = new SelectList(_context.MedicineBills, "Id", "Id", medicineBillInfo.MedicineBillID);
             return View(medicineBillInfo);
         }
 
         // GET: MedicineBillInfoes/Edit/5
-        public async Task<IActionResult> Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
-            var medicineBillInfo = _MedicineBillInfo.GetById(id).Result;
+            if (id == null || _context.MedicineBillInfos == null)
+            {
+                return NotFound();
+            }
+
+            var medicineBillInfo = await _context.MedicineBillInfos.FindAsync(id);
             if (medicineBillInfo == null)
             {
                 return NotFound();
             }
-            ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(), "Id", "Id");
-            ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(), "Id", "Name");
+            ViewData["MedicineBillID"] = new SelectList(_context.MedicineBills, "Id", "Id", medicineBillInfo.MedicineBillID);
             return View(medicineBillInfo);
         }
 
@@ -89,9 +92,8 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("MedicineBillID,IdMedicineInfo,Quantity,UnitPrice,Id")] MedicineBillInfo medicineBillInfo)
+        public async Task<IActionResult> Edit(Guid id, [Bind("MedicineBillID,IdMedicineInfo,Quantity,UnitPrice,Price,Id")] MedicineBillInfo medicineBillInfo)
         {
-            ModelState.Remove("Price");
             if (id != medicineBillInfo.Id)
             {
                 return NotFound();
@@ -101,8 +103,8 @@ namespace Web.Controllers
             {
                 try
                 {
-                    medicineBillInfo.Price = medicineBillInfo.UnitPrice * medicineBillInfo.Quantity;
-                    _MedicineBillInfo.Update(medicineBillInfo);
+                    _context.Update(medicineBillInfo);
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -117,15 +119,21 @@ namespace Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(), "Id", "Id", medicineBillInfo.MedicineBillID);
-            ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(), "Id", "Name", medicineBillInfo.IdMedicineInfo);
+            ViewData["MedicineBillID"] = new SelectList(_context.MedicineBills, "Id", "Id", medicineBillInfo.MedicineBillID);
             return View(medicineBillInfo);
         }
 
         // GET: MedicineBillInfoes/Delete/5
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
-            var medicineBillInfo = _MedicineBillInfo.GetById(id).Result;
+            if (id == null || _context.MedicineBillInfos == null)
+            {
+                return NotFound();
+            }
+
+            var medicineBillInfo = await _context.MedicineBillInfos
+                .Include(m => m.MedicineBills)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (medicineBillInfo == null)
             {
                 return NotFound();
@@ -139,21 +147,23 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_MedicineBillInfo.GetType() == null)
+            if (_context.MedicineBillInfos == null)
             {
                 return Problem("Entity set 'StoreContext.MedicineBillInfos'  is null.");
             }
-            var medicineBillInfo = _MedicineBillInfo.GetById(id).Result;
+            var medicineBillInfo = await _context.MedicineBillInfos.FindAsync(id);
             if (medicineBillInfo != null)
             {
-                _MedicineBillInfo.Delete(id);
+                _context.MedicineBillInfos.Remove(medicineBillInfo);
             }
+
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MedicineBillInfoExists(Guid id)
         {
-            return _MedicineBillInfo.GetById(id).IsCompletedSuccessfully;
+            return _context.MedicineBillInfos.Any(e => e.Id == id);
         }
     }
 }

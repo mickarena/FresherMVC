@@ -1,11 +1,9 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Web.Controllers
@@ -18,17 +16,12 @@ namespace Web.Controllers
         {
             _doctorRepository = doctorRepository;
             _webHostEnvironment = webHostEnvironment;
-
         }       
-        public async Task<IActionResult> Index(int pg = 1, int pageSize = 1)
+        public async Task<IActionResult> Index()
         {
-            var model = await _doctorRepository.GetDoctor();  
-            
-            var page =  new Page(model.Count(), pg , pageSize);
-            var data = model.Skip((pg - 1) * pageSize).Take(page.PageSize).ToList();
-            ViewBag.Page = page;
+            var model = await _doctorRepository.GetDoctor();
+            return View(model);
 
-            return View(data);
         }
 
         public IActionResult Create()
@@ -36,11 +29,12 @@ namespace Web.Controllers
             return View();
         }
 
-        
-
         [HttpPost]
         public async Task<IActionResult> Create(Doctor model)
-        {           
+        {
+
+            if (!ModelState.IsValid)
+            {
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
                 string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
                 string extension = Path.GetExtension(model.ImageFile.FileName);
@@ -53,7 +47,8 @@ namespace Web.Controllers
 
                 await _doctorRepository.Create(model);
                 return RedirectToAction("Index");
-           
+            }
+            return View(model);
         }
         
         public async Task<IActionResult> Edit(Guid id)
@@ -64,7 +59,9 @@ namespace Web.Controllers
         
         [HttpPost]
         public async Task<IActionResult> Edit(Doctor model)
-        {         
+        {
+            if (!ModelState.IsValid)
+            {
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
                 string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
                 string extension = Path.GetExtension(model.ImageFile.FileName);
@@ -74,26 +71,22 @@ namespace Web.Controllers
                 {
                     await model.ImageFile.CopyToAsync(fileStream);
                 }
-            await _doctorRepository.Update(model);
-            return RedirectToAction("Index");
-
+                await _doctorRepository.Update(model);
+                return RedirectToAction("Index");
+            }
+            return View(model);
         }
-        
+
         public async Task<IActionResult> Delete(Guid id)
         {
             var doctor =  await _doctorRepository.GetById(id);
             return View(doctor);
         }
         
-        
         [HttpPost]
-        public async Task<IActionResult> Deleted(Guid id)
+        public async Task<IActionResult> Remove(Guid id)
         {
             if (ModelState.IsValid) {
-                var doctor = await _doctorRepository.GetById(id);
-                var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "image/doctors", doctor.Image);
-                if (System.IO.File.Exists(imagePath))
-                    System.IO.File.Delete(imagePath);
                 await _doctorRepository.Delete(id);
                 return RedirectToAction("Index");
             }              
@@ -105,7 +98,5 @@ namespace Web.Controllers
             var result = await _doctorRepository.Search(searchName);
             return View("Index", result);
         }
-    
-
     }
 }

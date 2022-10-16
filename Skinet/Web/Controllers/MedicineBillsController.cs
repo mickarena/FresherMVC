@@ -5,31 +5,36 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Core.Entities;
+using Core.Entity;
 using Infrastructure.Data;
-using Core.Interfaces;
 
 namespace Web.Controllers
 {
     public class MedicineBillsController : Controller
     {
-        private IMedBillRepository _billRepository;
+        private readonly StoreContext _context;
 
-        public MedicineBillsController(IMedBillRepository billRepository)
+        public MedicineBillsController(StoreContext context)
         {
-            _billRepository = billRepository;
+            _context = context;
         }
 
         // GET: MedicineBills
         public async Task<IActionResult> Index()
         {
-            return View(_billRepository.GetType());
+              return View(await _context.MedicineBills.ToListAsync());
         }
 
         // GET: MedicineBills/Details/5
-        public async Task<IActionResult> Details(Guid id)
+        public async Task<IActionResult> Details(Guid? id)
         {
-            var medicineBill = _billRepository.GetById(id).Result;
+            if (id == null || _context.MedicineBills == null)
+            {
+                return NotFound();
+            }
+
+            var medicineBill = await _context.MedicineBills
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (medicineBill == null)
             {
                 return NotFound();
@@ -54,16 +59,22 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 medicineBill.Id = Guid.NewGuid();
-                _billRepository.Create(medicineBill);
+                _context.Add(medicineBill);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(medicineBill);
         }
 
         // GET: MedicineBills/Edit/5
-        public async Task<IActionResult> Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
-            var medicineBill = _billRepository.GetById(id).Result;
+            if (id == null || _context.MedicineBills == null)
+            {
+                return NotFound();
+            }
+
+            var medicineBill = await _context.MedicineBills.FindAsync(id);
             if (medicineBill == null)
             {
                 return NotFound();
@@ -87,7 +98,8 @@ namespace Web.Controllers
             {
                 try
                 {
-                    _billRepository.Update(medicineBill);
+                    _context.Update(medicineBill);
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -106,9 +118,15 @@ namespace Web.Controllers
         }
 
         // GET: MedicineBills/Delete/5
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
-            var medicineBill = _billRepository.GetById(id).Result;
+            if (id == null || _context.MedicineBills == null)
+            {
+                return NotFound();
+            }
+
+            var medicineBill = await _context.MedicineBills
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (medicineBill == null)
             {
                 return NotFound();
@@ -122,22 +140,23 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_billRepository.GetById(id) == null)
+            if (_context.MedicineBills == null)
             {
                 return Problem("Entity set 'StoreContext.MedicineBills'  is null.");
             }
-            var medicineBill = _billRepository.GetById(id);
+            var medicineBill = await _context.MedicineBills.FindAsync(id);
             if (medicineBill != null)
             {
-                _billRepository.Delete(id);
+                _context.MedicineBills.Remove(medicineBill);
             }
-
+            
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MedicineBillExists(Guid id)
         {
-            return _billRepository.GetById(id).IsCompletedSuccessfully;
+          return _context.MedicineBills.Any(e => e.Id == id);
         }
     }
 }
