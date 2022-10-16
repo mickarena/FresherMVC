@@ -28,7 +28,7 @@ namespace Infrastructure.Data
 
         public async Task<MedicineBillInfo> GetById(Guid id)
         {
-            return _context.MedicineBillInfos.AsNoTracking().FirstOrDefault(c => c.Id == id);
+            return _context.MedicineBillInfos.FirstOrDefault(c => c.Id == id);
         }
 
         public void Update(MedicineBillInfo medicineBillInfo)
@@ -39,7 +39,7 @@ namespace Infrastructure.Data
 
         public List<MedicineBillInfo> GetType()
         {
-            return _context.MedicineBillInfos.Include(m => m.MedicineBills).Include(c => c.MedicineInfomations).AsNoTracking().ToList();
+            return _context.MedicineBillInfos.Include(m => m.MedicineBills).Include(c => c.MedicineInfomations).ToList();
         }
     }
 }
