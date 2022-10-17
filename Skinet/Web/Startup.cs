@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Core.Pagination;
 
 namespace Web
 {
@@ -36,6 +37,7 @@ namespace Web
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddDbContext<StoreContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
+            services.AddScoped(typeof(IPagedRepository<>), typeof(PageRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
