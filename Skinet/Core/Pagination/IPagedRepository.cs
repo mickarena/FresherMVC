@@ -1,7 +1,9 @@
-﻿namespace Core.Pagination
+﻿using Core.Entities;
+
+namespace Core.Pagination
 {
-    public interface IPagedRepository<T> where T : List<T>
+    public interface IPagedRepository<T> where T : BaseEntity
     {
-        public List<T> PaginatedList(List<T> items, int pageIndex);
+        public DtoPagination<T> PaginatedList(List<T> items, int pageIndex);
     }
 }

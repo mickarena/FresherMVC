@@ -21,7 +21,7 @@ namespace Infrastructure.Data
 
         public void Delete(Guid id)
         {
-            var temp = _context!.MedicineTypes.FirstOrDefault(c => c.Id == id);
+            var temp = _context.MedicineTypes.FirstOrDefault(c => c.Id == id);
             _context.MedicineTypes.Remove(temp!);
             _context.SaveChangesAsync();
         }
@@ -39,7 +39,7 @@ namespace Infrastructure.Data
 
         public List<MedicineType> GetType()
         {
-            return _context.MedicineTypes.AsNoTracking().ToList();
+            return _context.MedicineTypes.ToList();
         }
     }
 }

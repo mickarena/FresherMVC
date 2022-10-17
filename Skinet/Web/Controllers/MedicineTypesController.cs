@@ -8,22 +8,35 @@ using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using Infrastructure.Data;
 using Core.Interfaces;
+using Core.Pagination;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace Web.Controllers
 {
     public class MedicineTypesController : Controller
     {
         private IMedicineTypeRepository _medicineType;
+        private IPagedRepository<MedicineType> pagedRepository;
 
-        public MedicineTypesController(IMedicineTypeRepository medicineType)
+        public MedicineTypesController(IMedicineTypeRepository medicineType, IPagedRepository<MedicineType> pagedRepository)
         {
             _medicineType = medicineType;
+            this.pagedRepository = pagedRepository;
         }
 
         // GET: MedicineTypes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int currentPage, string searchString)
+
         {
-            return View(_medicineType.GetType());
+            var list = _medicineType.GetType();
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                list = list.Where(c => c.Name == searchString).ToList();
+            }
+            var dto = pagedRepository.PaginatedList(list, currentPage);
+            ViewBag.TotalPage = dto.TotalPages;
+            ViewBag.CurrentPage = dto.PageIndex;
+            return View(dto.Items);
         }
 
         // GET: MedicineTypes/Details/5
