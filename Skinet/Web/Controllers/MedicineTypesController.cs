@@ -31,7 +31,7 @@ namespace Web.Controllers
             var list = _medicineType.GetType();
             if (!string.IsNullOrWhiteSpace(searchString))
             {
-                list = list.Where(c => c.Name == searchString).ToList();
+                list = list.Where(c => c.Name.Contains(searchString)).ToList();
             }
             var dto = pagedRepository.PaginatedList(list, currentPage);
             ViewBag.TotalPage = dto.TotalPages;

@@ -8,27 +8,37 @@ using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using Infrastructure.Data;
 using Core.Interfaces;
+using Core.Pagination;
 
 namespace Web.Controllers
 {
     public class MedicineBillInfoesController : Controller
     {
-        public MedicineBillInfoesController(IMedBillRepository medicineBill, IMedBillInfoRepository medicineBillInfo, IMedicineInfoRepository medicineInfo)
+        public MedicineBillInfoesController(IMedBillRepository medicineBill, IMedBillInfoRepository medicineBillInfo, IMedicineInfoRepository medicineInfo, IPagedRepository<MedicineBillInfo> pagedRepository)
         {
             _MedicineBill = medicineBill;
             _MedicineBillInfo = medicineBillInfo;
             _MedicineInfo = medicineInfo;
+            this.pagedRepository = pagedRepository;
         }
 
         private IMedBillRepository _MedicineBill { get; set; }
         private IMedBillInfoRepository _MedicineBillInfo { get; set; }
         private IMedicineInfoRepository _MedicineInfo { get; set; }
+        private IPagedRepository<MedicineBillInfo> pagedRepository;
 
         // GET: MedicineBillInfoes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int currentPage, Guid searchString)
         {
-            var storeContext = _MedicineBillInfo.GetType();
-            return View(storeContext);
+            var list = _MedicineBillInfo.GetType();
+            if (searchString != Guid.Empty)
+            {
+                list = list.Where(c => c.MedicineBillID == searchString).ToList();
+            }
+            var dto = pagedRepository.PaginatedList(list, currentPage);
+            ViewBag.TotalPage = dto.TotalPages;
+            ViewBag.CurrentPage = dto.PageIndex;
+            return View(dto.Items);
         }
 
         // GET: MedicineBillInfoes/Details/5
