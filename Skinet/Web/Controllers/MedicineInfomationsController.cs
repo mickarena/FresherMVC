@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using Infrastructure.Data;
 using Core.Interfaces;
+using Core.Pagination;
 
 namespace Web.Controllers
 {
@@ -15,17 +16,27 @@ namespace Web.Controllers
     {
         private IMedicineInfoRepository _medicineInfo;
         private IMedicineTypeRepository _medicineType;
+        private IPagedRepository<MedicineInfomation> pagedRepository;
 
-        public MedicineInfomationsController(IMedicineInfoRepository medicineInfo, IMedicineTypeRepository medicineType)
+        public MedicineInfomationsController(IMedicineInfoRepository medicineInfo, IMedicineTypeRepository medicineType, IPagedRepository<MedicineInfomation> pagedRepository)
         {
             _medicineInfo = medicineInfo;
             _medicineType = medicineType;
+            this.pagedRepository = pagedRepository;
         }
 
         // GET: MedicineInfomations
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int currentPage, string searchString)
         {
-            return View(_medicineInfo.GetType());
+            var list = _medicineInfo.GetType();
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                list = list.Where(c => c.Name.StartsWith(searchString)).ToList();
+            }
+            var dto = pagedRepository.PaginatedList(list, currentPage);
+            ViewBag.TotalPage = dto.TotalPages;
+            ViewBag.CurrentPage = dto.PageIndex;
+            return View(dto.Items);
         }
 
         // GET: MedicineInfomations/Details/5
