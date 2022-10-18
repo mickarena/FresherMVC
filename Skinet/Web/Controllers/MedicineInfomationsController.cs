@@ -29,10 +29,6 @@ namespace Web.Controllers
         public async Task<IActionResult> Index(int currentPage, string search)
         {
             var list = _medicineInfo.GetType(search);
-            if (!string.IsNullOrWhiteSpace(search))
-            {
-                list = list.Where(c => c.Name.StartsWith(search)).ToList();
-            }
             var dto = pagedRepository.PaginatedList(list, currentPage);
             ViewBag.TotalPage = dto.TotalPages;
             ViewBag.CurrentPage = dto.PageIndex;

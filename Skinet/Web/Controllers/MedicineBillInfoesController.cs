@@ -31,10 +31,6 @@ namespace Web.Controllers
         public async Task<IActionResult> Index(int currentPage, Guid search)
         {
             var list = _MedicineBillInfo.GetType(search);
-            if (search != Guid.Empty)
-            {
-                list = list.Where(c => c.MedicineBillID == search).ToList();
-            }
             var dto = pagedRepository.PaginatedList(list, currentPage);
             ViewBag.TotalPage = dto.TotalPages;
             ViewBag.CurrentPage = dto.PageIndex;
