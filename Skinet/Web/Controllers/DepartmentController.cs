@@ -1,66 +1,72 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
+using Core.Pagination;
+using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Linq;
 
 namespace Web.Controllers
 {
     public class DepartmentController : Controller
     {
-        private INurseRepository _nurseRepository;
-
         private IDepartmentRepository _departmentRepository;
+        private IPagedRepository<Department> pagedRepository;
 
-        public DepartmentController(INurseRepository nurseRepository, IDepartmentRepository departmentRepository)
+
+        public DepartmentController(IDepartmentRepository departmentRepository, IPagedRepository<Department> pagedRepository)
         {
-            _nurseRepository = nurseRepository;
             _departmentRepository = departmentRepository;
+            this.pagedRepository = pagedRepository;
         }
-        public ActionResult Index()
+        public ActionResult Index(int currentPage, string searchString)
+
         {
-            var nurses = _departmentRepository.GetAll();
-            return View(nurses);
+            var list = _departmentRepository.GetAll();
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                list = list.Where(c => c.Name.Contains(searchString)).ToList();
+            }
+            var dto = pagedRepository.PaginatedList(list, currentPage);
+            ViewBag.TotalPage = dto.TotalPages;
+            ViewBag.CurrentPage = dto.PageIndex;
+            return View(dto.Items);
         }
         public ActionResult Create()
         {
-            LoadData();
             return View();
         }
 
         // POST: Nurses/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Nurse nurse)
+        public ActionResult Create(Department department)
         {
             if (ModelState.IsValid)
             {
-                _departmentRepository.Create(nurse);
+                _departmentRepository.Create(department);
                 return RedirectToAction("Index");
             }
-            LoadData();
-            return View(nurse);
+            return View(department);
         }
 
         // GET: Nurses/Edit/5
         public ActionResult Edit(Guid id)
         {
             var nurses = _departmentRepository.GetbyId(id);
-            LoadData();
             return View(nurses);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Nurse nurse)
+        public ActionResult Edit(Department department)
         {
             if (ModelState.IsValid)
             {
-                _departmentRepository.Update(nurse);
+                _departmentRepository.Update(department);
                 return RedirectToAction("Index");
             }
-            LoadData();
-            return View(nurse);
+            return View(department);
         }
 
         public ActionResult Delete(Guid id)
@@ -73,13 +79,8 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            _nurseRepository.Delete(id);
+            _departmentRepository.Delete(id);
             return RedirectToAction("Index");
-        }
-        public void LoadData()
-        {
-            var departments = _departmentRepository.GetAll();
-            ViewBag.SelectDDepartments = new SelectList(departments, "Id", "Name");
         }
 
     }

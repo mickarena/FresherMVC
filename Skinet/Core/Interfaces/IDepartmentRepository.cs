@@ -1,10 +1,4 @@
 ﻿using Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Core.Interfaces
 {
     public interface IDepartmentRepository
@@ -12,7 +6,7 @@ namespace Core.Interfaces
         void Create(Department departments);
         void Update(Department departments);
         void Delete(Guid id);
-        IEnumerable<Department> GetAll();
+        List<Department> GetAll();
         Department GetbyId(Guid id);
     }
 }

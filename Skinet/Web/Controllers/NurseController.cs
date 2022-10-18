@@ -1,8 +1,10 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
+using Core.Pagination;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Linq;
 
 namespace Web.Controllers
 {
@@ -11,16 +13,26 @@ namespace Web.Controllers
         private INurseRepository _nurseRepository;
 
         private IDepartmentRepository _departmentRepository;
+        private IPagedRepository<Nurse> pagedRepository;
 
-        public NurseController(INurseRepository nurseRepository, IDepartmentRepository departmentRepository)
+        public NurseController(INurseRepository nurseRepository, IDepartmentRepository departmentRepository, IPagedRepository<Nurse> pagedRepository)
         {
             _nurseRepository = nurseRepository;
             _departmentRepository = departmentRepository;
+            this.pagedRepository = pagedRepository;
         }
-        public ActionResult Index()
+        public ActionResult Index(int currentPage, string searchString)
+
         {
-            var nurses = _nurseRepository.GetAll();
-            return View(nurses);
+            var list = _nurseRepository.GetAll();
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                list = list.Where(c => c.Name.Contains(searchString)).ToList();
+            }
+            var dto = pagedRepository.PaginatedList(list, currentPage);
+            ViewBag.TotalPage = dto.TotalPages;
+            ViewBag.CurrentPage = dto.PageIndex;
+            return View(dto.Items);
         }
         public ActionResult Create()
         {

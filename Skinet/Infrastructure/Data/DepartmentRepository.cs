@@ -1,10 +1,5 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
@@ -29,9 +24,9 @@ namespace Infrastructure.Data
             _db.SaveChanges();
         }
 
-        public IEnumerable<Department> GetAll()
+        public List<Department> GetAll()
         {
-            return _db.Department.ToList();
+            return _db.Departments.ToList();
         }
 
         public Department GetbyId(Guid id)

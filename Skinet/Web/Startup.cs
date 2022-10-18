@@ -27,6 +27,8 @@ namespace Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<INurseRepository, NurseRepository>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IMedicineInfoRepository, MedInfoRepository>();
