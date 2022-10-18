@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Core.Pagination;
+using Core.Entities;
 
 namespace Web
 {
@@ -33,6 +35,7 @@ namespace Web
             services.AddScoped<IMedBillInfoRepository, MedBillInfoRepository>();
             services.AddScoped<IMedBillRepository, MedBillRepository>();
             services.AddScoped<IBedRepository, BedRepository>();
+            services.AddScoped(typeof(IPagedRepository<>), typeof(PageRepository<>));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddDbContext<StoreContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();

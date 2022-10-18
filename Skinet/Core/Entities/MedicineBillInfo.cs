@@ -20,11 +20,13 @@ namespace Core.Entities
         [DisplayName("Quantity")]
         public int Quantity { get; set; }
 
+        [MaxLength(50)]
         [Range(0, int.MaxValue)]
         [DisplayName("Unit price")]
         public int UnitPrice { get; set; }
 
         [Range(0, int.MaxValue)]
+        [MaxLength(50)]
         [DisplayName("Total price")]
         public int Price { get; set; }
 
