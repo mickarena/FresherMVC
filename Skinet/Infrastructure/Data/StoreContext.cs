@@ -24,12 +24,6 @@ namespace Infrastructure.Data
         public DbSet<Shift> Shifts { get; set; }
         public DbSet<WorkShift> WorkShifts { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("Server=DESKTOP-1D6NN35;Database=Skinetv6;Trusted_Connection=True;MultipleActiveResultSets=true");
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -43,8 +37,12 @@ namespace Infrastructure.Data
             modelBuilder.Entity<MedicineBillInfo>().HasOne(a => a.MedicineInfomations).WithMany(c => c.MedicineBillInfos).HasForeignKey(d => d.IdMedicineInfo);
 
             //Thuộc tính của model edit từ đây
+    
+            modelBuilder.Entity<MedicineInfomation>().Property(c => c.MedicineIDType).IsRequired();
+            modelBuilder.Entity<MedicineInfomation>().Property(c => c.IsEmpty).IsRequired();
+            modelBuilder.Entity<MedicineInfomation>().Property(c => c.ImportDate).IsRequired();
 
-            modelBuilder.Entity<Doctor>().Property(d => d.Birthday).HasDefaultValue(DateTime.Now);
+
             modelBuilder.Entity<MedicineInfomation>().Property(c => c.ImportDate).HasDefaultValue(DateTime.UtcNow);
             modelBuilder.Entity<MedicineInfomation>().Property(c => c.Quantity).HasDefaultValue(1);
             modelBuilder.Entity<MedicineBill>().Property(c => c.DateCreate).HasDefaultValue(DateTime.Now);
