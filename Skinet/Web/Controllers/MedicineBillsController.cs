@@ -24,12 +24,12 @@ namespace Web.Controllers
         }
 
         // GET: MedicineBills
-        public async Task<IActionResult> Index(int currentPage, Guid searchString)
+        public async Task<IActionResult> Index(int currentPage, Guid search)
         {
-            var list = _billRepository.GetType();
-            if (searchString != Guid.Empty)
+            var list = _billRepository.GetType(search);
+            if (search != Guid.Empty)
             {
-                list = list.Where(c => c.DoctorID == searchString).ToList();
+                list = list.Where(c => c.DoctorID == search).ToList();
             }
             var dto = pagedRepository.PaginatedList(list, currentPage);
             ViewBag.TotalPage = dto.TotalPages;

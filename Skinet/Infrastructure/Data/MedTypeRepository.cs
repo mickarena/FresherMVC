@@ -37,9 +37,14 @@ namespace Infrastructure.Data
             _context.SaveChangesAsync();
         }
 
-        public List<MedicineType> GetType()
+        public List<MedicineType> GetType(string search)
         {
-            return _context.MedicineTypes.ToList();
+            var list = _context.MedicineTypes.ToList();
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                list = list.Where(c => c.Name.Contains(search)).ToList();
+            }
+            return list;
         }
     }
 }

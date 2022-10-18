@@ -28,12 +28,12 @@ namespace Web.Controllers
         private IPagedRepository<MedicineBillInfo> pagedRepository;
 
         // GET: MedicineBillInfoes
-        public async Task<IActionResult> Index(int currentPage, Guid searchString)
+        public async Task<IActionResult> Index(int currentPage, Guid search)
         {
-            var list = _MedicineBillInfo.GetType();
-            if (searchString != Guid.Empty)
+            var list = _MedicineBillInfo.GetType(search);
+            if (search != Guid.Empty)
             {
-                list = list.Where(c => c.MedicineBillID == searchString).ToList();
+                list = list.Where(c => c.MedicineBillID == search).ToList();
             }
             var dto = pagedRepository.PaginatedList(list, currentPage);
             ViewBag.TotalPage = dto.TotalPages;
@@ -56,8 +56,8 @@ namespace Web.Controllers
         // GET: MedicineBillInfoes/Create
         public IActionResult Create()
         {
-            ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(), "Id", "Id");
-            ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(), "Id", "Name");
+            ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(Guid.Empty), "Id", "Id");
+            ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(null), "Id", "Name");
             return View();
         }
 
@@ -76,8 +76,8 @@ namespace Web.Controllers
                 _MedicineBillInfo.Create(medicineBillInfo);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(), "Id", "Id", medicineBillInfo.MedicineBillID);
-            ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(), "Id", "Name", medicineBillInfo.IdMedicineInfo);
+            ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(Guid.Empty), "Id", "Id", medicineBillInfo.MedicineBillID);
+            ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(null), "Id", "Name", medicineBillInfo.IdMedicineInfo);
             return View(medicineBillInfo);
         }
 
@@ -89,8 +89,8 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
-            ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(), "Id", "Id");
-            ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(), "Id", "Name");
+            ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(Guid.Empty), "Id", "Id");
+            ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(null), "Id", "Name");
             return View(medicineBillInfo);
         }
 
@@ -127,8 +127,8 @@ namespace Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(), "Id", "Id", medicineBillInfo.MedicineBillID);
-            ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(), "Id", "Name", medicineBillInfo.IdMedicineInfo);
+            ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(Guid.Empty), "Id", "Id", medicineBillInfo.MedicineBillID);
+            ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(null), "Id", "Name", medicineBillInfo.IdMedicineInfo);
             return View(medicineBillInfo);
         }
 
