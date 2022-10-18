@@ -34,46 +34,23 @@ namespace Infrastructure.Data
             modelBuilder.Entity<ProductBrand>().Property(p => p.Id).ValueGeneratedNever();
             modelBuilder.Entity<Product>().Property(p => p.Id).ValueGeneratedNever();
             modelBuilder.Entity<ProductType>().Property(p => p.Id).ValueGeneratedNever();
-            modelBuilder.Entity<MedicineType>().HasKey(c => c.Id);
-            modelBuilder.Entity<MedicineBill>().HasKey(c => c.Id);
-            modelBuilder.Entity<MedicineInfomation>().HasKey(c => c.Id);
-            modelBuilder.Entity<MedicineBillInfo>().HasKey(c => c.Id);
+
             modelBuilder.Entity<MedicineInfomation>().HasOne(a => a.MedicineTypes).WithMany(c => c.MedicineInfomations).HasForeignKey(d => d.MedicineIDType);
             modelBuilder.Entity<MedicineBillInfo>().HasOne(a => a.MedicineBills).WithMany(c => c.MedicineBillInfos).HasForeignKey(d => d.MedicineBillID);
             modelBuilder.Entity<MedicineBillInfo>().HasOne(a => a.MedicineInfomations).WithMany(c => c.MedicineBillInfos).HasForeignKey(d => d.IdMedicineInfo);
 
             //Thuộc tính của model edit từ đây
-            modelBuilder.Entity<Doctor>().Property(d => d.Name).IsRequired().HasMaxLength(255);
-            modelBuilder.Entity<Doctor>().Property(d => d.Phone).IsRequired().HasMaxLength(100);
-            modelBuilder.Entity<Doctor>().Property(d => d.Address).IsRequired().HasMaxLength(255);
-            modelBuilder.Entity<Doctor>().Property(d => d.Birthday).HasDefaultValue(DateTime.Now);
-            modelBuilder.Entity<Doctor>().Property(d => d.Department).IsRequired().HasMaxLength(255);
-            modelBuilder.Entity<Doctor>().Property(d => d.Image).IsRequired().HasMaxLength(255);
-
+    
             modelBuilder.Entity<MedicineInfomation>().Property(c => c.MedicineIDType).IsRequired();
             modelBuilder.Entity<MedicineInfomation>().Property(c => c.IsEmpty).IsRequired();
             modelBuilder.Entity<MedicineInfomation>().Property(c => c.ImportDate).IsRequired();
-            modelBuilder.Entity<MedicineInfomation>().Property(c => c.ImportDate).HasDefaultValue(DateTime.UtcNow);
-            modelBuilder.Entity<MedicineInfomation>().Property(c => c.ExpireDate).IsRequired();
-            modelBuilder.Entity<MedicineInfomation>().Property(c => c.Quantity).IsRequired();
-            modelBuilder.Entity<MedicineInfomation>().Property(c => c.UnitPrice).IsRequired();
-            modelBuilder.Entity<MedicineInfomation>().Property(c => c.Name).IsRequired();
-            modelBuilder.Entity<MedicineInfomation>().Property(c => c.Name).HasMaxLength(100);
+
+
+
+            modelBuilder.Entity<Doctor>().Property(d => d.Birthday).HasDefaultValue(DateTime.Now);
+
+          
             modelBuilder.Entity<MedicineInfomation>().Property(c => c.Quantity).HasDefaultValue(1);
-
-            modelBuilder.Entity<MedicineType>().Property(c => c.Name).IsRequired();
-            modelBuilder.Entity<MedicineType>().Property(c => c.Name).HasMaxLength(100);
-
-            modelBuilder.Entity<MedicineBill>().Property(c => c.DoctorID).IsRequired();
-            modelBuilder.Entity<MedicineBill>().Property(c => c.DateCreate).IsRequired();
-            modelBuilder.Entity<MedicineBill>().Property(c => c.PayStatus).IsRequired();
-            modelBuilder.Entity<MedicineBill>().Property(c => c.DateCreate).HasDefaultValue(DateTime.Now);
-
-            modelBuilder.Entity<MedicineBillInfo>().Property(c => c.IdMedicineInfo).IsRequired();
-            modelBuilder.Entity<MedicineBillInfo>().Property(c => c.MedicineBillID).IsRequired();
-            modelBuilder.Entity<MedicineBillInfo>().Property(c => c.Price).IsRequired();
-            modelBuilder.Entity<MedicineBillInfo>().Property(c => c.UnitPrice).IsRequired();
-            modelBuilder.Entity<MedicineBillInfo>().Property(c => c.Quantity).IsRequired();
 
             //fresher-2410-start
             modelBuilder.Entity<Shift>().HasKey(c => c.Id);
@@ -81,7 +58,6 @@ namespace Infrastructure.Data
             modelBuilder.Entity<WorkShift>().HasKey(c => c.Id);
             modelBuilder.Entity<WorkShift>().HasOne(a => a.Shift).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdShift);
             modelBuilder.Entity<WorkShift>().HasOne(a => a.Doctor).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdDoctor);
-            modelBuilder.Entity<WorkShift>().Property(c => c.CreateAt).HasDefaultValue(DateTime.Now);
             //
 
             modelBuilder.Entity<Nurse>().HasKey(p => p.Id);

@@ -1,17 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Core.Pagination;
+
 
 namespace Web
 {
@@ -36,6 +32,9 @@ namespace Web
             services.AddScoped<IMedBillInfoRepository, MedBillInfoRepository>();
             services.AddScoped<IMedBillRepository, MedBillRepository>();
             services.AddScoped<IBedRepository, BedRepository>();
+            services.AddScoped<IShiftRepository, ShiftRepository>();
+            services.AddScoped<IWorkShiftRepository, WorkShiftRepository>();
+            services.AddScoped(typeof(IPagedRepository<>), typeof(PageRepository<>));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddDbContext<StoreContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();

@@ -9,6 +9,14 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form >
+    <div class="input-group mb-3">
+        <input name="search" type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" asp-action="Index" type="submit">Button</button>
+        </div>
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -19,17 +27,28 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<div aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(ViewBag.CurrentPage <= 1 ? "disabled" : "")"><a class="page-link" asp-route-currentPage="@(ViewBag.CurrentPage - 1)" asp-action="Index">Previous</a></li>
+        @for (int i = 0; i < ViewBag.TotalPage; i++)
+        {
+            <li class="page-item @(ViewBag.CurrentPage == i+1 ? "active" : "")"><a class="page-link" asp-action="Index" asp-route-currentPage="@(i+1)">@(i + 1)</a></li>
+        }
+        <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPage ? "disabled" : "")"><a class="page-link" asp-route-currentPage="@(ViewBag.CurrentPage + 1)" asp-action="Index">Next</a></li>
+    </ul>
+</div>

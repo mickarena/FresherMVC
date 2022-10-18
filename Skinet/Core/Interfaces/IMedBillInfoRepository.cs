@@ -12,6 +12,6 @@ namespace Core.Interfaces
 
         Task<MedicineBillInfo> GetById(Guid id);
 
-        List<MedicineBillInfo> GetType();
+        List<MedicineBillInfo> GetType(Guid search);
     }
 }

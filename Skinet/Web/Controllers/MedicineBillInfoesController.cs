@@ -8,27 +8,37 @@ using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using Infrastructure.Data;
 using Core.Interfaces;
+using Core.Pagination;
 
 namespace Web.Controllers
 {
     public class MedicineBillInfoesController : Controller
     {
-        public MedicineBillInfoesController(IMedBillRepository medicineBill, IMedBillInfoRepository medicineBillInfo, IMedicineInfoRepository medicineInfo)
+        public MedicineBillInfoesController(IMedBillRepository medicineBill, IMedBillInfoRepository medicineBillInfo, IMedicineInfoRepository medicineInfo, IPagedRepository<MedicineBillInfo> pagedRepository)
         {
             _MedicineBill = medicineBill;
             _MedicineBillInfo = medicineBillInfo;
             _MedicineInfo = medicineInfo;
+            this.pagedRepository = pagedRepository;
         }
 
         private IMedBillRepository _MedicineBill { get; set; }
         private IMedBillInfoRepository _MedicineBillInfo { get; set; }
         private IMedicineInfoRepository _MedicineInfo { get; set; }
+        private IPagedRepository<MedicineBillInfo> pagedRepository;
 
         // GET: MedicineBillInfoes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int currentPage, Guid search)
         {
-            var storeContext = _MedicineBillInfo.GetType();
-            return View(storeContext);
+            var list = _MedicineBillInfo.GetType(search);
+            if (search != Guid.Empty)
+            {
+                list = list.Where(c => c.MedicineBillID == search).ToList();
+            }
+            var dto = pagedRepository.PaginatedList(list, currentPage);
+            ViewBag.TotalPage = dto.TotalPages;
+            ViewBag.CurrentPage = dto.PageIndex;
+            return View(dto.Items);
         }
 
         // GET: MedicineBillInfoes/Details/5
@@ -46,8 +56,8 @@ namespace Web.Controllers
         // GET: MedicineBillInfoes/Create
         public IActionResult Create()
         {
-            ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(), "Id", "Id");
-            ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(), "Id", "Name");
+            ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(Guid.Empty), "Id", "Id");
+            ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(null), "Id", "Name");
             return View();
         }
 
@@ -66,8 +76,8 @@ namespace Web.Controllers
                 _MedicineBillInfo.Create(medicineBillInfo);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(), "Id", "Id", medicineBillInfo.MedicineBillID);
-            ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(), "Id", "Name", medicineBillInfo.IdMedicineInfo);
+            ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(Guid.Empty), "Id", "Id", medicineBillInfo.MedicineBillID);
+            ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(null), "Id", "Name", medicineBillInfo.IdMedicineInfo);
             return View(medicineBillInfo);
         }
 
@@ -79,8 +89,8 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
-            ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(), "Id", "Id");
-            ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(), "Id", "Name");
+            ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(Guid.Empty), "Id", "Id");
+            ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(null), "Id", "Name");
             return View(medicineBillInfo);
         }
 
@@ -117,8 +127,8 @@ namespace Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(), "Id", "Id", medicineBillInfo.MedicineBillID);
-            ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(), "Id", "Name", medicineBillInfo.IdMedicineInfo);
+            ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(Guid.Empty), "Id", "Id", medicineBillInfo.MedicineBillID);
+            ViewData["IdMedicineInfo"] = new SelectList(_MedicineInfo.GetType(null), "Id", "Name", medicineBillInfo.IdMedicineInfo);
             return View(medicineBillInfo);
         }
 

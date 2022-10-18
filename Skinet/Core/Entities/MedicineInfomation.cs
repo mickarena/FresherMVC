@@ -15,7 +15,7 @@ namespace Core.Entities
         public string Name { get; set; }
 
         [DisplayName("Import date")]
-        public DateTime ImportDate { get; set; }
+        public DateTime ImportDate { get; set; } = DateTime.UtcNow;
 
         [Required]
         [DisplayName("Expire date")]

@@ -10,7 +10,7 @@ namespace Core.Entities
         public Guid DoctorID { get; set; }
 
         [DisplayName("Date created")]
-        public DateTime DateCreate { get; set; }
+        public DateTime DateCreate { get; set; } = DateTime.UtcNow;
 
         [Required]
         [DisplayName("Pay status")]
