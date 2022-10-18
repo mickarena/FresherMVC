@@ -24,12 +24,6 @@ namespace Infrastructure.Data
         public DbSet<Shift> Shifts { get; set; }
         public DbSet<WorkShift> WorkShifts { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("Server=DESKTOP-1D6NN35;Database=Skinetv6;Trusted_Connection=True;MultipleActiveResultSets=true");
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
