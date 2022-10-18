@@ -43,9 +43,11 @@ namespace Infrastructure.Data
             modelBuilder.Entity<MedicineInfomation>().Property(c => c.ImportDate).IsRequired();
 
 
-            modelBuilder.Entity<MedicineInfomation>().Property(c => c.ImportDate).HasDefaultValue(DateTime.UtcNow);
+
+            modelBuilder.Entity<Doctor>().Property(d => d.Birthday).HasDefaultValue(DateTime.Now);
+
+          
             modelBuilder.Entity<MedicineInfomation>().Property(c => c.Quantity).HasDefaultValue(1);
-            modelBuilder.Entity<MedicineBill>().Property(c => c.DateCreate).HasDefaultValue(DateTime.Now);
 
             //fresher-2410-start
             modelBuilder.Entity<Shift>().HasKey(c => c.Id);

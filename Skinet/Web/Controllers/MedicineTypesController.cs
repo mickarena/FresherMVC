@@ -25,14 +25,10 @@ namespace Web.Controllers
         }
 
         // GET: MedicineTypes
-        public async Task<IActionResult> Index(int currentPage, string searchString)
+        public async Task<IActionResult> Index(int currentPage, string search)
 
         {
-            var list = _medicineType.GetType();
-            if (!string.IsNullOrWhiteSpace(searchString))
-            {
-                list = list.Where(c => c.Name.Contains(searchString)).ToList();
-            }
+            var list = _medicineType.GetType(search);
             var dto = pagedRepository.PaginatedList(list, currentPage);
             ViewBag.TotalPage = dto.TotalPages;
             ViewBag.CurrentPage = dto.PageIndex;
@@ -135,7 +131,7 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_medicineType.GetType() == null)
+            if (_medicineType.GetType(null) == null)
             {
                 return Problem("Entity set 'StoreContext.MedicineTypes'  is null.");
             }

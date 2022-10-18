@@ -9,6 +9,14 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form>
+    <div class="input-group mb-3">
+        <input name="search" type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" asp-action="Index" type="submit">Button</button>
+        </div>
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>

@@ -37,9 +37,14 @@ namespace Infrastructure.Data
             _context.SaveChangesAsync();
         }
 
-        public List<MedicineBillInfo> GetType()
+        public List<MedicineBillInfo> GetType(Guid search)
         {
-            return _context.MedicineBillInfos.Include(m => m.MedicineBills).Include(c => c.MedicineInfomations).ToList();
+            var list = _context.MedicineBillInfos.Include(m => m.MedicineBills).Include(c => c.MedicineInfomations).ToList();
+            if (search != Guid.Empty)
+            {
+                list = list.Where(c => c.MedicineBillID == search).ToList();
+            }
+            return list;
         }
     }
 }
