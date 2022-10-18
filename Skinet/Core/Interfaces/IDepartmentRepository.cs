@@ -6,7 +6,7 @@ namespace Core.Interfaces
         void Create(Department departments);
         void Update(Department departments);
         void Delete(Guid id);
-        List<Department> GetAll();
+        List<Department> GetAll(string? searchString);
         Department GetbyId(Guid id);
     }
 }

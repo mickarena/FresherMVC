@@ -30,9 +30,15 @@ namespace Infrastructure.Data
             _db.SaveChanges();
         }
 
-        public List<Nurse> GetAll()
+        public List<Nurse> GetAll(string searchString)
         {
-            return _db.Nurse.Include(x => x.Departments).ToList();
+
+            var list = _db.Nurse.Include(x => x.Departments).ToList();
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                list = _db.Nurse.Include(x => x.Departments).Where(c => c.Name.Contains(searchString)).ToList();
+            }
+            return list;
         }
 
         public Nurse GetbyId(Guid id)

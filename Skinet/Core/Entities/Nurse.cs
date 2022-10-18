@@ -14,7 +14,7 @@ namespace Core.Entities
         [StringLength(100)]
         public string? Name { get; set; }
         [Required(ErrorMessage = "Enter phone number")]
-        [Display(Name = "Phone Nmber")]
+        [Display(Name = "Phone Number")]
         [Phone]
         public string? Phone { get; set; }
         [Required(ErrorMessage = "Enter Address")]
@@ -22,7 +22,7 @@ namespace Core.Entities
         public Guid DepartmentId { get; set; }
         public Department? Departments { get; set; }
         public bool? IsDelete { get; set; }
-        public DateTime? CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; } = DateTime.Now;
         public DateTime? ModifyDate { get; set; }
         public DateTime? JoinDate { get; set; }
     }

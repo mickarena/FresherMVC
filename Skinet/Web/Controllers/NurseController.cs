@@ -24,11 +24,7 @@ namespace Web.Controllers
         public ActionResult Index(int currentPage, string searchString)
 
         {
-            var list = _nurseRepository.GetAll();
-            if (!string.IsNullOrWhiteSpace(searchString))
-            {
-                list = list.Where(c => c.Name.Contains(searchString)).ToList();
-            }
+            var list = _nurseRepository.GetAll(searchString);
             var dto = pagedRepository.PaginatedList(list, currentPage);
             ViewBag.TotalPage = dto.TotalPages;
             ViewBag.CurrentPage = dto.PageIndex;
@@ -90,7 +86,7 @@ namespace Web.Controllers
         }
         public void LoadData()
         {
-            var departments = _departmentRepository.GetAll();
+            var departments = _departmentRepository.GetAll(null);
             ViewBag.SelectDDepartments = new SelectList(departments, "Id", "Name");
         }
 

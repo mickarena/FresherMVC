@@ -8,7 +8,7 @@ namespace Core.Interfaces
         void Update(Nurse nurse);
 
         void Delete(Guid id);
-        List<Nurse> GetAll();
+        List<Nurse> GetAll(string searchString);
         Nurse GetbyId(Guid id);
     }
 }

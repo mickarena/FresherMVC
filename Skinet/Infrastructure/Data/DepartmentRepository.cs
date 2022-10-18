@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
@@ -24,9 +25,15 @@ namespace Infrastructure.Data
             _db.SaveChanges();
         }
 
-        public List<Department> GetAll()
+        public List<Department> GetAll(string? searchString)
         {
-            return _db.Departments.ToList();
+
+            var list = _db.Departments.ToList();
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                list = list.Where(c => c.Name.Contains(searchString)).ToList();
+            }
+            return list;
         }
 
         public Department GetbyId(Guid id)
