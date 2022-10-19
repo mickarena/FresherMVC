@@ -52,6 +52,7 @@ namespace Infrastructure.Data
             //fresher-2410-start
             modelBuilder.Entity<WorkShift>().HasOne(a => a.Shift).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdShift).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<WorkShift>().HasOne(a => a.Doctor).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdDoctor).OnDelete(DeleteBehavior.Cascade);
+            //modelBuilder.Entity<Shift>().HasIndex(u => u.ShiftName).IsUnique();
             //
         }
     }

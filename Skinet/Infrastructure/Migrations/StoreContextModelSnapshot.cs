@@ -34,7 +34,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<DateTime>("Birthday")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2022, 10, 19, 10, 45, 33, 711, DateTimeKind.Local).AddTicks(8819));
 
                     b.Property<string>("Department")
                         .IsRequired()
@@ -92,9 +94,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 18, 15, 57, 1, 455, DateTimeKind.Local).AddTicks(4685));
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("DoctorID")
                         .HasColumnType("uniqueidentifier");
@@ -149,9 +149,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("ImportDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 18, 8, 57, 1, 455, DateTimeKind.Utc).AddTicks(4227));
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsEmpty")
                         .HasColumnType("bit");
