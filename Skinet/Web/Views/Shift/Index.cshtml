@@ -1,26 +1,27 @@
 ﻿@model IEnumerable<Core.Entities.Shift>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index Shift";
 }
 
-<h1>Index</h1>
+<h1 class="text-center">List Shift</h1>
+<hr />
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div>
+    <a asp-action="Create" class="btn btn-primary" role="button">Create New</a>
+    <a asp-action="Index" class="btn btn-primary float-right" role="button">Back to Full List</a>
+</div>
 
-<form asp-controller="Shift" asp-action="Search">
-    <div class="form-actions no-color">
+<form asp-controller="Shift" asp-action="Search" class="row form-inline">
+    <div class="form-actions col text-center">
         <p>
-            Find by shift name: <input type="text" name="searchString">
-            <input type="submit" value="Search" class="btn btn-default" /> |
-            <a asp-action="Index">Back to Full List</a>
-        </p>
+            <input type="text" value="@ViewData["CurrentFilter"]" name="searchString" placeholder="Find by shift name" class="form-control mr-sm-2">
+            <input type="submit" value="Search" class="btn btn-success" />
+        </p> 
     </div>
 </form>
-<table class="table">
-    <thead>
+<table class="table table-bordered table-hover">
+    <thead class="thead-dark">
         <tr>
             <th>
                 Shift Name
@@ -31,7 +32,7 @@
             <th>
                 End Time
             </th>
-            <th></th>
+            <th>Option</th>
         </tr>
     </thead>
     <tbody>
@@ -48,8 +49,8 @@
                     @Html.DisplayFor(modelItem => item.EndTime)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning" role="button">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id"class="btn btn-danger" role="button">Delete</a>
                 </td>
             </tr>
         }

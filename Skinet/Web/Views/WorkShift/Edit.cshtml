@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdDoctor" class="control-label">Doctor Id</label>
-                <input asp-for="IdDoctor" class="form-control" />
+                <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.IdDoctor"></select>
                 <span asp-validation-for="IdDoctor" class="text-danger"></span>
             </div>
             <div class="form-group">

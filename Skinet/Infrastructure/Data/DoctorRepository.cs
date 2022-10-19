@@ -51,5 +51,10 @@ namespace Infrastructure.Data
             }
             return await query.ToListAsync();
         }
+
+        public List<Doctor> GetType()
+        {
+            return _context.Doctors.ToList();
+        }
     }
 }

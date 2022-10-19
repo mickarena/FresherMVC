@@ -13,11 +13,17 @@ namespace Web.Controllers
     {
         private readonly IWorkShiftRepository _workShiftRepository;
         private readonly IShiftRepository _shiftRepository;
+        private readonly IDoctorRepository _doctorRepository;
         private readonly StoreContext _context;
-        public WorkShiftController(IWorkShiftRepository workShiftRepository, IShiftRepository shiftRepository, IDoctorRepository doctorRepository, StoreContext context)
+        public WorkShiftController(
+            IWorkShiftRepository workShiftRepository, 
+            IShiftRepository shiftRepository, 
+            IDoctorRepository doctorRepository, 
+            StoreContext context)
         {
             _workShiftRepository = workShiftRepository;
             _shiftRepository = shiftRepository;
+            _doctorRepository = doctorRepository;
             _context = context;
         }
 
@@ -27,6 +33,7 @@ namespace Web.Controllers
             var model = await _workShiftRepository.GetWorkShift();
             var storeContext = _workShiftRepository.GetType();
             ViewData["IdShift"] = new SelectList(_shiftRepository.GetType(), "Id", "ShiftName");
+            ViewData["IdDoctor"] = new SelectList(_doctorRepository.GetType(), "Id", "Name");
             return View(model);
         }
 
@@ -34,6 +41,7 @@ namespace Web.Controllers
         public IActionResult Create()
         {
             ViewData["IdShift"] = new SelectList(_shiftRepository.GetType(), "Id", "ShiftName");
+            ViewData["IdDoctor"] = new SelectList(_doctorRepository.GetType(), "Id", "Name");
             return View();
         }
 
@@ -47,6 +55,7 @@ namespace Web.Controllers
                 return RedirectToAction("Index");
             }
             ViewData["IdShift"] = new SelectList(_shiftRepository.GetType(), "Id", "ShiftName", workShift.Id);
+            ViewData["IdDoctor"] = new SelectList(_doctorRepository.GetType(), "Id", "Name", workShift.Id);
             return View(workShift);
         }
 
@@ -55,6 +64,7 @@ namespace Web.Controllers
         {
             var workShift = await _workShiftRepository.GetById(id);
             ViewData["IdShift"] = new SelectList(_shiftRepository.GetType(), "Id", "ShiftName");
+            ViewData["IdDoctor"] = new SelectList(_doctorRepository.GetType(), "Id", "Name");
             return View(workShift);
         }
 
@@ -68,6 +78,7 @@ namespace Web.Controllers
                 return RedirectToAction("Index");
             }
             ViewData["IdShift"] = new SelectList(_shiftRepository.GetType(), "Id", "ShiftName", workShift.Id);
+            ViewData["IdDoctor"] = new SelectList(_doctorRepository.GetType(), "Id", "Name", workShift.Id);
             return View(workShift);
         }
 
@@ -75,6 +86,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             ViewData["IdShift"] = new SelectList(_shiftRepository.GetType(), "Id", "ShiftName");
+            ViewData["IdDoctor"] = new SelectList(_doctorRepository.GetType(), "Id", "Name");
             var workShift = await _workShiftRepository.GetById(id);
             return View(workShift);
         }
