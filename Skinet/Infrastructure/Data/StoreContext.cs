@@ -9,6 +9,9 @@ namespace Infrastructure.Data
         public StoreContext(DbContextOptions<StoreContext> options) : base(options)
         {
         }
+        public DbSet<Nurse> Nurse { get; set; }
+
+        public DbSet<Department> Departments { get; set; }
 
         public DbSet<Product> Products { get; set; }
 
@@ -46,8 +49,14 @@ namespace Infrastructure.Data
             modelBuilder.Entity<WorkShift>().HasKey(c => c.Id);
             modelBuilder.Entity<WorkShift>().HasOne(a => a.Shift).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdShift);
             modelBuilder.Entity<WorkShift>().HasOne(a => a.Doctor).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdDoctor);
-            modelBuilder.Entity<WorkShift>().Property(c => c.CreateAt).HasDefaultValue(DateTime.Now);
             //
+
+            modelBuilder.Entity<Nurse>().HasKey(p => p.Id);
+            modelBuilder.Entity<Department>().HasKey(p => p.Id);
+            modelBuilder.Entity<Nurse>()
+           .HasOne(s => s.Departments)
+           .WithMany(g => g.Nurses)
+           .HasForeignKey(s => s.DepartmentId);
         }
     }
 }

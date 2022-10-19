@@ -1,10 +1,8 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
-using Infrastructure.Data;
-using Microsoft.AspNetCore.Hosting;
+using Core.Pagination;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace Web.Controllers
@@ -12,9 +10,11 @@ namespace Web.Controllers
     public class ShiftController : Controller
     {
         private readonly IShiftRepository _shiftRepository;
-        public ShiftController(IShiftRepository shiftRepository)
+        private IPagedRepository<Shift> pagedRepository;
+        public ShiftController(IShiftRepository shiftRepository, IPagedRepository<Shift> pagedRepository)
         {
             _shiftRepository = shiftRepository;
+            this.pagedRepository = pagedRepository;
         }
 
         // Search
@@ -25,10 +25,13 @@ namespace Web.Controllers
         }
 
         // GET/Index
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int currentPage)
         {
-            var model = await _shiftRepository.GetShift();
-            return View(model);
+            var model = _shiftRepository.GetType();
+            var dto = pagedRepository.PaginatedList(model, currentPage);
+            ViewBag.TotalPage = dto.TotalPages;
+            ViewBag.CurrentPage = dto.PageIndex;
+            return View(dto.Items);
         }
 
         // GET/Create

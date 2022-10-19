@@ -11,7 +11,7 @@ namespace Core.Entities
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "You haven't chosen a working day")]
         public DateTime? Date { get; set; }
-        public DateTime CreateAt { get; set; }
+        public DateTime CreateAt { get; set; } = DateTime.Now;
         public Shift? Shift { get; set; }
         public Doctor? Doctor { get; set; }
     }
