@@ -39,7 +39,7 @@ namespace Infrastructure.Data
         public async Task Update(Doctor doctor)
         {
             _context.Doctors.Update(doctor);
-            await _context.SaveChangesAsync();           
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Doctor>> Search(string name)

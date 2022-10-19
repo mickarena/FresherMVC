@@ -41,11 +41,11 @@ namespace Infrastructure.Data
         public async Task<IEnumerable<HospitalBed>> Search(string name)
         {
             IQueryable<HospitalBed> query = _context.HospitalBeds;
-                       if (!string.IsNullOrEmpty(name))
-                       {
-                           query = query.Where(e => e.IDRoom.Contains(name) || e.IDPatient.Contains(name));
-                       }
-                        return await query.ToListAsync();
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(e => e.IDRoom.Contains(name) || e.IDPatient.Contains(name));
+            }
+            return await query.ToListAsync();
         }
 
         public async Task<HospitalBed> Update(HospitalBed request)
