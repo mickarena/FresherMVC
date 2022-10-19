@@ -32,6 +32,7 @@ namespace Web.Controllers
             var dto = pagedRepository.PaginatedList(list, currentPage);
             ViewBag.TotalPage = dto.TotalPages;
             ViewBag.CurrentPage = dto.PageIndex;
+            ViewBag.SearchData = search;
             return View(dto.Items);
         }
 
@@ -58,12 +59,12 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Id")] MedicineType medicineType)
+        public async Task<IActionResult> Create(MedicineType medicineType)
         {
             if (ModelState.IsValid)
             {
                 medicineType.Id = Guid.NewGuid();
-                _medicineType.Create(medicineType);
+                await _medicineType.Create(medicineType);
                 return RedirectToAction(nameof(Index));
             }
             return View(medicineType);
@@ -85,7 +86,7 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Name,Id")] MedicineType medicineType)
+        public async Task<IActionResult> Edit(Guid id, MedicineType medicineType)
         {
             if (id != medicineType.Id)
             {
@@ -96,7 +97,7 @@ namespace Web.Controllers
             {
                 try
                 {
-                    _medicineType.Update(medicineType);
+                    await _medicineType.Update(medicineType);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -138,7 +139,7 @@ namespace Web.Controllers
             var medicineType = _medicineType.GetById(id);
             if (medicineType != null)
             {
-                _medicineType.Delete(id);
+                await _medicineType.DeleteAsync(id);
             }
 
             return RedirectToAction(nameof(Index));

@@ -13,17 +13,17 @@ namespace Infrastructure.Data
             _context = context;
         }
 
-        public void Create(MedicineBillInfo medicineBillInfo)
+        public async Task Create(MedicineBillInfo medicineBillInfo)
         {
             _context.MedicineBillInfos.Add(medicineBillInfo);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
             var temp = _context.MedicineBillInfos.FirstOrDefault(c => c.Id == id);
             _context.MedicineBillInfos.Remove(temp);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         public async Task<MedicineBillInfo> GetById(Guid id)
@@ -31,10 +31,10 @@ namespace Infrastructure.Data
             return _context.MedicineBillInfos.FirstOrDefault(c => c.Id == id);
         }
 
-        public void Update(MedicineBillInfo medicineBillInfo)
+        public async Task Update(MedicineBillInfo medicineBillInfo)
         {
             _context.MedicineBillInfos.Update(medicineBillInfo);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         public List<MedicineBillInfo> GetType(Guid search)

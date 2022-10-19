@@ -29,10 +29,6 @@ namespace Web.Controllers
         public async Task<IActionResult> Index(int currentPage, string search)
         {
             var list = _medicineInfo.GetType(search);
-            if (!string.IsNullOrWhiteSpace(search))
-            {
-                list = list.Where(c => c.Name.StartsWith(search)).ToList();
-            }
             var dto = pagedRepository.PaginatedList(list, currentPage);
             ViewBag.TotalPage = dto.TotalPages;
             ViewBag.CurrentPage = dto.PageIndex;
@@ -68,7 +64,7 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 medicineInfomation.Id = Guid.NewGuid();
-                _medicineInfo.Create(medicineInfomation);
+                await _medicineInfo.Create(medicineInfomation);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MedicineIDType"] = new SelectList(_medicineType.GetType(null), "Id", "Name", medicineInfomation.MedicineIDType);
@@ -103,7 +99,7 @@ namespace Web.Controllers
             {
                 try
                 {
-                    _medicineInfo.Update(medicineInfomation);
+                    await _medicineInfo.Update(medicineInfomation);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -139,14 +135,10 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_medicineInfo.GetById(id).IsFaulted == null)
-            {
-                return Problem("Entity set 'StoreContext.MedicineInfomations'  is null.");
-            }
             var medicineInfomation = _medicineInfo.GetById(id);
             if (medicineInfomation != null)
             {
-                _medicineInfo.Delete(id);
+                await _medicineInfo.Delete(id);
             }
             return RedirectToAction(nameof(Index));
         }

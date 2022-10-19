@@ -13,13 +13,13 @@ namespace Infrastructure.Data
             _context = context;
         }
 
-        public void Create(MedicineInfomation medicineInfomation)
+        public async Task Create(MedicineInfomation medicineInfomation)
         {
             _context.MedicineInfomations.Add(medicineInfomation);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
-        public async void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
             var temp = _context.MedicineInfomations.FirstOrDefault(c => c.Id == id);
             _context.MedicineInfomations.Remove(temp!);
@@ -31,7 +31,7 @@ namespace Infrastructure.Data
             return _context.MedicineInfomations.Include(c => c.MedicineTypes).FirstOrDefault(c => c.Id == id);
         }
 
-        public async void Update(MedicineInfomation medicineInfomation)
+        public async Task Update(MedicineInfomation medicineInfomation)
         {
             var data = _context.MedicineInfomations.Update(medicineInfomation);
             await _context.SaveChangesAsync();
