@@ -4,14 +4,14 @@
     ViewData["Title"] = "Index Work Shift";
 }
 
-<h1>Index Work Shift</h1>
+<h1>List Work Shift</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 
-<table class="table">
-    <thead>
+<table class="table table-striped">
+    <thead class="thead-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Date)
@@ -25,7 +25,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Doctor)
             </th>
-            <th></th>
+            <th>Option</th>
         </tr>
     </thead>
     <tbody>

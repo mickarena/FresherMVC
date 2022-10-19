@@ -53,11 +53,9 @@ namespace Infrastructure.Data
             modelBuilder.Entity<MedicineInfomation>().Property(c => c.Quantity).HasDefaultValue(1);
 
             //fresher-2410-start
-            modelBuilder.Entity<Shift>().HasKey(c => c.Id);
-            modelBuilder.Entity<Doctor>().HasKey(c => c.Id);
-            modelBuilder.Entity<WorkShift>().HasKey(c => c.Id);
-            modelBuilder.Entity<WorkShift>().HasOne(a => a.Shift).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdShift);
-            modelBuilder.Entity<WorkShift>().HasOne(a => a.Doctor).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdDoctor);
+            modelBuilder.Entity<WorkShift>().HasOne(a => a.Shift).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdShift).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<WorkShift>().HasOne(a => a.Doctor).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdDoctor).OnDelete(DeleteBehavior.Cascade);
+            //modelBuilder.Entity<Shift>().HasIndex(u => u.ShiftName).IsUnique();
             //
 
             modelBuilder.Entity<Nurse>().HasKey(p => p.Id);

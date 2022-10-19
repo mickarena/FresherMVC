@@ -20,6 +20,7 @@ namespace Web.Controllers
         // Search
         public async Task<IActionResult> Search(string searchString)
         {
+            ViewData["CurrentFilter"] = searchString;
             var result = await _shiftRepository.Search(searchString);
             return View("Index", result);
         }
