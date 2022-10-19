@@ -69,7 +69,7 @@ namespace Web.Controllers
             {
                 medicineBillInfo.Id = Guid.NewGuid();
                 medicineBillInfo.Price = medicineBillInfo.UnitPrice * medicineBillInfo.Quantity;
-                _MedicineBillInfo.Create(medicineBillInfo);
+                await _MedicineBillInfo.Create(medicineBillInfo);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MedicineBillID"] = new SelectList(_MedicineBill.GetType(Guid.Empty), "Id", "Id", medicineBillInfo.MedicineBillID);
@@ -108,7 +108,7 @@ namespace Web.Controllers
                 try
                 {
                     medicineBillInfo.Price = medicineBillInfo.UnitPrice * medicineBillInfo.Quantity;
-                    _MedicineBillInfo.Update(medicineBillInfo);
+                    await _MedicineBillInfo.Update(medicineBillInfo);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -152,7 +152,7 @@ namespace Web.Controllers
             var medicineBillInfo = _MedicineBillInfo.GetById(id).Result;
             if (medicineBillInfo != null)
             {
-                _MedicineBillInfo.Delete(id);
+                await _MedicineBillInfo.Delete(id);
             }
             return RedirectToAction(nameof(Index));
         }

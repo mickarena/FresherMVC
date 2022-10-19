@@ -61,7 +61,7 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 medicineBill.Id = Guid.NewGuid();
-                _billRepository.Create(medicineBill);
+                await _billRepository.Create(medicineBill);
                 return RedirectToAction(nameof(Index));
             }
             return View(medicineBill);
@@ -94,7 +94,7 @@ namespace Web.Controllers
             {
                 try
                 {
-                    _billRepository.Update(medicineBill);
+                    await _billRepository.Update(medicineBill);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -136,7 +136,7 @@ namespace Web.Controllers
             var medicineBill = _billRepository.GetById(id);
             if (medicineBill != null)
             {
-                _billRepository.Delete(id);
+                await _billRepository.Delete(id);
             }
 
             return RedirectToAction(nameof(Index));
