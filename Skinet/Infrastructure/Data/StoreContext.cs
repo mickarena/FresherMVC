@@ -24,6 +24,11 @@ namespace Infrastructure.Data
         public DbSet<Shift> Shifts { get; set; }
         public DbSet<WorkShift> WorkShifts { get; set; }
 
+        public DbSet<Consent> Consents { get; set; }
+        public DbSet<ApplicationConsent> applicationConsents { get; set; }
+        public DbSet<Application> Applications { get; set; }
+        public DbSet<ProcessFlowConfiguration> processFlowConfigurations{ get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -56,6 +61,11 @@ namespace Infrastructure.Data
             modelBuilder.Entity<WorkShift>().HasOne(a => a.Shift).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdShift);
             modelBuilder.Entity<WorkShift>().HasOne(a => a.Doctor).WithMany(c => c.WorkShift).HasForeignKey(d => d.IdDoctor);
             //
+
+
+            modelBuilder.Entity<Consent>().HasOne(a => a.ProcessFlowConfiguration).WithMany(c => c.Consents).HasForeignKey(d => d.ProcessFlowConfigurationId);
+            modelBuilder.Entity<ApplicationConsent>().HasOne(a => a.Consent).WithMany(c => c.ApplicationConsents).HasForeignKey(d => d.ConsentId);
+            modelBuilder.Entity<ApplicationConsent>().HasOne(a => a.Application).WithMany(c => c.ApplicationConsents).HasForeignKey(d => d.ApplicationId);
         }
     }
 }

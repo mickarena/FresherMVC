@@ -1,0 +1,316 @@
+﻿@using PetronasICT.STS.OAS.DbFirst;
+@using PetronasICT.STS.OAS.DbFirst.Model;
+@model PetronasICT.STS.OAS.DbFirst.Model.Consent
+
+@{
+    ViewBag.Title = "Manage Applicant’s Consent";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- IE7 pseudo-->
+<!--[if lt IE 9]>
+    <script src="~/Scripts/ie7/IE9.js"></script>
+<![endif]-->
+
+<div class="FontType001">
+    <div class="AdminTitle">
+        Manage Applicant’s Consent
+    </div>
+</div>
+<br />
+
+<div id="divSearch" class="FontType001">
+    <div id="addNewDiv">
+        <input type="button" name="btnSave" value="+ NEW" class="ButtonTabs"  onclick="AddnewRow()" style="width: 80px"/> 
+    </div>
+    <br/>
+</div>
+
+<div id="addNewForm" class="FontType001">
+    <form id="form1">
+        <table style="width: 450px;">
+            <tr>
+                <td  class="SetTextVerticalAlignTop width120"><span class="required"><b>Application Year</b></span></td>
+                <td class="AdminFieldTextSearchForm">
+                    @{
+                        List<SelectListItem> listApplicationYear = new SelectList((System.Collections.IEnumerable)ViewBag.listApplicationYear, "Value", "Text").ToList();
+                        listApplicationYear.Insert(0, new SelectListItem() { Value = "", Text = "- Select Application Year -" });
+                    }
+                    @Html.DropDownList("ApplicationYear",listApplicationYear,htmlAttributes: new { id = "ddlApplicationYear", @class = "customSelect width180" })
+                    @Html.ValidationMessageFor(m => m.ProcessFlowConfiguration.ApplicationYear, "", htmlAttributes: new { id = "lblApplicationYearErrorMessage", @class = "errorMessage" })
+                </td>
+            </tr>
+            <tr>
+                <td  class="SetTextVerticalAlignTop"><span class="required"><b>Consent</b></span></td>
+                <td class="AdminFieldTextSearchForm">
+                    @Html.TextBoxFor(m => m.Name, htmlAttributes: new { id = "txtName", @class = "customInput width180", maxlength = 225 })
+                    @Html.ValidationMessageFor(m => m.Name, "", htmlAttributes: new { id = "lblNameErrorMessage", @class = "errorMessage" })
+                </td>
+            </tr>
+            <tr>
+                <td class="SetTextVerticalAlignTop"><span class="required"><b>Category</b></span></td>
+                <td class="AdminFieldTextSearchForm">
+                    @{
+                        List<SelectListItem> listCategory = new SelectList((System.Collections.IEnumerable)ViewBag.listCategory, "Text", "Value").ToList();
+                        listCategory.Insert(0, new SelectListItem() { Value = "", Text = "- Select Category -" });
+                    }
+                    @Html.DropDownList("Category",listCategory,htmlAttributes: new { id = "ddlCategory", @class = "customSelect width180" })
+                    @Html.ValidationMessageFor(m => m.Category, "", htmlAttributes: new { id = "lblCategoryErrorMessage", @class = "errorMessage" })
+                </td>
+            </tr>
+        </table>
+        <table style="width: 319px">
+            <tr>
+                <td align="right">
+                    <input type="button" title="Save" value="SAVE" class="ButtonTabs" onclick="Save()" style="width: 80px"/>
+                    &nbsp;
+                    <input type="button" title="Cancel" value="CANCEL" class="ButtonTabs" onclick="Cancel()" style="width: 80px" />
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" id="spmConsentId"/>
+    </form>
+    <br/>
+</div>
+
+<div style="clear: both;"></div>
+<div id="showemptytable" style="display: none;"></div>
+<div id="jqgridwrapper" style="width: 100%;">
+    <div style="width: 600px">
+        <table id="list">
+        </table>
+    </div>
+    <div id="pager"></div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var urlNav = '@Url.Action("Index", "ManageApplicantsConsent", new { area = "Admin" })';
+        $('a[href*="' + urlNav + '"]').addClass('highlight');
+        $('a[href*="#"]').removeClass('highlight');
+        $('a[href*="' + urlNav + '"]').parent('li').parent('ul').slideDown(350);
+        $('a[href*="' + urlNav + '"]').parent('li').parent('ul').parent('li').children('a').addClass('active');
+        $('select.customSelect').customSelect();
+        ShowSearchPage();
+        DoSearch();
+        initializeFormValidation();
+    });
+    
+    function initializeFormValidation() {
+        var validator = $('#form1').validate({
+            errorElement: "div",
+            rules: {
+                ApplicationYear : { required: true },
+                Name : { required: true },
+                Category : { required: true }
+            },
+            messages: {
+                ApplicationYear: { required: "@Constants.Messages.MSG3" },
+                Name: { required: "@Constants.Messages.MSG3" },
+                Category: { required: "@Constants.Messages.MSG3" }
+            },
+            errorPlacement: function (error, element) {
+                if (element.is('#ddlApplicationYear')) {
+                    error.appendTo('#lblApplicationYearErrorMessage');
+                }
+                if (element.is('#txtName')) {
+                    error.appendTo('#lblNameErrorMessage');
+                }
+                if (element.is('#ddlCategory')) {
+                    error.appendTo('#lblCategoryErrorMessage');
+                }
+            },
+            submitHandler: function (form) {
+                $("#form1").submit(function (e) {
+                    e.preventDefault();
+                });
+            }
+        });
+    }
+    
+    function DoSearch() {
+        $("#list").jqGrid('GridUnload');
+        var url = '@Url.Action("SearchConsent")';
+        var list = $("#list").jqGrid({
+            altRows: true,
+            altclass: 'altRow',
+            beforeSelectRow: function (rowid, e) {
+                return false;
+            },
+            hoverrows: false,
+            url: url,
+            datatype: 'json',
+            mtype: 'GET',
+            colNames: ['Id', 'CheckDependency', 'Application Year', 'Consent', 'Category', 'Action'],
+            colModel: [{ name: 'Id', index: 'Id', width: 55, hidden: true },
+           { name: 'CheckDependency', index: 'CheckDependency', width: 55, hidden: true },
+           { name: 'ApplicationYear', index: 'ApplicationYear', width: 100 },
+           { name: 'Name', index: 'Name', width: 190 },
+           { name: 'Category', index: 'Category', width: 80 },
+           { name: 'Action', index: 'Id', width: 60, sortable: false, formatter: actionFormat }],
+            pager: '#pager',
+            sortname: 'ApplicationYear',
+            viewrecords: true,
+            sortorder: 'desc',
+            autowidth: true,
+            height: 'auto',
+            autoencode: true,
+            rowNum: 20,
+            rowList: [20]
+        });
+        
+        var cm = list[0].p.colModel;
+        $.each(list[0].grid.headers, function (index, value) {
+            var cmi = cm[index], colName = cmi.name;
+            if (!cmi.sortable && colName !== 'rn' && colName !== 'cb' && colName !== 'subgrid') {
+                $('div.ui-jqgrid-sortable', value.el).css({ cursor: "default" });
+            }
+        });
+
+        jQuery("#list").jqGrid('navGrid', '#pager', { edit: false, add: false, del: false, search: false });
+        $(".ui-jqgrid-titlebar").hide();
+        function actionFormat(cellvalue, options, rowObject) {
+            var htmlString = '';
+            htmlString = '<img src="@Url.Content("~/Images/admin-edit.png")" alt="View" title="Edit" style="margin-left:10px;cursor: pointer;" onclick="javascript:UpdateRow(' + rowObject["Id"] + ');" />';
+            if (rowObject["CheckDependency"] == false) {
+                htmlString += '<img src="@Url.Content("~/Images/admin-delete.png")" alt="View" title="Delete" style="margin-left:10px;cursor: pointer;" onclick="javascript:DeleteRow(' + rowObject["Id"] + ');" />';
+        }
+        return htmlString;
+        }    
+    }
+    
+    function AddnewRow() {
+        ShowAddNewForm();
+        $("#ddlApplicationYear").val('');
+        $("#ddlApplicationYear").trigger('change');
+        $("#txtName").val('');
+        $("#ddlCategory").val('');
+        $("#ddlCategory").trigger('change');
+        $("#spmConsentId").val('-1');
+    }
+
+    function UpdateRow(id) {
+        $("#lblApplicationYearErrorMessage").text('');
+        $("#lblNameErrorMessage").text('');
+        $("#lblCategoryErrorMessage").text('');
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: '@Url.Action("GetConsentById")/' + id,
+            async: false,
+            dataType: "json",
+            success: function (response, textStatus, jqXHR) {
+                if (response.Status == "OK") {
+                    $("#spmConsentId").val(response.d.Id);
+                    $("#ddlApplicationYear").val(response.d.ProcessFlowConfigurationId);
+                    $("#ddlApplicationYear").trigger('change');
+                    $("#txtName").val(response.d.Name);
+                    $("#ddlCategory").val(response.d.Category);
+                    $("#ddlCategory").trigger('change');
+                    ShowAddNewForm();
+                    $('#ddlApplicationYear').focus();
+                } else {
+                    alert(response.Msg);
+                }
+            }
+        });
+    }
+
+
+    function Save() {
+        $("#ddlApplicationYear").rules("add", "required");
+        $("#txtName").rules("add", "required");
+        $("#ddlCategory").rules("add", "required");
+        if ($('#form1').valid()) {
+            var id = $("#spmConsentId").val();
+            var url;
+            if (id == "-1") {
+                url = '@Url.Action("Insert")';
+            }
+            else {
+                url = '@Url.Action("Update")';
+            }
+            var rowData = {};
+            rowData.spmConsentId = id;
+            rowData.ProcessFlowConfigurationId = $("#ddlApplicationYear").val();
+            rowData.Name = $("#txtName").val();
+            rowData.Category = $("#ddlCategory").val();
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: url,
+                async: false,
+                data: {
+                    id: rowData.spmConsentId,
+                    processFlowConfigurationId : rowData.ProcessFlowConfigurationId,
+                    name: rowData.Name,
+                    category: rowData.Category
+                },
+                dataType: "json",
+                timeout: 5000,
+                success: function (response, textStatus, jqXHR) {
+                    if (response.Status == "OK") {
+                        if (id == "-1") {
+                            alert("@Constants.Messages.MSG41");
+                        } else {
+                            alert("@Constants.Messages.MSG73");
+                        }
+                        ShowSearchPage();
+                        $("#list").jqGrid().trigger("reloadGrid");
+                    }
+                    else {
+                        alert(response.Msg);
+                        $('#ddlApplicationYear').focus();
+                    }
+                }
+            });
+        }
+    }
+    
+    function DeleteRow(rowId) {
+        if (confirm("@Constants.Messages.MSG4")) {
+            var deleteUrl = '@Url.Action("Delete")';
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: deleteUrl,
+                async: false,
+                data: {
+                    id: rowId
+                },
+                dataType: "json",
+                timeout: 5000,
+                success: function (response, textStatus, jqXHR) {
+                    if (response.Status == "OK") {
+                        $('#list').trigger('reloadGrid');
+                    }
+                    else {
+                        alert(response.Msg);
+                    }
+                }
+            });
+        }
+    }
+
+    function ShowAddNewForm() {
+        $("#lblApplicationYearErrorMessage").text('');
+        $("#lblNameErrorMessage ").text('');
+        $("#lblCategoryErrorMessage").text('');
+        $("#divSearch").hide();
+        $("#addNewForm").show();
+        $('#ddlApplicationYear').focus();
+        initializeFormValidation();
+    }
+    function Cancel() {
+        $("#ddlApplicationYear").rules("remove", "required");
+        $("#txtName").rules("remove", "required");
+        $("#ddlCategory").rules("remove", "required");
+        ShowSearchPage();
+    }
+    function ShowSearchPage() {
+        $("#addNewForm").hide();
+        $("#divSearch").show();
+    }
+
+
+</script>
