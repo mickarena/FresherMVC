@@ -11,7 +11,7 @@ namespace Infrastructure.Data
         {
             dto.PageIndex = pageIndex == 0 ? 1 : pageIndex;
             var count = items.Count;
-            var pageSize = 3;
+            var pageSize = 5;
             dto.Items = items.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
             dto.TotalPages = (int)Math.Ceiling(count / (double)pageSize);
             return dto;

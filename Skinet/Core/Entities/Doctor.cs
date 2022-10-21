@@ -19,6 +19,7 @@ namespace Core.Entities
         public string Address { get; set; }
 
         public Gender Gender { get; set; }
+        [DataType(DataType.Date)]
         public DateTime Birthday { get; set; }
 
         [Required]

@@ -7,12 +7,12 @@
 <h1 class="text-center">List Shift</h1>
 <hr />
 
-<div>
+<div style="margin-top: -9vh;">
     <a asp-action="Create" class="btn btn-primary" role="button">Create New</a>
     <a asp-action="Index" class="btn btn-primary float-right" role="button">Back to Full List</a>
 </div>
 
-<form asp-controller="Shift" asp-action="Search" class="row form-inline">
+<form asp-controller="Shift" asp-action="Search" class="row form-inline" style="margin-top: 5vh;">
     <div class="form-actions col text-center">
         <p>
             <input type="text" value="@ViewData["CurrentFilter"]" name="searchString" placeholder="Find by shift name" class="form-control mr-sm-2">

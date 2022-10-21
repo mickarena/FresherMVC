@@ -2,10 +2,8 @@
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Infrastructure.Data;
 
 namespace Web.Controllers
 {
@@ -14,24 +12,20 @@ namespace Web.Controllers
         private readonly IWorkShiftRepository _workShiftRepository;
         private readonly IShiftRepository _shiftRepository;
         private readonly IDoctorRepository _doctorRepository;
-        private readonly StoreContext _context;
         public WorkShiftController(
             IWorkShiftRepository workShiftRepository, 
             IShiftRepository shiftRepository, 
-            IDoctorRepository doctorRepository, 
-            StoreContext context)
+            IDoctorRepository doctorRepository)
         {
             _workShiftRepository = workShiftRepository;
             _shiftRepository = shiftRepository;
             _doctorRepository = doctorRepository;
-            _context = context;
         }
 
         // GET/Index
         public async Task<IActionResult> Index()
         {
             var model = await _workShiftRepository.GetWorkShift();
-            var storeContext = _workShiftRepository.GetType();
             ViewData["IdShift"] = new SelectList(_shiftRepository.GetType(), "Id", "ShiftName");
             ViewData["IdDoctor"] = new SelectList(_doctorRepository.GetType(), "Id", "Name");
             return View(model);
