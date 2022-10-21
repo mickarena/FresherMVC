@@ -8,22 +8,32 @@ using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using Infrastructure.Data;
 using Core.Interfaces;
+using Core.Pagination;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace Web.Controllers
 {
     public class MedicineTypesController : Controller
     {
         private IMedicineTypeRepository _medicineType;
+        private IPagedRepository<MedicineType> pagedRepository;
 
-        public MedicineTypesController(IMedicineTypeRepository medicineType)
+        public MedicineTypesController(IMedicineTypeRepository medicineType, IPagedRepository<MedicineType> pagedRepository)
         {
             _medicineType = medicineType;
+            this.pagedRepository = pagedRepository;
         }
 
         // GET: MedicineTypes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int currentPage, string search)
+
         {
-            return View(_medicineType.GetType());
+            var list = _medicineType.GetType(search);
+            var dto = pagedRepository.PaginatedList(list, currentPage);
+            ViewBag.TotalPage = dto.TotalPages;
+            ViewBag.CurrentPage = dto.PageIndex;
+            ViewBag.SearchData = search;
+            return View(dto.Items);
         }
 
         // GET: MedicineTypes/Details/5
@@ -49,12 +59,12 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Id")] MedicineType medicineType)
+        public async Task<IActionResult> Create(MedicineType medicineType)
         {
             if (ModelState.IsValid)
             {
                 medicineType.Id = Guid.NewGuid();
-                _medicineType.Create(medicineType);
+                await _medicineType.Create(medicineType);
                 return RedirectToAction(nameof(Index));
             }
             return View(medicineType);
@@ -76,7 +86,7 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Name,Id")] MedicineType medicineType)
+        public async Task<IActionResult> Edit(Guid id, MedicineType medicineType)
         {
             if (id != medicineType.Id)
             {
@@ -87,7 +97,7 @@ namespace Web.Controllers
             {
                 try
                 {
-                    _medicineType.Update(medicineType);
+                    await _medicineType.Update(medicineType);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -122,14 +132,14 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_medicineType.GetType() == null)
+            if (_medicineType.GetType(null) == null)
             {
                 return Problem("Entity set 'StoreContext.MedicineTypes'  is null.");
             }
             var medicineType = _medicineType.GetById(id);
             if (medicineType != null)
             {
-                _medicineType.Delete(id);
+                await _medicineType.DeleteAsync(id);
             }
 
             return RedirectToAction(nameof(Index));

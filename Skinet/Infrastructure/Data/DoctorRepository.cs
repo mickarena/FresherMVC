@@ -1,11 +1,6 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
@@ -43,7 +38,7 @@ namespace Infrastructure.Data
 
         public async Task Update(Doctor doctor)
         {
-            _context.Entry(doctor).State = EntityState.Modified;
+            _context.Doctors.Update(doctor);
             await _context.SaveChangesAsync();
         }
 
@@ -55,6 +50,11 @@ namespace Infrastructure.Data
                 query = query.Where(e => e.Name.Contains(name) || e.Department.Contains(name) || e.Address.Contains(name));
             }
             return await query.ToListAsync();
+        }
+
+        public List<Doctor> GetType()
+        {
+            return _context.Doctors.ToList();
         }
     }
 }

@@ -13,33 +13,38 @@ namespace Infrastructure.Data
             _context = context;
         }
 
-        public void Create(MedicineInfomation medicineInfomation)
+        public async Task Create(MedicineInfomation medicineInfomation)
         {
             _context.MedicineInfomations.Add(medicineInfomation);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
-        public async void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            var temp = _context!.MedicineInfomations.FirstOrDefault(c => c.Id == id);
+            var temp = _context.MedicineInfomations.FirstOrDefault(c => c.Id == id);
             _context.MedicineInfomations.Remove(temp!);
             await _context.SaveChangesAsync();
         }
 
         public async Task<MedicineInfomation> GetById(Guid id)
         {
-            return _context.MedicineInfomations.Include(c => c.MedicineTypes).AsNoTracking().FirstOrDefault(c => c.Id == id);
+            return _context.MedicineInfomations.Include(c => c.MedicineTypes).FirstOrDefault(c => c.Id == id);
         }
 
-        public async void Update(MedicineInfomation medicineInfomation)
+        public async Task Update(MedicineInfomation medicineInfomation)
         {
             var data = _context.MedicineInfomations.Update(medicineInfomation);
             await _context.SaveChangesAsync();
         }
 
-        public List<MedicineInfomation> GetType()
+        public List<MedicineInfomation> GetType(string search)
         {
-            return _context.MedicineInfomations.Include(m => m.MedicineTypes).AsNoTracking().ToList();
+            var list = _context.MedicineInfomations.Include(m => m.MedicineTypes).ToList();
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                list = list.Where(c => c.Name.StartsWith(search)).ToList();
+            }
+            return list;
         }
     }
 }

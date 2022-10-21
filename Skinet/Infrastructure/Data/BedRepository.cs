@@ -41,7 +41,6 @@ namespace Infrastructure.Data
 
         public async Task<Pagination<HospitalBed>> Search(string name, int pageIndex, int pageSize)
         {
-            
             IQueryable<HospitalBed> query = _context.HospitalBeds;
                        if (!string.IsNullOrEmpty(name))
                        {

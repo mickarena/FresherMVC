@@ -13,17 +13,17 @@ namespace Infrastructure.Data
             _context = context;
         }
 
-        public void Create(MedicineType medicineType)
+        public async Task Create(MedicineType medicineType)
         {
             _context.MedicineTypes.Add(medicineType);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-            var temp = _context!.MedicineTypes.FirstOrDefault(c => c.Id == id);
-            _context.MedicineTypes.Remove(temp!);
-            _context.SaveChangesAsync();
+            var temp = _context.MedicineTypes.FirstOrDefault(c => c.Id == id);
+            _context.MedicineTypes.Remove(temp);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<MedicineType> GetById(Guid id)
@@ -31,15 +31,20 @@ namespace Infrastructure.Data
             return await _context.MedicineTypes.FindAsync(id);
         }
 
-        public void Update(MedicineType medicineType)
+        public async Task Update(MedicineType medicineType)
         {
             _context.MedicineTypes.Update(medicineType);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
-        public List<MedicineType> GetType()
+        public List<MedicineType> GetType(string search)
         {
-            return _context.MedicineTypes.AsNoTracking().ToList();
+            var list = _context.MedicineTypes.ToList();
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                list = list.Where(c => c.Name.Contains(search)).ToList();
+            }
+            return list;
         }
     }
 }

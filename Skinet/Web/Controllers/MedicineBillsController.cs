@@ -8,22 +8,29 @@ using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using Infrastructure.Data;
 using Core.Interfaces;
+using Core.Pagination;
 
 namespace Web.Controllers
 {
     public class MedicineBillsController : Controller
     {
         private IMedBillRepository _billRepository;
+        private IPagedRepository<MedicineBill> pagedRepository;
 
-        public MedicineBillsController(IMedBillRepository billRepository)
+        public MedicineBillsController(IMedBillRepository billRepository, IPagedRepository<MedicineBill> pagedRepository)
         {
             _billRepository = billRepository;
+            this.pagedRepository = pagedRepository;
         }
 
         // GET: MedicineBills
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int currentPage, Guid search)
         {
-            return View(_billRepository.GetType());
+            var list = _billRepository.GetType(search);
+            var dto = pagedRepository.PaginatedList(list, currentPage);
+            ViewBag.TotalPage = dto.TotalPages;
+            ViewBag.CurrentPage = dto.PageIndex;
+            return View(dto.Items);
         }
 
         // GET: MedicineBills/Details/5
@@ -54,7 +61,7 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 medicineBill.Id = Guid.NewGuid();
-                _billRepository.Create(medicineBill);
+                await _billRepository.Create(medicineBill);
                 return RedirectToAction(nameof(Index));
             }
             return View(medicineBill);
@@ -87,7 +94,7 @@ namespace Web.Controllers
             {
                 try
                 {
-                    _billRepository.Update(medicineBill);
+                    await _billRepository.Update(medicineBill);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -129,7 +136,7 @@ namespace Web.Controllers
             var medicineBill = _billRepository.GetById(id);
             if (medicineBill != null)
             {
-                _billRepository.Delete(id);
+                await _billRepository.Delete(id);
             }
 
             return RedirectToAction(nameof(Index));

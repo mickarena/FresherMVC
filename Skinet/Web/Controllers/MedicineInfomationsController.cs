@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using Infrastructure.Data;
 using Core.Interfaces;
+using Core.Pagination;
 
 namespace Web.Controllers
 {
@@ -15,17 +16,23 @@ namespace Web.Controllers
     {
         private IMedicineInfoRepository _medicineInfo;
         private IMedicineTypeRepository _medicineType;
+        private IPagedRepository<MedicineInfomation> pagedRepository;
 
-        public MedicineInfomationsController(IMedicineInfoRepository medicineInfo, IMedicineTypeRepository medicineType)
+        public MedicineInfomationsController(IMedicineInfoRepository medicineInfo, IMedicineTypeRepository medicineType, IPagedRepository<MedicineInfomation> pagedRepository)
         {
             _medicineInfo = medicineInfo;
             _medicineType = medicineType;
+            this.pagedRepository = pagedRepository;
         }
 
         // GET: MedicineInfomations
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int currentPage, string search)
         {
-            return View(_medicineInfo.GetType());
+            var list = _medicineInfo.GetType(search);
+            var dto = pagedRepository.PaginatedList(list, currentPage);
+            ViewBag.TotalPage = dto.TotalPages;
+            ViewBag.CurrentPage = dto.PageIndex;
+            return View(dto.Items);
         }
 
         // GET: MedicineInfomations/Details/5
@@ -43,7 +50,7 @@ namespace Web.Controllers
         // GET: MedicineInfomations/Create
         public IActionResult Create()
         {
-            ViewData["MedicineIDType"] = new SelectList(_medicineType.GetType(), "Id", "Name");
+            ViewData["MedicineIDType"] = new SelectList(_medicineType.GetType(null), "Id", "Name");
             return View();
         }
 
@@ -52,15 +59,15 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MedicineIDType,Name,ImportDate,ExpireDate,Quantity,UnitPrice,IsEmpty,Id")] MedicineInfomation medicineInfomation)
+        public async Task<IActionResult> Create(MedicineInfomation medicineInfomation)
         {
             if (ModelState.IsValid)
             {
                 medicineInfomation.Id = Guid.NewGuid();
-                _medicineInfo.Create(medicineInfomation);
+                await _medicineInfo.Create(medicineInfomation);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MedicineIDType"] = new SelectList(_medicineType.GetType(), "Id", "Name", medicineInfomation.MedicineIDType);
+            ViewData["MedicineIDType"] = new SelectList(_medicineType.GetType(null), "Id", "Name", medicineInfomation.MedicineIDType);
             return View(medicineInfomation);
         }
 
@@ -72,7 +79,7 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
-            ViewData["MedicineIDType"] = new SelectList(_medicineType.GetType(), "Id", "Name");
+            ViewData["MedicineIDType"] = new SelectList(_medicineType.GetType(null), "Id", "Name");
             return View(medicineInfomation);
         }
 
@@ -81,7 +88,7 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("MedicineIDType,Name,ImportDate,ExpireDate,Quantity,UnitPrice,IsEmpty,Id")] MedicineInfomation medicineInfomation)
+        public async Task<IActionResult> Edit(Guid id, MedicineInfomation medicineInfomation)
         {
             if (id != medicineInfomation.Id)
             {
@@ -92,7 +99,7 @@ namespace Web.Controllers
             {
                 try
                 {
-                    _medicineInfo.Update(medicineInfomation);
+                    await _medicineInfo.Update(medicineInfomation);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -107,7 +114,7 @@ namespace Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MedicineIDType"] = new SelectList(_medicineType.GetType(), "Id", "Name", medicineInfomation.MedicineIDType);
+            ViewData["MedicineIDType"] = new SelectList(_medicineType.GetType(null), "Id", "Name", medicineInfomation.MedicineIDType);
             return View(medicineInfomation);
         }
 
@@ -128,14 +135,10 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_medicineInfo.GetById(id).IsFaulted == null)
-            {
-                return Problem("Entity set 'StoreContext.MedicineInfomations'  is null.");
-            }
             var medicineInfomation = _medicineInfo.GetById(id);
             if (medicineInfomation != null)
             {
-                _medicineInfo.Delete(id);
+                await _medicineInfo.Delete(id);
             }
             return RedirectToAction(nameof(Index));
         }
