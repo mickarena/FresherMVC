@@ -17,24 +17,20 @@ namespace Web.Controllers
         }
 
         // GET: BedController
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string searchName,int pageIndex=1, int pageSize = 10)
         {
- 
-            var test = await _bedRepository.ListAllAsync();
-            return View(test);
-        }
+            var result = await _bedRepository.Search(searchName, pageIndex, pageSize);
+            ViewBag.searchName = searchName;
+            ViewBag.TotalItems=result.TotalItems;
+            ViewBag.PageIndex=pageIndex;
+            if (pageIndex > result.TotalItems / pageSize)
+            {
+                pageIndex = result.TotalItems / pageSize;
+            }
+            
+            return View(result.Items);
 
-        public async Task<IActionResult> Search(string searchName)
-        {
-            var result = await _bedRepository.Search(searchName);
-            return View("Index", result);
-        }
-        // GET: BedController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
+        }     
         // GET: BedController/Create
         public ActionResult Create()
         {

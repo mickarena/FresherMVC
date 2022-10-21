@@ -3,6 +3,7 @@ using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,22 +39,35 @@ namespace Infrastructure.Data
             return await _context.HospitalBeds.FirstOrDefaultAsync(x => x.Id == Id);
         }
 
-        public async Task<IEnumerable<HospitalBed>> Search(string name)
+        public async Task<Pagination<HospitalBed>> Search(string name, int pageIndex, int pageSize)
         {
+            
             IQueryable<HospitalBed> query = _context.HospitalBeds;
                        if (!string.IsNullOrEmpty(name))
                        {
                            query = query.Where(e => e.IDRoom.Contains(name) || e.IDPatient.Contains(name));
                        }
-                        return await query.ToListAsync();
+            var result = new Pagination<HospitalBed>
+            {
+                Items = await query.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync(),
+                TotalItems = query.Count(),
+                PageIndex = pageIndex,
+                PageSize = pageSize
+            };
+            return result;
+
         }
 
         public async Task<HospitalBed> Update(HospitalBed request)
         {
-
             _context.HospitalBeds.Update(request);
             await _context.SaveChangesAsync();
             return request;
+        }
+
+        Task IBedRepository.Search(string searchName, int pageIndex)
+        {
+            throw new NotImplementedException();
         }
     }
 }

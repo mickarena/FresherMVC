@@ -9,10 +9,11 @@ namespace Core.Entities
 {
     public class HospitalBed : BaseEntity
     {
-        [Required(ErrorMessage ="ID phòng không để trống")]
+        [Required(ErrorMessage = "Room ID cannot be empty")]
         public string IDRoom { get; set; }
-        [Required(ErrorMessage = "ID bệnh nhân không để trống")]
+        [Required(ErrorMessage = "Parient ID cannot be empty")]
         public string IDPatient { get; set; }
         public bool Status { get; set; }
+        
     }
 }

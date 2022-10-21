@@ -4,10 +4,11 @@
 }
 
 <h1>Index</h1>
-<form asp-action="Search" method="get">
+<h3>Total Beds: @ViewBag.TotalItems</h3>
+<form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
-            Find by name: <input type="text" name="searchName" placeholder="Search Key" />
+            Find by name: <input type="text" name="searchName" value="@ViewBag.searchName" placeholder="Search Key" />
             <input type="submit" value="Search" class="btn btn-primary" /> 
             
                 <a asp-action="Index">Back to List</a>
@@ -16,7 +17,7 @@
     </div>
 </form>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
 </p>
 
 <table class="table">
@@ -49,9 +50,9 @@
                 </td>
                 
                 <td>
-                    <a href="bed/Edit/@item.Id">Edit</a>
-                   
-                    <a href="bed/Delete/@item.Id">Delete</a>
+                    <a class="btn btn-success" href="bed/Edit/@item.Id">Edit</a>
+
+                    <a  class="btn btn-danger" href="bed/Delete/@item.Id">Delete</a>
                 </td>
                 
 
@@ -59,3 +60,13 @@
         }
     </tbody>
 </table>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="/bed?searchName=@(ViewBag.searchName)&pageIndex=@(ViewBag.PageIndex-1)">Pre</a></li>
+        <li class="page-item"><a class="page-link" href="/bed?searchName=@(ViewBag.searchName)&pageIndex=@(ViewBag.PageIndex)">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="/bed?searchName=@(ViewBag.searchName)&pageIndex=@(ViewBag.PageIndex+1)">Next</a></li>
+    </ul>
+</nav>
+
