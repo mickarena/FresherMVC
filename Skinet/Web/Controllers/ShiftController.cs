@@ -2,6 +2,7 @@
 using Core.Interfaces;
 using Core.Pagination;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
 
@@ -35,50 +36,6 @@ namespace Web.Controllers
             return View(dto.Items);
         }
 
-        // GET/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST/Create
-        [HttpPost]
-        public async Task<IActionResult> Create(Shift shift)
-        {
-            if (ModelState.IsValid)
-            {
-                await _shiftRepository.Create(shift);
-                return RedirectToAction("Index");
-            }
-            return View(shift);
-        }
-
-        // GET/Edit
-        public async Task<IActionResult> Edit(Guid id)
-        {
-            var shift = await _shiftRepository.GetById(id);
-            return View(shift);
-        }
-
-        // POST/Edit
-        [HttpPost]
-        public async Task<IActionResult> Edit(Shift shift)
-        {
-            if (ModelState.IsValid)
-            {
-                await _shiftRepository.Edit(shift);
-                return RedirectToAction("Index");
-            }
-            return View(shift);
-        }
-
-        // GET/Delete
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            var shift = await _shiftRepository.GetById(id);
-            return View(shift);
-        }
-
         // POST/Delete
         [HttpPost]
         public async Task<IActionResult> Remove(Guid id)
@@ -89,6 +46,45 @@ namespace Web.Controllers
                 return RedirectToAction("Index");
             }
             return View(id);
+        }
+
+        // GET/CreateOrEdit
+        public async Task<IActionResult> CreateOrEdit(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                return View();
+            }
+            else
+            {
+                var shift = await _shiftRepository.GetById(id);
+                return View(shift);
+            }
+        }
+
+        // POST/CreateOrEdit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateOrEdit(Shift shift)
+        {
+            if (shift.Id == Guid.Empty)
+            {
+                ModelState.Remove("Id");
+                if (ModelState.IsValid)
+                {
+                    await _shiftRepository.Create(shift);
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    await _shiftRepository.Edit(shift);
+                    return RedirectToAction("Index");
+                }
+            }
+            return View(shift);
         }
     }
 }

@@ -1,15 +1,15 @@
 ﻿@model Core.Entities.Shift
 
 @{
-    ViewData["Title"] = "Edit Shift";
+    ViewData["Title"] = "Shift";
 }
 
-<div class="text-center"><h1>Edit Shift</h1></div>
+<div class="text-center"><h1>Shift</h1></div>
 
 <hr />
-<div class="row" style="width:50%; margin:auto;">
+<div class="col-md-6 offset-md-3">
     <div class="col">
-        <form asp-controller="Shift" asp-action="Edit" method="Post">
+        <form asp-controller="Shift" asp-action="CreateOrEdit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
