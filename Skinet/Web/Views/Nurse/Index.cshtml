@@ -1,8 +1,6 @@
 ﻿@model IEnumerable<Core.Entities.Nurse>
 
-@{
-    ViewData["Title"] = "Index";
-}
+
 
 <h1>Index</h1>
 
@@ -60,3 +58,4 @@
         <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPage ? "disabled" : "")"><a class="page-link" asp-route-currentPage="@(ViewBag.CurrentPage + 1)" asp-action="Index">Next</a></li>
     </ul>
 </nav>
+

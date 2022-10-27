@@ -1,14 +1,26 @@
 ﻿@model IEnumerable<Core.Entities.Department>
 
-@{
-    ViewData["Title"] = "Index";
-}
-
 <h1>Index</h1>
 <form>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#createDepartment">Create</button>
+
+        <div class="input-group">
+            <input type="text" name="search" value="@ViewBag.SearchData" class="form-control" aria-describedby="btnGroupAddon2">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" asp-action="Index" type="submit">Search</button>
+            </div>
+        </div>
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <button class="dropdown-item" value="@(ViewBag.PageSize = 5)" asp-action="Index" type="submit">5</button>
+            <button class="dropdown-item" value="@(ViewBag.PageSize = 10)" asp-action="Index" type="submit">10</button>
+            <button class="dropdown-item" value="@(ViewBag.PageSize = 50)" asp-action="Index" type="submit">50</button>
+        </div>
+    </div>
 <table class="table">
     <thead>
         <tr>
@@ -19,39 +31,25 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a type="button" class="btn btn-primary" data-toggle="Delete" data-target="#exampleDelete" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="@("#editDepartment-"+item.Id)" data-url="@Url.Action($"Edit/{item.Id}")">Edit</button>
+                        @await Html.PartialAsync("Edit", item)
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="@("#deleteDepartment-"+item.Id)" data-url="@Url.Action($"Delete/{item.Id}")">Delete</button>
+                        @await Html.PartialAsync("Delete", item)
                 </td>
             </tr>
-        }
+        } 
     </tbody>
 </table>
+    @await Html.PartialAsync("Create",new Core.Entities.Department())
 
-<div class="col-auto my-1">
-    <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect " onchange="this.form.submit();">
-        <option selected>Choose...</option>
-        <option value="1">10</option>
-        <option value="2">20</option>
-        <option value="3">30</option>
-        <option value="3">40</option>
-        <option value="3">50</option>
-        <option value="3">60</option>
-        <option value="3">70</option>
-        <option value="3">80</option>
-        <option value="3">90</option>
-        <option value="3">100</option>
-    </select>
-</div>
-
-<nav aria-label="Page navigation example">
+        <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
         <li class="page-item @(ViewBag.CurrentPage <= 1 ? "disabled" : "")"><a class="page-link" asp-route-currentPage="@(ViewBag.CurrentPage - 1)" asp-action="Index">Previous</a></li>
         @for (int i = 0; i < ViewBag.TotalPage; i++)
@@ -63,22 +61,3 @@
 </nav>
 </form>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>

@@ -19,43 +19,46 @@ namespace Web.Controllers
             _departmentRepository = departmentRepository;
             this.pagedRepository = pagedRepository;
         }
-        public ActionResult Index(int currentPage, string searchString)
+        public IActionResult Index(int currentPage, string search)
 
         {
-            var list = _departmentRepository.GetAll(searchString);
+            var list = _departmentRepository.GetAll(search);
             var dto = pagedRepository.PaginatedList(list, currentPage);
             ViewBag.TotalPage = dto.TotalPages;
             ViewBag.CurrentPage = dto.PageIndex;
+            ViewBag.PageSize = dto.PageSize;
+            ViewBag.SearchData = search;
             return View(dto.Items);
         }
-        public ActionResult Create()
+        public IActionResult Create()
         {
-            return View();
+            Department department = new Department();
+            return PartialView("Create", department);
         }
 
         // POST: Nurses/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Department department)
+        public IActionResult Create(Department department)
         {
             if (ModelState.IsValid)
             {
                 _departmentRepository.Create(department);
                 return RedirectToAction("Index");
             }
-            return View(department);
+            return PartialView("Create", department);
         }
 
         // GET: Nurses/Edit/5
-        public ActionResult Edit(Guid id)
+        public IActionResult Edit(Guid id)
         {
             var nurses = _departmentRepository.GetbyId(id);
-            return View(nurses);
+            return PartialView("Edit", nurses);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Department department)
+        public IActionResult Edit(Department department)
         {
             if (ModelState.IsValid)
             {
@@ -65,15 +68,16 @@ namespace Web.Controllers
             return View(department);
         }
 
-        public ActionResult Delete(Guid id)
+        public IActionResult Delete(Guid id)
         {
+           
             var nurses = _departmentRepository.GetbyId(id);
-            return View(nurses);
+            return PartialView("Delete", nurses);
         }
         // POST: Nurses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        public IActionResult DeleteConfirmed(Guid id)
         {
             _departmentRepository.Delete(id);
             return RedirectToAction("Index");
