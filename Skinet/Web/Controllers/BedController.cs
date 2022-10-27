@@ -1,5 +1,4 @@
 ﻿using Core.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Core.Entities;
@@ -17,24 +16,33 @@ namespace Web.Controllers
         }
 
         // GET: BedController
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string search,int pageIndex=1, int pageSize = 10)
         {
- 
-            var test = await _bedRepository.ListAllAsync();
-            return View(test);
-        }
+            var result = await _bedRepository.Search(search, pageIndex, pageSize);
+            ViewBag.searchName = search;
+            ViewBag.TotalItems=result.TotalItems;
+            ViewBag.PageIndex=pageIndex;
+            ViewBag.TotalPage = result.TotalPage;
+            ViewBag.EndPage = result.endPage;
+            ViewBag.StartPage=result.startPage;
+       
+            if (ViewBag.StartPage <= 0)
+            {
+                ViewBag.EndPage = ViewBag.EndPage - (ViewBag.StartPage - 1);
+                ViewBag.StartPage = 1;
+            }
+            if (ViewBag.EndPage > ViewBag.TotalPage)
+            {
+                ViewBag.EndPage = ViewBag.TotalPage;
+                if (ViewBag.EndPage > 10)
+                {
+                    ViewBag.StartPage = ViewBag.EndPage - 9;
+                }
+            }
+           
+            return View(result.Items);
 
-        public async Task<IActionResult> Search(string searchName)
-        {
-            var result = await _bedRepository.Search(searchName);
-            return View("Index", result);
-        }
-        // GET: BedController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
+        }     
         // GET: BedController/Create
         public ActionResult Create()
         {

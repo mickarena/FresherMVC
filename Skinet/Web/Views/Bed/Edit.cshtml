@@ -15,13 +15,14 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label class="control-label">Nhập Tên Phòng</label>
-                <input name="IdRoom" class="form-control" />
+                <input asp-for="IDRoom" class="form-control" />
+                <span asp-validation-for="IDRoom" class="text-danger"></span>
 
             </div>
             <div class="form-group">
                 <label class="control-label">Nhập tên bệnh nhân</label>
-                <input name="IdPatient" class="form-control" />
-
+                <input asp-for="IDPatient" class="form-control" />
+                <span asp-validation-for="IDPatient" class="text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -29,13 +30,13 @@
                     <label class="control-label">Chọn trạng thái</label>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="Status" value="true"> hết giường
+                            <input type="radio" asp-for="Status" value="true"> hết giường
                         </label>
                     </div>
 
                     <div class="radio">
                         <label>
-                            <input type="radio" name="Status" value="false" checked>
+                            <input type="radio" asp-for="Status" value="false" checked>
                             còn giường
                         </label>
                     </div>
