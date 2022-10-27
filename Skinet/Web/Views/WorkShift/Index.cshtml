@@ -38,10 +38,12 @@
                 @Html.DisplayFor(modelItem => item.CreateAt)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Shift.StartTime) -
+                @Html.DisplayFor(modelItem => item.Shift.EndTime)
                 @Html.DisplayFor(modelItem => item.Shift.ShiftName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Doctor)
+                @Html.DisplayFor(modelItem => item.Doctor.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
