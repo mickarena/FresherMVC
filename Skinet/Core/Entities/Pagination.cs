@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Core.Entities
+﻿namespace Core.Entities
 {
     public class Pagination<T>
     {
@@ -12,8 +6,8 @@ namespace Core.Entities
         public int TotalItems { get; set; }
         public int PageSize { get; set; }
         public int PageIndex { get; set; }
-        public int CurentPage { get; set; }
         public int TotalPage { get; set; }
-
+        public int startPage { get; set; }
+        public int endPage { get; set; }
     }
 }

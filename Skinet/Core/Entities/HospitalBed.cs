@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Core.Entities
 {
@@ -14,6 +9,5 @@ namespace Core.Entities
         [Required(ErrorMessage = "Parient ID cannot be empty")]
         public string IDPatient { get; set; }
         public bool Status { get; set; }
-        
     }
 }
